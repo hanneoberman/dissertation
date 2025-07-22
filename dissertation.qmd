@@ -1,0 +1,96 @@
+---
+title: "Dissertation"
+format: pdf
+---
+
+## Eisen onderzoek
+
+Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf).
+
+> 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten:
+
+>   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan;
+    b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van 
+het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van 
+nieuwe kennis;
+    c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of 
+knowledge’, welke in ieder geval omvat de principes en methoden van de internationale 
+wetenschapsbeoefening en de theorievorming, methoden en studies van het 
+desbetreffende vakgebied;
+    d. de promovendus beschikt over het vermogen om een omvangrijk project voor de 
+ontwikkeling van nieuwe kennis te ontwerpen en te implementeren;
+    e. de promovendus is in staat om de kennis en methoden van het desbetreffende 
+specialisme en/of vakgebied adequaat over te dragen;
+    f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien 
+van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen.
+
+> 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels
+
+
+## Inhoud proefschrift
+
+### Introductie
+
+Thema: computationele evaluatie van imputatiemethodologie.
+
+### H1: Standardized evaluation
+
+- Inhoud hoofdstuk: review paper (manuscript). 
+
+- Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107
+
+- Kwaliteitstoetsing (eis 1a) door peer-review.
+
+  - Gepubliceerd, 20x geciteerd (bron: Google Scholar). 
+
+### H2: Missing the point
+
+- Inhoud hoofdstuk: simulatiestudie (manuscript).
+
+- Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951
+
+- Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model).
+
+  - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar).
+
+### H3: R package `ggmice`
+
+- Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette).
+
+- Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702
+
+- Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues).
+
+  - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar).
+
+  - GitHub Issues as peer review (10x external Issue, 13x external PR).
+
+  - CRAN downloads as impact (852x/month; 21k total).
+
+
+### Discussie
+
+Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
+
+# Introduction
+
+Wat is het probleem? 
+Welke methoden bestaan al?
+Wat zijn de voor- en nadelen van de huidige methoden?
+
+Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen?
+In welke opzicht vult de nieuwe methode een lacune?
+
+Op welke principe is de nieuwe aanpak gebaseerd?
+Hoe zijn deze principes in de software vertaald?
+Welke onderliggende aannames zijn hierbij gebruikt?
+
+Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken?
+Levert het nieuwe gereedschap in de praktijk betere resultaten?
+
+Wat vinden toekomstige gebruikers van het gereedschap?
+Wat zijn relevante indicatoren voor adoptie?
+
+Welke richtlijnen en advies gelden bij gebruik?
+Wat zijn beperkingen van de methode?
+Wat zijn vragen voor nader onderzoek?
