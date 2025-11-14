@@ -74,23 +74,82 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
 
 # Introduction
 
-Wat is het probleem? 
-Welke methoden bestaan al?
-Wat zijn de voor- en nadelen van de huidige methoden?
+## Onderbouwing `ggmice` als hoofdstuk
 
-Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen?
-In welke opzicht vult de nieuwe methode een lacune?
+### Wat is het probleem? 
+Visualization of incomplete data, imputation models, and imputed data. Evaluation of 'applicablity' imputation models. Visualization of uncertainty due to missingness. Data exploration for building imputation models.
 
-Op welke principe is de nieuwe aanpak gebaseerd?
-Hoe zijn deze principes in de software vertaald?
-Welke onderliggende aannames zijn hierbij gebruikt?
 
-Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken?
-Levert het nieuwe gereedschap in de praktijk betere resultaten?
+### Welke methoden bestaan al?
 
-Wat vinden toekomstige gebruikers van het gereedschap?
-Wat zijn relevante indicatoren voor adoptie?
+- `naniar` for incomplete data
+- `VIM` for incomplete and imputed data (but not `mice`)
+- `mice` for imputed (but not `ggplot2`)
+- 'artisinal' code solutions
+- print of excel export for imputation models
 
-Welke richtlijnen en advies gelden bij gebruik?
-Wat zijn beperkingen van de methode?
-Wat zijn vragen voor nader onderzoek?
+### Wat zijn de voor- en nadelen van de huidige methoden?
+
+- missing visualization tool compatible with both incomplete data and `mice` imputations: `mice` lacks incomplete data, other packages lack support for `mice`-imputed data
+- missing visualization tool for imputation models
+
+### Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen?
+
+- no methodology for visualizing `mice` models
+- plotting tools for `mids` objects not easily editable/publication-ready
+- no direct comparison tool for `mice` between incomplete and imputed data
+
+### In welke opzicht vult de nieuwe methode een lacune?
+
+- unified solution for: missingness, imputation models, imputations
+- direct comparison between data before and after imputation with `mice`
+- complex imputation models are easier to review through visualization (as opposed to console prints/excel exports)
+
+### Op welke principe is de nieuwe aanpak gebaseerd?
+
+- Grammar of Graphics: layered plots
+- Open Source Software development/FAIR
+
+### Hoe zijn deze principes in de software vertaald?
+
+- `ggmice` produces `ggplot` objects: layered, easily adjustable
+- GitHub, CRAN, Zenodo, ...
+
+### Welke onderliggende aannames zijn hierbij gebruikt?
+
+...
+
+### Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken?
+
+- data types (e.g. `mids`)
+- how 'publication-ready' the visualizations are (e.g. number of lines of code needed?)
+- number of functions? 
+- number of downloads? `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
+
+### Levert het nieuwe gereedschap in de praktijk betere resultaten?
+
+...
+
+### Wat vinden toekomstige gebruikers van het gereedschap?
+
+...
+
+### Wat zijn relevante indicatoren voor adoptie?
+
+- CRAN downloads
+- GitHub stars and issues
+- StackOverflow mentions/questions
+- citations of the package (Zenodo reference)
+
+### Welke richtlijnen en advies gelden bij gebruik?
+
+- not a replacement of evaluation but support
+
+### Wat zijn beperkingen van de methode?
+
+- interpretation remains subjective (e.g. convergence, MAR assumption, etc.)
+
+### Wat zijn vragen voor nader onderzoek?
+
+- visualizing `mira` objects
+- quantifying uncertainty at pattern/cell level
