@@ -126,6 +126,10 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 - number of functions? 
 - number of downloads? `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
 
+@Gerko: graag advies!
+
+TODO: table with visualization types in all packages (compare `VIM`, `naniar`, `amelia`)
+
 ### Levert het nieuwe gereedschap in de praktijk betere resultaten?
 
 ...
