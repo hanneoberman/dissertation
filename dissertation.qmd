@@ -161,9 +161,20 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 - number of functions* <br> 
 - number of downloads* <br> `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
 
-@Gerko: graag advies!
+<!-- TODO: table with visualization types in all packages (compare `VIM`, `naniar`, `amelia`) -->
 
-TODO: table with visualization types in all packages (compare `VIM`, `naniar`, `amelia`)
+
+|                   Functionaliteit                  |  ggmice  |        VIM       |  naniar  |   amelia  |   mice (lattice)   |
+|:--------------------------------------------------|:--------:|:----------------:|:--------:|:---------:|:------------------:|
+| Visualisatie van de missingness                    | V        | V                | V        | (beperkt) | V                  |
+| Visalisatie van het imputatie EN nonresponse model | V        | X                | X        | X         | X                  |
+| Imputatie diagnostiek (visueel) + evt in cijfer?   | V        | V (gedeeltelijk) | X        | V         | V                  |
+| Ondersteuning mids en andere data typen            | V        | X                | X        | X         | V (alleen lattice) |
+| Grammar of Graphics                                | V        | X                | V        | X         | X                  |
+| Aanpasbaarheid                                     | hoog     | laag             | hoog     | laag      | laag               |
+| Tidyverse compatible?                              | volledig | beperkt          | volledig | beperkt   | geen               |
+| Meteen klaar voor publicatie?                      | hoog     | middel           | hoog     | laag      | laag               |
+
 
 *Levert het nieuwe gereedschap in de praktijk betere resultaten* <br>
 
