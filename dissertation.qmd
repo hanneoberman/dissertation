@@ -74,13 +74,48 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
 
 # Introduction
 
-## Onderbouwing `ggmice` als hoofdstuk
+<!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
 
-### Wat is het probleem? 
+## What is this dissertation about?
+
+- missing data & imputation are widespread
+- imputation is easy with software defaults
+- good imputation is very hard still
+- how do we know if we have a good imputation method?
+- in this dissertation I study computational evaluation of imputation methodology
+- computational evaluation at different levels: 
+  - building imp models (`ggmice`), 
+  - assessing imp models (`ggmice` and convergence), 
+  - developing new imp models/methods (evaluation paper)
+  
+## What is computational evaluation of imputation methodology?
+
+- imputation methods are developed to solve missing data problems: typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or missing variables)
+- in the FSC framework, we need an imputation model for each incomplete variable
+- imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
+- in the building stage, how do we know which functional form to choose?
+  - rely on defaults, tested in simulation studies ($\rightarrow$ evaluation chapter)
+  - assess the distribution of the incomplete variable (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
+  - ...?
+- in the building stage, how do we know which imputation model predictors to select?
+  - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter)
+  - association of missingness indicator with other variables in the data ($\rightarrow$ `ggmice` chapter)
+  - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
+  - ...?
+- after imputation, how do we assess imputation model misfit?
+  - non-convergence in the algorithm ($\rightarrow$ convergence chapter)
+  - mismatch between observed and imputed data distributions (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
+  - ...?
+
+RQ: how can applied researchers be aided in developing and evaluating imputation methods?
+
+## Chapter 1: `ggmice`
+
+*Wat is het probleem* <br> 
+
 Visualization of incomplete data, imputation models, and imputed data. Evaluation of 'applicablity' imputation models. Visualization of uncertainty due to missingness. Data exploration for building imputation models.
 
-
-### Welke methoden bestaan al?
+*Welke methoden bestaan al* <br>
 
 - `naniar` for incomplete data
 - `VIM` for incomplete and imputed data (but not `mice`)
@@ -88,72 +123,76 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 - 'artisinal' code solutions
 - print of excel export for imputation models
 
-### Wat zijn de voor- en nadelen van de huidige methoden?
+*Wat zijn de voor- en nadelen van de huidige methoden* <br>
 
 - missing visualization tool compatible with both incomplete data and `mice` imputations: `mice` lacks incomplete data, other packages lack support for `mice`-imputed data
 - missing visualization tool for imputation models
 
-### Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen?
+*Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen* <br>
 
 - no methodology for visualizing `mice` models
 - plotting tools for `mids` objects not easily editable/publication-ready
 - no direct comparison tool for `mice` between incomplete and imputed data
 
-### In welke opzicht vult de nieuwe methode een lacune?
+*In welke opzicht vult de nieuwe methode een lacune* <br>
 
 - unified solution for: missingness, imputation models, imputations
 - direct comparison between data before and after imputation with `mice`
 - complex imputation models are easier to review through visualization (as opposed to console prints/excel exports)
 
-### Op welke principe is de nieuwe aanpak gebaseerd?
+*Op welke principe is de nieuwe aanpak gebaseerd* <br>
 
 - Grammar of Graphics: layered plots
 - Open Source Software development/FAIR
 
-### Hoe zijn deze principes in de software vertaald?
+*Hoe zijn deze principes in de software vertaald* <br>
 
 - `ggmice` produces `ggplot` objects: layered, easily adjustable
 - GitHub, CRAN, Zenodo, ...
 
-### Welke onderliggende aannames zijn hierbij gebruikt?
+*Welke onderliggende aannames zijn hierbij gebruikt* <br>
 
 ...
 
-### Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken?
+*Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken* <br>
 
 - data types (e.g. `mids`)
-- how 'publication-ready' the visualizations are (e.g. number of lines of code needed?)
-- number of functions? 
-- number of downloads? `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
+- how 'publication-ready' the visualizations are (e.g. number of lines of code needed* <br>)
+- number of functions* <br> 
+- number of downloads* <br> `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
 
 @Gerko: graag advies!
 
 TODO: table with visualization types in all packages (compare `VIM`, `naniar`, `amelia`)
 
-### Levert het nieuwe gereedschap in de praktijk betere resultaten?
+*Levert het nieuwe gereedschap in de praktijk betere resultaten* <br>
 
 ...
 
-### Wat vinden toekomstige gebruikers van het gereedschap?
+*Wat vinden toekomstige gebruikers van het gereedschap* <br>
 
 ...
 
-### Wat zijn relevante indicatoren voor adoptie?
+*Wat zijn relevante indicatoren voor adoptie* <br>
 
 - CRAN downloads
 - GitHub stars and issues
 - StackOverflow mentions/questions
 - citations of the package (Zenodo reference)
 
-### Welke richtlijnen en advies gelden bij gebruik?
+*Welke richtlijnen en advies gelden bij gebruik* <br>
 
 - not a replacement of evaluation but support
 
-### Wat zijn beperkingen van de methode?
+*Wat zijn beperkingen van de methode* <br>
 
 - interpretation remains subjective (e.g. convergence, MAR assumption, etc.)
 
-### Wat zijn vragen voor nader onderzoek?
+*Wat zijn vragen voor nader onderzoek* <br>
 
 - visualizing `mira` objects
 - quantifying uncertainty at pattern/cell level
+
+## Chapter 2: convergence
+
+## Chapter 3: evaluation
