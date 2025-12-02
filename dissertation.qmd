@@ -3,6 +3,8 @@ title: "Dissertation"
 format: pdf
 ---
 
+# Outline
+
 ## Eisen onderzoek
 
 Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf).
@@ -26,6 +28,7 @@ van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen.
 
 > 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels
 
+\newpage
 
 ## Inhoud proefschrift
 
@@ -72,6 +75,36 @@ Thema: computationele evaluatie van imputatiemethodologie.
 
 Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
 
+\newpage
+
+\newpage
+
+# Start proefschrift
+
+[TODO: create cover, add boilerplate stuff]
+
+\newpage
+
+# Acknowledgements
+
+[TODO: write]
+
+\newpage
+
+# Table of Contents
+
+[TODO: fix which sections are included]
+
+\tableofcontents
+
+\newpage
+
+# Samenvatting
+
+[TODO: write]
+
+\newpage
+
 # Introduction
 
 <!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
@@ -109,7 +142,7 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
 
 RQ: how can applied researchers be aided in developing and evaluating imputation methods?
 
-## Chapter 1: `ggmice`
+## Introducing chapter 1: `ggmice`
 
 *Wat is het probleem* <br> 
 
@@ -191,8 +224,43 @@ TODO: table with visualization types in all packages (compare `VIM`, `naniar`, `
 *Wat zijn vragen voor nader onderzoek* <br>
 
 - visualizing `mira` objects
+- add posterior predictive check plots
 - quantifying uncertainty at pattern/cell level
 
-## Chapter 2: convergence
+## Introducing chapter 2: convergence
 
-## Chapter 3: evaluation
+## Introducing chapter 3: evaluation
+
+\newpage
+
+# Chapter 1
+
+[TODO: link/insert]
+
+\newpage
+
+# Chapter 2
+
+[TODO: link/insert]
+
+\newpage
+
+# Chapter 3
+
+[TODO: link/insert]
+
+\newpage
+
+# Discussion
+
+[TODO: write]
+
+\newpage
+
+# References
+
+\newpage
+
+# CV
+
+[TODO: write]
