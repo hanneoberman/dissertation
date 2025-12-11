@@ -123,6 +123,7 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
   
 ## What is computational evaluation of imputation methodology?
 
+
 **[GV: I believe this section could benefit from something like this:]** *How does comp eval differ from statistical eval? IMO it goes beyond it --> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera. Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology. I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.*
 
 --> even without conv, we can get valid inference at sample/population level, not at individual cell level.
@@ -282,25 +283,23 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 [TODO: write]
 
-## Summary
 
-- In this thesis, we investigated...
+## Conclusion
+
+- Computational evaluation of imputation methodology is never finished.
+  - In practice, you cannot validate whether the imputation model was appropriate (???), because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
+  - The best thing we can do is to evaluate imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offered insight and tools to do so.
+  - The only setting where we do have the comparative truth (the true but missing values) is simulation studies. Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. That's why simulation studies for imputation methodology should be comparable with one another, so imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one.
+
+
+--> example: NRI seach for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
+
+## Implications
 
 - The main findings in this thesis are...
   - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so.
   - Visual inspection aids imputers in developing and evaluating imputation models. The R package `ggmice` offers tools that were previously unavailable.
   - Defining and testing new imputation methods through simulation studies requires careful consideration of the simulation design and evaluation to make imputation methods comparable across studies.
-
-- In this final chapter we bring all these findings together...
-
-## Conclusion
-
-- Computational evaluation of imputation methodology is never finished.
-  - In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
-  - The best thing we can do is to evaluate imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offered insight and tools to do so.
-  - The only setting where we do have the comparative truth (the true but missing values) is simulation studies. Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. That's why simulation studies for imputation methodology should be comparable with one another, so imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one.
-
-## Implications
 
 - Recommendations for fellow missing data methodologists:
   - design simulation studies structured and reproducible
@@ -314,6 +313,8 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 ## Limitations
 
+[TODO: rephrase 'havent's into future research (positive phrasing)]
+
 - Computational evaluation is not a substitute for thinking. It may give a false sense of certainty, e.g. against MNAR mechanism.
   - Use expert insight
   - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
@@ -324,6 +325,8 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
   - Many machine learning and deep learning methods are not (yet) implemented as imputation models in `mice`. These may be able to better approximate the posterior predictive distribution of the missing values than `mice` methods
 
 - I haven't tested whether the tools I developed actually improve the imputations of `mice` users.
+  - GitHub issues and StackOverflow are indication
+  - Onmogelijk om evidence-based conclusies te trekken, maar misschien wel evidence-informed?
 
 - The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data).
 
