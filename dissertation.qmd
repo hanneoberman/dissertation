@@ -3,6 +3,8 @@ title: "Dissertation"
 format: pdf
 ---
 
+# Outline
+
 ## Eisen onderzoek
 
 Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf).
@@ -26,6 +28,7 @@ van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen.
 
 > 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels
 
+\newpage
 
 ## Inhoud proefschrift
 
@@ -71,6 +74,36 @@ Thema: computationele evaluatie van imputatiemethodologie.
 ### Discussie
 
 Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
+
+\newpage
+
+\newpage
+
+# Start proefschrift
+
+[TODO: create cover, add boilerplate stuff]
+
+\newpage
+
+# Acknowledgements
+
+[TODO: write]
+
+\newpage
+
+# Table of Contents
+
+[TODO: fix which sections are included]
+
+\tableofcontents
+
+\newpage
+
+# Samenvatting
+
+[TODO: write]
+
+\newpage
 
 # Introduction
 
@@ -119,7 +152,7 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
 
 RQ: how can applied researchers be aided in developing and evaluating imputation methods?
 
-## Chapter 1: `ggmice`
+## Introducing chapter 1: `ggmice`
 
 *Wat is het probleem* <br> 
 
@@ -212,8 +245,108 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 *Wat zijn vragen voor nader onderzoek* <br>
 
 - visualizing `mira` objects
+- add posterior predictive check plots
 - quantifying uncertainty at pattern/cell level
+- tools for sensitiviity analyses
 
-## Chapter 2: convergence
+## Introducing chapter 2: convergence
 
-## Chapter 3: evaluation
+- FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?
+
+## Introducing chapter 3: evaluation
+
+- based on literature review published in [REF]
+
+
+\newpage
+
+# Chapter 1
+
+[TODO: link/insert]
+
+\newpage
+
+# Chapter 2
+
+[TODO: link/insert]
+
+\newpage
+
+# Chapter 3
+
+[TODO: link/insert]
+
+\newpage
+
+# Discussion
+
+[TODO: write]
+
+## Summary
+
+- In this thesis, we investigated...
+
+- The main findings in this thesis are...
+  - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so.
+  - Visual inspection aids imputers in developing and evaluating imputation models. The R package `ggmice` offers tools that were previously unavailable.
+  - Defining and testing new imputation methods through simulation studies requires careful consideration of the simulation design and evaluation to make imputation methods comparable across studies.
+
+- In this final chapter we bring all these findings together...
+
+## Conclusion
+
+- Computational evaluation of imputation methodology is never finished.
+  - In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
+  - The best thing we can do is to evaluate imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offered insight and tools to do so.
+  - The only setting where we do have the comparative truth (the true but missing values) is simulation studies. Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. That's why simulation studies for imputation methodology should be comparable with one another, so imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one.
+
+## Implications
+
+- Recommendations for fellow missing data methodologists:
+  - design simulation studies structured and reproducible
+  - talk to your intended audience (i.e., applied researchers), or at least check what they are struggling with (e.g., StackOverflow)
+  - ...?
+
+- Recommendations for fellow imputers:
+  - think before you code 
+  - look at the data
+  - ...?
+
+## Limitations
+
+- Computational evaluation is not a substitute for thinking. It may give a false sense of certainty, e.g. against MNAR mechanism.
+  - Use expert insight
+  - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
+  - ...?
+
+- This entire dissertation relies on the R language and centers the `mice` package.
+  - While this set-up is very popular, the data science landscape has expanded and is ever evolving
+  - Many machine learning and deep learning methods are not (yet) implemented as imputation models in `mice`. These may be able to better approximate the posterior predictive distribution of the missing values than `mice` methods
+
+- I haven't tested whether the tools I developed actually improve the imputations of `mice` users.
+
+- The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data).
+
+## Outlook
+
+- This chapter ends with a future perspective...
+
+- Missing data remains a problem indefinitely. I expect imputation methodology to be developed and applied for the foreseeable future. But the way we deal with data might change.
+- With the rise of machine learning and deep learning methods (or "AI"), evaluation will become ever more important. Novel methods are being developed under a prediction framework, not statistical inference framework: ignoring the uncertainty in the estimates, and thus not incorporating between-imputation variance. This leads to too narrow CIs, and too low p-values. Which, in turn, causes spurious results.
+- trust in science requires honest reflection of uncertainty in our analyses
+- be open about uncertainty, and limitations of scientific studies 
+- publish null results (e.g., registered reports or pre-registrations)
+- share data and code with other scientists, and the public
+- publish open access, educational materials too!
+- change the way we evaluate science: this dissertation is an example of the new recognition and rewards vision. it includes software as an actual chapter, not something extra.
+- I hope to inspire others to reflect on their own view of what scientific output is. And most of all, I hope to set an example for other PhD candidates to do the same
+
+\newpage
+
+# References
+
+\newpage
+
+# CV
+
+[TODO: write]
