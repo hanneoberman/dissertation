@@ -90,6 +90,8 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
   
 ## What is computational evaluation of imputation methodology?
 
+**[GV: I believe this section could benefit from something like this:]** *How does comp eval differ from statistical eval? IMO it goes beyond it --> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera. Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology. I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.*
+
 - imputation methods are developed to solve missing data problems: typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or missing variables)
 - in the FSC framework, we need an imputation model for each incomplete variable
 - imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
