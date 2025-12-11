@@ -123,19 +123,22 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
   
 ## What is computational evaluation of imputation methodology?
 
-- imputation methods are developed to solve missing data problems: typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or missing variables)
-- in the FSC framework, we need an imputation model for each incomplete variable
+- imputation methods are developed to solve missing data problems
+- what types of missing data problems? typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or entirely missing variables)
+- missing observations in incomplete cases/variables can be filled in using an imputation model
+- in the FCS framework, we need an imputation model for each incomplete variable [explain framework here?]
 - imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
-- in the building stage, how do we know which functional form to choose?
+- recurring question: how do we choose an appropriate imputation model?
+- [in the building stage] how do we know which functional form to choose?
   - rely on defaults, tested in simulation studies ($\rightarrow$ evaluation chapter)
   - assess the distribution of the incomplete variable (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
   - ...?
-- in the building stage, how do we know which imputation model predictors to select?
+- [in the building stage] how do we know which imputation model predictors to select?
   - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter)
   - association of missingness indicator with other variables in the data ($\rightarrow$ `ggmice` chapter)
   - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
   - ...?
-- after imputation, how do we assess imputation model misfit?
+- [after imputation] how do we assess imputation model misfit?
   - non-convergence in the algorithm ($\rightarrow$ convergence chapter)
   - mismatch between observed and imputed data distributions (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
   - ...?
