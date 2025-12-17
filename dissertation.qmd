@@ -126,14 +126,13 @@ format: pdf
 
 - computational evaluation =/= statistical evaluation
 - models can be statistically valid, but not fitting
-- "Evaluation is the process of ensuring an algorithmic solution is a good one: that it is fit for purpose"
-- computational evaluation is "to determine the quality of solutions attainable"
-- computational evaluation from information retrieval research: combining effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.)
-- computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
+- computational evaluation is "to determine the quality of solutions attainable" or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose"
+- computational evaluation is originally from information retrieval research: combining effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.)
+- computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
 - imputation pragmatists/purists don't care for the imputed values
-- implausible or impossible imputed values can yield valid statistical inference; non-converged algorithm might yield valid statistical inferences?
-- not just taking the answer, but tracing back the black box to some extend, digging into the algorithms
-- are we satisfied with the way that the imp were obtained?
+- implausible or impossible imputed values can yield valid statistical inference
+- but are we satisfied with the way that the imp were obtained?
+- not just taking the answer as-is, but tracing back the black box to some extend, digging into the algorithms
 - even without conv, we can get valid inference at sample/population level, but not at individual cell level
 - what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
 
@@ -304,7 +303,6 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
   - In practice, you cannot validate whether the imputation model was appropriate (???), because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
   - The best thing we can do is to evaluate imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offered insight and tools to do so.
   - The only setting where we do have the comparative truth (the true but missing values) is simulation studies. Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. That's why simulation studies for imputation methodology should be comparable with one another, so imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one.
-
 
 --> example: NRI seach for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
 
