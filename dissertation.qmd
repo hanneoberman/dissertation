@@ -3,83 +3,80 @@ title: "Dissertation"
 format: pdf
 ---
 
-# Outline
+<!-- # Outline -->
 
-## Eisen onderzoek
+<!-- ## Eisen onderzoek -->
 
-Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf).
+<!-- Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf). -->
 
-> 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten:
+<!-- > 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten: -->
 
->   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan;
-    b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van 
-het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van 
-nieuwe kennis;
-    c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of 
-knowledge’, welke in ieder geval omvat de principes en methoden van de internationale 
-wetenschapsbeoefening en de theorievorming, methoden en studies van het 
-desbetreffende vakgebied;
-    d. de promovendus beschikt over het vermogen om een omvangrijk project voor de 
-ontwikkeling van nieuwe kennis te ontwerpen en te implementeren;
-    e. de promovendus is in staat om de kennis en methoden van het desbetreffende 
-specialisme en/of vakgebied adequaat over te dragen;
-    f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien 
-van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen.
+<!-- >   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan; -->
+<!--     b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van  -->
+<!-- het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van  -->
+<!-- nieuwe kennis; -->
+<!--     c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of  -->
+<!-- knowledge’, welke in ieder geval omvat de principes en methoden van de internationale  -->
+<!-- wetenschapsbeoefening en de theorievorming, methoden en studies van het  -->
+<!-- desbetreffende vakgebied; -->
+<!--     d. de promovendus beschikt over het vermogen om een omvangrijk project voor de  -->
+<!-- ontwikkeling van nieuwe kennis te ontwerpen en te implementeren; -->
+<!--     e. de promovendus is in staat om de kennis en methoden van het desbetreffende  -->
+<!-- specialisme en/of vakgebied adequaat over te dragen; -->
+<!--     f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien  -->
+<!-- van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen. -->
 
-> 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels
+<!-- > 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels -->
 
-\newpage
+<!-- \newpage -->
 
-## Inhoud proefschrift
+<!-- ## Inhoud proefschrift -->
 
-### Introductie
+<!-- ### Introductie -->
 
-Thema: computationele evaluatie van imputatiemethodologie.
+<!-- Thema: computationele evaluatie van imputatiemethodologie. -->
 
-### H1: Standardized evaluation
+<!-- ### H1: Standardized evaluation -->
 
-- Inhoud hoofdstuk: review paper (manuscript). 
+<!-- - Inhoud hoofdstuk: review paper (manuscript).  -->
 
-- Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107
+<!-- - Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107 -->
 
-- Kwaliteitstoetsing (eis 1a) door peer-review.
+<!-- - Kwaliteitstoetsing (eis 1a) door peer-review. -->
 
-  - Gepubliceerd, 20x geciteerd (bron: Google Scholar). 
+<!--   - Gepubliceerd, 20x geciteerd (bron: Google Scholar).  -->
 
-### H2: Missing the point
+<!-- ### H2: Missing the point -->
 
-- Inhoud hoofdstuk: simulatiestudie (manuscript).
+<!-- - Inhoud hoofdstuk: simulatiestudie (manuscript). -->
 
-- Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951
+<!-- - Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951 -->
 
-- Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model).
+<!-- - Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model). -->
 
-  - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar).
+<!--   - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar). -->
 
-### H3: R package `ggmice`
+<!-- ### H3: R package `ggmice` -->
 
-- Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette).
+<!-- - Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette). -->
 
-- Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702
+<!-- - Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702 -->
 
-- Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues).
+<!-- - Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues). -->
 
-  - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar).
+<!--   - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar). -->
 
-  - GitHub Issues as peer review (10x external Issue, 13x external PR).
+<!--   - GitHub Issues as peer review (10x external Issue, 13x external PR). -->
 
-  - CRAN downloads as impact (852x/month; 21k total).
+<!--   - CRAN downloads as impact (852x/month; 21k total). -->
 
 
-### Discussie
+<!-- ### Discussie -->
 
-Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
+<!-- Plaatsing proefschrift in bredere ontwikkelingen wetenschap. -->
 
-\newpage
+<!-- \newpage -->
 
-\newpage
-
-# Start proefschrift
 
 [TODO: create cover, add boilerplate stuff]
 
@@ -121,18 +118,32 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
   - assessing imp models (`ggmice` and convergence), 
   - developing new imp models/methods (evaluation paper)
   
+<!-- TODO check req info: imp = filling in. then phil about evaluation, then deeper into imp -->
+
 ## What is computational evaluation of imputation methodology?
 
+### Computational evaluation
 
-**[GV: I believe this section could benefit from something like this:]** *How does comp eval differ from statistical eval? IMO it goes beyond it --> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera. Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology. I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.*
+- computational evaluation =/= statistical evaluation
+- models can be statistically valid, but not fitting
+- "Evaluation is the process of ensuring an algorithmic solution is a good one: that it is fit for purpose"
+- computational evaluation is "to determine the quality of solutions attainable"
+- computational evaluation from information retrieval research: combining effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.)
+- computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
+- imputation pragmatists/purists don't care for the imputed values
+- implausible or impossible imputed values can yield valid statistical inference; non-converged algorithm might yield valid statistical inferences?
+- not just taking the answer, but tracing back the black box to some extend, digging into the algorithms
+- are we satisfied with the way that the imp were obtained?
+- even without conv, we can get valid inference at sample/population level, but not at individual cell level
+- what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
 
---> even without conv, we can get valid inference at sample/population level, not at individual cell level.
---> pragmatists? purists?
---> even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI
---> are we satisfied with the way that the imp were obtained?
---> req info: imp is filling in. then this is phil, then deeper into imp
+<!-- Gerko: "How does comp eval differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
+<!-- Example: {irmi} package by mattias temple yields unbiased estimates, but coverage of 0 because variance was 0 -->
+<!-- Gerko: "Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology." -->
+<!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
+<!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
 
-<!-- irmi: mattias temple, unbiased, coverage van 0 want geen variantie -->
+### Imputation methodology
 
 - imputation methods are developed to solve missing data problems
 - what types of missing data problems? typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or entirely missing variables)
@@ -339,6 +350,7 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 - Missing data remains a problem indefinitely. I expect imputation methodology to be developed and applied for the foreseeable future. But the way we deal with data might change.
 - With the rise of machine learning and deep learning methods (or "AI"), evaluation will become ever more important. Novel methods are being developed under a prediction framework, not statistical inference framework: ignoring the uncertainty in the estimates, and thus not incorporating between-imputation variance. This leads to too narrow CIs, and too low p-values. Which, in turn, causes spurious results.
+- AI models should propagate uncertainty!
 - trust in science requires honest reflection of uncertainty in our analyses
 - be open about uncertainty, and limitations of scientific studies 
 - publish null results (e.g., registered reports or pre-registrations)
@@ -346,6 +358,7 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 - publish open access, educational materials too!
 - change the way we evaluate science: this dissertation is an example of the new recognition and rewards vision. it includes software as an actual chapter, not something extra.
 - I hope to inspire others to reflect on their own view of what scientific output is. And most of all, I hope to set an example for other PhD candidates to do the same
+
 
 \newpage
 
