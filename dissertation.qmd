@@ -1,6 +1,8 @@
 ---
 title: "Dissertation"
 format: pdf
+bibliography: dissertation.bib
+csl: apa.csl
 ---
 
 <!-- # Outline -->
@@ -126,7 +128,7 @@ format: pdf
 
 - computational evaluation =/= statistical evaluation
 - models can be statistically valid, but not fitting
-- computational evaluation is "to determine the quality of solutions attainable" or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose"
+- computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose"
 - computational evaluation is originally from information retrieval research: combining effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.)
 - computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
 - imputation pragmatists/purists don't care for the imputed values
@@ -382,6 +384,9 @@ TODO: when might plausibility mislead users into believing the imputations are s
 \newpage
 
 # References
+
+::: {#refs}
+:::
 
 \newpage
 
