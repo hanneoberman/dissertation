@@ -1,85 +1,83 @@
 ---
 title: "Dissertation"
 format: pdf
+bibliography: dissertation.bib
+csl: apa.csl
 ---
 
-# Outline
+<!-- # Outline -->
 
-## Eisen onderzoek
+<!-- ## Eisen onderzoek -->
 
-Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf).
+<!-- Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf). -->
 
-> 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten:
+<!-- > 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten: -->
 
->   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan;
-    b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van 
-het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van 
-nieuwe kennis;
-    c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of 
-knowledge’, welke in ieder geval omvat de principes en methoden van de internationale 
-wetenschapsbeoefening en de theorievorming, methoden en studies van het 
-desbetreffende vakgebied;
-    d. de promovendus beschikt over het vermogen om een omvangrijk project voor de 
-ontwikkeling van nieuwe kennis te ontwerpen en te implementeren;
-    e. de promovendus is in staat om de kennis en methoden van het desbetreffende 
-specialisme en/of vakgebied adequaat over te dragen;
-    f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien 
-van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen.
+<!-- >   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan; -->
+<!--     b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van  -->
+<!-- het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van  -->
+<!-- nieuwe kennis; -->
+<!--     c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of  -->
+<!-- knowledge’, welke in ieder geval omvat de principes en methoden van de internationale  -->
+<!-- wetenschapsbeoefening en de theorievorming, methoden en studies van het  -->
+<!-- desbetreffende vakgebied; -->
+<!--     d. de promovendus beschikt over het vermogen om een omvangrijk project voor de  -->
+<!-- ontwikkeling van nieuwe kennis te ontwerpen en te implementeren; -->
+<!--     e. de promovendus is in staat om de kennis en methoden van het desbetreffende  -->
+<!-- specialisme en/of vakgebied adequaat over te dragen; -->
+<!--     f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien  -->
+<!-- van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen. -->
 
-> 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels
+<!-- > 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels -->
 
-\newpage
+<!-- \newpage -->
 
-## Inhoud proefschrift
+<!-- ## Inhoud proefschrift -->
 
-### Introductie
+<!-- ### Introductie -->
 
-Thema: computationele evaluatie van imputatiemethodologie.
+<!-- Thema: computationele evaluatie van imputatiemethodologie. -->
 
-### H1: Standardized evaluation
+<!-- ### H1: Standardized evaluation -->
 
-- Inhoud hoofdstuk: review paper (manuscript). 
+<!-- - Inhoud hoofdstuk: review paper (manuscript).  -->
 
-- Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107
+<!-- - Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107 -->
 
-- Kwaliteitstoetsing (eis 1a) door peer-review.
+<!-- - Kwaliteitstoetsing (eis 1a) door peer-review. -->
 
-  - Gepubliceerd, 20x geciteerd (bron: Google Scholar). 
+<!--   - Gepubliceerd, 20x geciteerd (bron: Google Scholar).  -->
 
-### H2: Missing the point
+<!-- ### H2: Missing the point -->
 
-- Inhoud hoofdstuk: simulatiestudie (manuscript).
+<!-- - Inhoud hoofdstuk: simulatiestudie (manuscript). -->
 
-- Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951
+<!-- - Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951 -->
 
-- Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model).
+<!-- - Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model). -->
 
-  - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar).
+<!--   - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar). -->
 
-### H3: R package `ggmice`
+<!-- ### H3: R package `ggmice` -->
 
-- Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette).
+<!-- - Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette). -->
 
-- Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702
+<!-- - Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702 -->
 
-- Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues).
+<!-- - Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues). -->
 
-  - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar).
+<!--   - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar). -->
 
-  - GitHub Issues as peer review (10x external Issue, 13x external PR).
+<!--   - GitHub Issues as peer review (10x external Issue, 13x external PR). -->
 
-  - CRAN downloads as impact (852x/month; 21k total).
+<!--   - CRAN downloads as impact (852x/month; 21k total). plus conda downloads 100+/month: https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview -->
 
+<!-- ### Discussie -->
 
-### Discussie
+<!-- Plaatsing proefschrift in bredere ontwikkelingen wetenschap. -->
 
-Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
+<!-- \newpage -->
 
-\newpage
-
-\newpage
-
-# Start proefschrift
 
 [TODO: create cover, add boilerplate stuff]
 
@@ -112,7 +110,8 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
 ## What is this dissertation about?
 
 - missing data & imputation are widespread
-- imputation is easy with software defaults
+- imputation = filling in missing values
+- imputation is easy with software defaults [e.g. in `mice`, @mice]
 - good imputation is very hard still
 - how do we know if we have a good imputation method?
 - in this dissertation I study computational evaluation of imputation methodology
@@ -121,29 +120,59 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
   - assessing imp models (`ggmice` and convergence), 
   - developing new imp models/methods (evaluation paper)
   
+<!-- TODO check req info: imp = filling in. then phil about evaluation, then deeper into imp -->
+
 ## What is computational evaluation of imputation methodology?
 
+### Computational evaluation
 
-**[GV: I believe this section could benefit from something like this:]** *How does comp eval differ from statistical eval? IMO it goes beyond it --> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera. Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology. I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.*
+- computational evaluation =/= statistical evaluation
+- models can be statistically valid, but not fitting
+- computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014]
+- computational evaluation is originally from information retrieval research: combining effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.) [@manning2008]
 
---> even without conv, we can get valid inference at sample/population level, not at individual cell level.
---> pragmatists? purists?
---> even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI
---> are we satisfied with the way that the imp were obtained?
---> req info: imp is filling in. then this is phil, then deeper into imp
+::: {.callout}
+TODO: better define 'computational evaluation' in general, and how do we define the term in the context of imputation methodology? Something like the *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*? Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. Emphasize that often these aspects are already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or ad hoc. See also [https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)]
+:::
 
-<!-- irmi: mattias temple, unbiased, coverage van 0 want geen variantie -->
+- computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
+- imputation pragmatists/purists don't care for the imputed values
+- Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples
+- implausible or impossible imputed values can yield valid statistical inference
+- but are we satisfied with the way that the imp were obtained?
+- even without conv, we can get valid inference at sample/population level, but not at individual cell level
+- what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
+- not just taking the answer as-is, but tracing back the black box to some extend, digging into the algorithms
+- I will focus on inferential validity, algorithmic stability, data plausibility, user burden.
+
+::: {.callout}
+TODO: what are the limitations of purely inferential metrics (bias, coverage)? and vice versa: when might plausibility mislead users into believing the imputations are statistically valid? e.g. PMM with parse data might lead to imputations that are too close?
+:::
+
+<!-- Gerko: "How does comp eval differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
+<!-- Example: {irmi} package by mattias temple yields unbiased estimates, but coverage of 0 because variance was 0 -->
+<!-- Gerko: "Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology." -->
+<!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
+<!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
+
+### Imputation methodology
 
 - imputation methods are developed to solve missing data problems
-- what types of missing data problems? typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or entirely missing variables)
+- what types of missing data problems? incomplete samples
+- typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or entirely missing variables)
 - missing observations in incomplete cases/variables can be filled in using an imputation model
-- in the FCS framework, we need an imputation model for each incomplete variable [explain framework here?]
+- in the FCS framework [vanbuuren2006], we need an imputation model for each incomplete variable 
+
+::: {.callout}
+TODO: explain framework here? while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
+:::
+
 - imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
 - recurring question: how do we choose an appropriate imputation model?
 - [in the building stage] how do we know which functional form to choose?
   - rely on defaults, tested in simulation studies ($\rightarrow$ evaluation chapter)
   - assess the distribution of the incomplete variable (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
-  - ...?
+  - ...? (maybe ad transformations?)
 - [in the building stage] how do we know which imputation model predictors to select?
   - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter)
   - association of missingness indicator with other variables in the data ($\rightarrow$ `ggmice` chapter)
@@ -154,13 +183,39 @@ Plaatsing proefschrift in bredere ontwikkelingen wetenschap.
   - mismatch between observed and imputed data distributions (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
   - ...?
 
-RQ: how can applied researchers be aided in developing and evaluating imputation methods?
+::: {.callout}
+TODO: link imputation methodology back to computational evaluation. "Imputation models bypass the need to specify P(Y, X, R), though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
+:::
+
+**RQ: how can applied researchers be aided in developing and evaluating imputation methods?**
+
+::: {.callout}
+TODO: sharper RQ. what is the generalizable scientific contribution of this dissertation?
+:::
+
+Sub-questions per chapter: 
+
+- 'What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)?'
+- 'How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed?'
+- 'How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?'
+
+::: {.callout}
+TODO: clearly define scope: FCS, item non-response, statistical inference (not prediction or causal inference), M(C)AR
+:::
 
 ## Introducing chapter 1: `ggmice`
 
+- **RQ: how can incomplete and imputed data be visualized?**
+- software published on Zenodo @oberman2022, with open code and bug reporting via GitHub
+- peer-review not formal via journal, but via Issues and Pull Requests on GitHub (10x external Issue, 13x external PR)
+- impact as citations (5x according to Google Scholar), CRAN downloads (852x/month; 21k total) and conda downloads (100+/month; https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview)
+
 *Wat is het probleem* <br> 
 
-Visualization of incomplete data, imputation models, and imputed data. Evaluation of 'applicablity' imputation models. Visualization of uncertainty due to missingness. Data exploration for building imputation models.
+- Visualization of incomplete data, imputation models, and imputed data. 
+- Data exploration for building imputation models: inspect marginal and joint distributions of incomplete variables 
+- Evaluation of 'applicablity' imputation models. 
+- Visualization of uncertainty due to missingness after imputation. 
 
 *Welke methoden bestaan al* <br>
 
@@ -173,7 +228,7 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 *Wat zijn de voor- en nadelen van de huidige methoden* <br>
 
 - missing visualization tool compatible with both incomplete data and `mice` imputations: `mice` lacks incomplete data, other packages lack support for `mice`-imputed data
-- missing visualization tool for imputation models
+- missing visualization tool for imputation models (i.e., pred and meth)
 
 *Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen* <br>
 
@@ -185,21 +240,23 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 - unified solution for: missingness, imputation models, imputations
 - direct comparison between data before and after imputation with `mice`
-- complex imputation models are easier to review through visualization (as opposed to console prints/excel exports)
+- complex imputation models are easier to review through visualization (as opposed to console prints/excel exports of predictor matrix)
 
-*Op welke principe is de nieuwe aanpak gebaseerd* <br>
+*Op welke principes is de nieuwe aanpak gebaseerd* <br>
 
-- Grammar of Graphics: layered plots
+- Grammar of Graphics: layered plots [@wilkinson2012]
 - Open Source Software development/FAIR
+- evaluation of the distribution of observed and imputed data -> imp model should fit the observed part, imp model should be congenial
 
 *Hoe zijn deze principes in de software vertaald* <br>
 
 - `ggmice` produces `ggplot` objects: layered, easily adjustable
 - GitHub, CRAN, Zenodo, ...
+- providing tools to see obs and imp side-by-side
 
 *Welke onderliggende aannames zijn hierbij gebruikt* <br>
 
-...
+- make explicit what these plots/analyses can and cannot tell us: imp models should fit the observed part of the data, but no way to determinately state miss mech.
 
 *Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken* <br>
 
@@ -225,11 +282,11 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 *Levert het nieuwe gereedschap in de praktijk betere resultaten* <br>
 
-...
+- visualization =/= objective truth
 
 *Wat vinden toekomstige gebruikers van het gereedschap* <br>
 
-...
+- StackOverflow, GitHub issues, feedback at conferences
 
 *Wat zijn relevante indicatoren voor adoptie* <br>
 
@@ -251,16 +308,18 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 - visualizing `mira` objects
 - add posterior predictive check plots
 - quantifying uncertainty at pattern/cell level
-- tools for sensitiviity analyses
+- tools for sensitivity analyses
 
 ## Introducing chapter 2: convergence
 
-- FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?
+- **RQ: FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?**
+- simulation study, published as pre-print (11x cited according to Google Scholar), presented at ICML
 
 ## Introducing chapter 3: evaluation
 
-- based on literature review published in [REF]
-
+- **RQ: what to look out for when designing simulation studies for the evaluation of imputation methodology?**
+- published as @oberman2024, cited 27x according to Google Scholar (of which 11x CrossRef)
+- based on literature review @liu2023
 
 \newpage
 
@@ -284,28 +343,30 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 # Discussion
 
-[TODO: write]
-
+<!-- Goal: -->
+<!-- consolidate contributions -->
+<!-- interpret, not restate—findings -->
+<!-- acknowledge limitations -->
+<!-- articulate future research agenda -->
 
 ## Conclusion
 
 - Computational evaluation of imputation methodology is never finished.
   - In practice, you cannot validate whether the imputation model was appropriate (???), because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
-  - The best thing we can do is to evaluate imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offered insight and tools to do so.
+  - The best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offered insight and tools to do so.
   - The only setting where we do have the comparative truth (the true but missing values) is simulation studies. Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. That's why simulation studies for imputation methodology should be comparable with one another, so imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one.
 
-
---> example: NRI seach for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
+--> example: NRI search for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
 
 ## Implications
 
 - The main findings in this thesis are...
-  - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so.
-  - Visual inspection aids imputers in developing and evaluating imputation models. The R package `ggmice` offers tools that were previously unavailable.
+  - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so. There is a mismatch between theoretical convergence criteria and practical algorithmic behavior.
+  - Visual inspection aids imputers in developing and evaluating imputation models, because formal tests are not available. The R package `ggmice` offers tools for the computational evaluation of the imputations models that were previously unavailable.
   - Defining and testing new imputation methods through simulation studies requires careful consideration of the simulation design and evaluation to make imputation methods comparable across studies.
 
 - Recommendations for fellow missing data methodologists:
-  - design simulation studies structured and reproducible
+  - design simulation studies structured and reproducible (e.g., report design choices, publish code)
   - talk to your intended audience (i.e., applied researchers), or at least check what they are struggling with (e.g., StackOverflow)
   - ...?
 
@@ -316,22 +377,24 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 ## Limitations
 
-[TODO: rephrase 'havent's into future research (positive phrasing)]
-
-- Computational evaluation is not a substitute for thinking. It may give a false sense of certainty, e.g. against MNAR mechanism.
-  - Use expert insight
+- Computational evaluation is not a substitute for thinking. It may give a false sense of certainty, e.g. against MNAR mechanism (untestable assumption).
+  - Use expert insight: use comp eval as complement to (not a replacement for) substantive knowledge and sensitivity analyses
   - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
   - ...?
 
-- This entire dissertation relies on the R language and centers the `mice` package.
+- This entire dissertation relies on the R language and centers the `mice` package (TODO rephrase as not a flaw: I focus on a dominant ecosystem, and concepts generalize beyond).
   - While this set-up is very popular, the data science landscape has expanded and is ever evolving
-  - Many machine learning and deep learning methods are not (yet) implemented as imputation models in `mice`. These may be able to better approximate the posterior predictive distribution of the missing values than `mice` methods
+  - Many machine learning and deep learning methods are not (yet) implemented as imputation models in `mice`. These might be able to better approximate the posterior predictive distribution of the missing values than `mice` methods, but research should show that still.
 
-- I haven't tested whether the tools I developed actually improve the imputations of `mice` users.
+- ~~I haven't tested whether the tools I developed actually improve the imputations of `mice` users~~ This dissertation evaluates tools and diagnostics at the methodological level; assessing their causal impact on user behavior and imputation quality remains an important direction for future empirical research.
   - GitHub issues and StackOverflow are indication
   - Onmogelijk om evidence-based conclusies te trekken, maar misschien wel evidence-informed?
 
-- The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data).
+- The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data, which is not supported by `mice` currently). Future research on: associations of cat vars with miss indicators, and conv parameter other than SD of imputed values.
+
+::: {.callout}
+[TODO: rephrase `haven't's into future research (positive phrasing: reframe as scope conditions, not shortcomings)]
+:::
 
 ## Outlook
 
@@ -339,17 +402,24 @@ Visualization of incomplete data, imputation models, and imputed data. Evaluatio
 
 - Missing data remains a problem indefinitely. I expect imputation methodology to be developed and applied for the foreseeable future. But the way we deal with data might change.
 - With the rise of machine learning and deep learning methods (or "AI"), evaluation will become ever more important. Novel methods are being developed under a prediction framework, not statistical inference framework: ignoring the uncertainty in the estimates, and thus not incorporating between-imputation variance. This leads to too narrow CIs, and too low p-values. Which, in turn, causes spurious results.
+- AI models should propagate uncertainty!
+
 - trust in science requires honest reflection of uncertainty in our analyses
 - be open about uncertainty, and limitations of scientific studies 
 - publish null results (e.g., registered reports or pre-registrations)
 - share data and code with other scientists, and the public
 - publish open access, educational materials too!
+
 - change the way we evaluate science: this dissertation is an example of the new recognition and rewards vision. it includes software as an actual chapter, not something extra.
 - I hope to inspire others to reflect on their own view of what scientific output is. And most of all, I hope to set an example for other PhD candidates to do the same
+
 
 \newpage
 
 # References
+
+::: {#refs}
+:::
 
 \newpage
 
