@@ -133,6 +133,17 @@ csl: apa.csl
 
 ::: {.callout}
 TODO: better define 'computational evaluation' in general, and how do we define the term in the context of imputation methodology? Something like the *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*? Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. Emphasize that often these aspects are already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or ad hoc. See also [https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)]
+
+- not specifically defined, 
+- not defined for statistics at all
+- e.g. purpose in stats verandert elke keer: voor verschil tussen groepen, voor viz? niveau van data, sample, population
+- therefore, planting a flag in this dissertation
+
+- stat val vs comp evel: one before the other? no, see next TODO
+- back-tracing the procedure: you should *always* be able to retrieve the chain of the imp procedure
+- imp stays a custom job: conv of imp is conditional on imp model
+- today, imp are not generated for 1 analysis prob, but all analyses that may be ... on the data --> all imp models should be compatible and congenieal --> more 'omvattende' imp models required
+- liefst wil je parameters tracken, daarom is dit zo belangrijk
 :::
 
 - computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
@@ -142,11 +153,17 @@ TODO: better define 'computational evaluation' in general, and how do we define 
 - but are we satisfied with the way that the imp were obtained?
 - even without conv, we can get valid inference at sample/population level, but not at individual cell level
 - what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
-- not just taking the answer as-is, but tracing back the black box to some extend, digging into the algorithms
+- not just taking the answer as-is, but tracing back the "black box" to some extend, digging into the algorithms
 - I will focus on inferential validity, algorithmic stability, data plausibility, user burden.
+- my definition of comp eval is: ... --> a suite of tools to investigate at least these domains
 
 ::: {.callout}
 TODO: what are the limitations of purely inferential metrics (bias, coverage)? and vice versa: when might plausibility mislead users into believing the imputations are statistically valid? e.g. PMM with parse data might lead to imputations that are too close?
+
+- think about case where stat eval is ok, but not the com eval
+- the term 'black box' is not correct: completely reproducible when all param at 0
+- tracing back the solution of an alg to its origin, if that's difficult some may refer to this as a black box: this also holds for mice
+- maybe future: com eval of variable importance within imp models
 :::
 
 <!-- Gerko: "How does comp eval differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
