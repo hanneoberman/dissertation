@@ -127,19 +127,18 @@ csl: apa.csl
 ### Computational evaluation
 
 - computational evaluation =/= statistical evaluation
-- models can be statistically valid, but not fitting
+- Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
+- computational evaluation is originally from information retrieval research [@wiki]
 - computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014]
-- computational evaluation is originally from information retrieval research: combining effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.) [@manning2008]
+- the practice of computational evaluation combines effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.) [@manning2008]
+- the term 'computational evaluation' is not specifically defined for the field of statistics, but it can be useful. 
+- a certain process may have different purposes (e.g., calculating uncertainty at the level of a single case, a sample, or inferring to a population)
+- models can be statistically valid, but not fitting
+- I want to plant a flag in this dissertation: how can we define the term in the context of imputation methodology?
+- working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. These aspects are already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or ad hoc. 
 
 ::: {.callout}
-TODO: better define 'computational evaluation' in general, and how do we define the term in the context of imputation methodology? Something like the *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*? Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. Emphasize that often these aspects are already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or ad hoc. See also [https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)]
-
-- not specifically defined, 
-- not defined for statistics at all
-- e.g. purpose in stats verandert elke keer: voor verschil tussen groepen, voor viz? niveau van data, sample, population
-- therefore, planting a flag in this dissertation
-
-- stat val vs comp evel: one before the other? no, see next TODO
+- stat val vs comp eval: one before the other? no, see next TODO
 - back-tracing the procedure: you should *always* be able to retrieve the chain of the imp procedure
 - imp stays a custom job: conv of imp is conditional on imp model
 - today, imp are not generated for 1 analysis prob, but all analyses that may be ... on the data --> all imp models should be compatible and congenieal --> more 'omvattende' imp models required
@@ -163,7 +162,7 @@ TODO: what are the limitations of purely inferential metrics (bias, coverage)? a
 - think about case where stat eval is ok, but not the com eval
 - the term 'black box' is not correct: completely reproducible when all param at 0
 - tracing back the solution of an alg to its origin, if that's difficult some may refer to this as a black box: this also holds for mice
-- maybe future: com eval of variable importance within imp models
+- maybe future: comp eval of variable importance within imp models
 :::
 
 <!-- Gerko: "How does comp eval differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
