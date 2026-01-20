@@ -110,7 +110,8 @@ csl: apa.csl
 ## What is this dissertation about?
 
 - missing data & imputation are widespread
-- imputation = filling in missing values
+- imputation = filling in missing values to fix the missing data problem
+<!-- - imputation splits the missing data problem and the analysis of scientific interest: first fill in the missingness to be able to analyze the completed data as if they were completely observed -->
 - imputation is easy with software defaults [e.g. in `mice`, @mice]
 - good imputation is very hard still
 - how do we know if we have a good imputation method?
@@ -132,37 +133,30 @@ csl: apa.csl
 - computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014]
 - the practice of computational evaluation combines effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.) [@manning2008]
 - the term 'computational evaluation' is not specifically defined for the field of statistics, but it can be useful. 
-- a certain process may have different purposes (e.g., calculating uncertainty at the level of a single case, a sample, or inferring to a population)
+- e.g., a certain process may have different purposes (e.g., calculating uncertainty at the level of a single case, a sample, or inferring to a population)
 - models can be statistically valid, but not fitting
-- I want to plant a flag in this dissertation: how can we define the term in the context of imputation methodology?
-- working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. These aspects are already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or ad hoc. 
+- in this dissertation, I want to plant a flag: how can we define the term in the context of imputation methodology?
+- working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
 
 ::: {.callout}
-- stat val vs comp eval: one before the other? no, see next TODO
-- back-tracing the procedure: you should *always* be able to retrieve the chain of the imp procedure
-- imp stays a custom job: conv of imp is conditional on imp model
-- today, imp are not generated for 1 analysis prob, but all analyses that may be ... on the data --> all imp models should be compatible and congenieal --> more 'omvattende' imp models required
-- liefst wil je parameters tracken, daarom is dit zo belangrijk
+- stat val vs comp eval: one before the other? 
+- what are the limitations of purely inferential metrics (bias, coverage)? and vice versa: when might plausibility mislead users into believing the imputations are statistically valid? e.g. PMM with parse data might lead to imputations that are too close?
 :::
 
 - computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
 - imputation pragmatists/purists don't care for the imputed values
 - Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples
-- implausible or impossible imputed values can yield valid statistical inference
-- but are we satisfied with the way that the imp were obtained?
-- even without conv, we can get valid inference at sample/population level, but not at individual cell level
+- implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imp were obtained?
+- even without convergence, we can get valid inference at sample/population level, but not at individual cell level
 - what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
-- not just taking the answer as-is, but tracing back the "black box" to some extend, digging into the algorithms
-- I will focus on inferential validity, algorithmic stability, data plausibility, user burden.
-- my definition of comp eval is: ... --> a suite of tools to investigate at least these domains
+- not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imp procedure
+- In this dissertation I will use comp eval as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
 
 ::: {.callout}
 TODO: what are the limitations of purely inferential metrics (bias, coverage)? and vice versa: when might plausibility mislead users into believing the imputations are statistically valid? e.g. PMM with parse data might lead to imputations that are too close?
 
 - think about case where stat eval is ok, but not the com eval
-- the term 'black box' is not correct: completely reproducible when all param at 0
-- tracing back the solution of an alg to its origin, if that's difficult some may refer to this as a black box: this also holds for mice
-- maybe future: comp eval of variable importance within imp models
+- imp stays a custom job: conv of imp is conditional on imp model
 :::
 
 <!-- Gerko: "How does comp eval differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
@@ -190,7 +184,7 @@ TODO: explain framework here? while "Rubin (Ch. 5) distinguished three tasks for
   - assess the distribution of the incomplete variable (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
   - ...? (maybe ad transformations?)
 - [in the building stage] how do we know which imputation model predictors to select?
-  - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter)
+  - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter) ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021]
   - association of missingness indicator with other variables in the data ($\rightarrow$ `ggmice` chapter)
   - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
   - ...?
@@ -331,6 +325,9 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 - **RQ: FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?**
 - simulation study, published as pre-print (11x cited according to Google Scholar), presented at ICML
 
+- today, imp are not generated for 1 analysis prob, but all analyses that may be fitted on the data --> all imp models should be compatible and congenieal --> more 'omvattende' imp models required
+- liefst wil je parameters tracken, daarom is dit zo belangrijk
+
 ## Introducing chapter 3: evaluation
 
 - **RQ: what to look out for when designing simulation studies for the evaluation of imputation methodology?**
@@ -409,7 +406,8 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 - The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data, which is not supported by `mice` currently). Future research on: associations of cat vars with miss indicators, and conv parameter other than SD of imputed values.
 
 ::: {.callout}
-[TODO: rephrase `haven't's into future research (positive phrasing: reframe as scope conditions, not shortcomings)]
+- TODO: rephrase `haven't's into future research (positive phrasing: reframe as scope conditions, not shortcomings)
+- maybe future: comp eval of variable importance within imp models
 :::
 
 ## Outlook
