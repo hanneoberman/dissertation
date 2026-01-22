@@ -109,57 +109,52 @@ csl: apa.csl
 
 ## What is this dissertation about?
 
-- missing data & imputation are widespread
-- imputation = filling in missing values to fix the missing data problem
+- Missing data are a nuisance in many data analysis efforts. 
+- Missing data are widespread, and so is imputation.
+- Imputation = filling in missing values to fix the missing data problem.
+<!-- - The nuisance of missing data is often relieved using imputation methods.  -->
+- To 'impute' means to fill in, so 'imputation' is the practice of replacing missing values with synthetic substitutes. 
 <!-- - imputation splits the missing data problem and the analysis of scientific interest: first fill in the missingness to be able to analyze the completed data as if they were completely observed -->
-- imputation is easy with software defaults [e.g. in `mice`, @mice]
-- good imputation is very hard still
-- how do we know if we have a good imputation method?
-- in this dissertation I study computational evaluation of imputation methodology
-- computational evaluation at different levels: 
-  - building imp models (`ggmice`), 
-  - assessing imp models (`ggmice` and convergence), 
-  - developing new imp models/methods (evaluation paper)
+- Imputation is easy with software defaults [e.g. in `mice`, @mice]
+- But good imputation is very hard still.
+- How do we know if we have a good imputation method?
+- In this dissertation, I study computational evaluation of imputation methodology.
   
-<!-- TODO check req info: imp = filling in. then phil about evaluation, then deeper into imp -->
+<!-- TODO check req info: imputation = filling in. then phil about evaluation, then deeper into imputation -->
 
 ## What is computational evaluation of imputation methodology?
 
 ### Computational evaluation
 
-- computational evaluation =/= statistical evaluation
+- Computational evaluation is not equal to statistical evaluation. Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
 - Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
-- computational evaluation is originally from information retrieval research [@wiki]
-- computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] or "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014]
-- the practice of computational evaluation combines effectiveness (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), system quality (e.g., speed, coverage of all possible results, etc.) and *importantly* user utility (e.g., happiness, productivity, etc.) [@manning2008]
-- the term 'computational evaluation' is not specifically defined for the field of statistics, but it can be useful. 
-- e.g., a certain process may have different purposes (e.g., calculating uncertainty at the level of a single case, a sample, or inferring to a population)
-- models can be statistically valid, but not fitting
-- in this dissertation, I want to plant a flag: how can we define the term in the context of imputation methodology?
-- working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*. It focuses on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
+- Computational evaluation is originally from information retrieval research [see e.g. @wiki]
+- The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008]
+- The term 'computational evaluation' is not specifically defined for the field of statistics, but it could be useful. 
+- One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] 
+- Translated to statistics, a model may be statistically valid, but not fit for purpose. For example, computations that take too long to converge for use in a production pipeline/real-time use in patient care.
+- Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
+- We can use this when a statistical process has different purposes and thus different usability/requirements. For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
+- Since the term is not defines for statistics, there is no definition for imputation methodology.
+- In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology?
+- Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
 
-::: {.callout}
-- stat val vs comp eval: one before the other? 
-- what are the limitations of purely inferential metrics (bias, coverage)? and vice versa: when might plausibility mislead users into believing the imputations are statistically valid? e.g. PMM with parse data might lead to imputations that are too close?
-:::
+<!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
-- computational evaluation thus goes beyond statistical evaluation: even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution (e.g. do the imputed values lie within the range of the observed values; no negative ages imputed?)
-- imputation pragmatists/purists don't care for the imputed values
-- Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples
-- implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imp were obtained?
-- even without convergence, we can get valid inference at sample/population level, but not at individual cell level
+- Computational evaluation thus goes beyond statistical evaluation.
+- Even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution. A question to consider is: do the imputed values lie within the range of the observed values?
+- Imputation thoery does not require the imputed values to be plausible. 
+- Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample.
+- Bluntly stated: imputation pragmatists/purists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
+- But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) 
+- and vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? when 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation, or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals.
+- statistical evaluation vs computational evaluation: does one come before the other? not necessarily.
+- implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained?
+- computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure
 - what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
-- not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imp procedure
-- In this dissertation I will use comp eval as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
+- In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
 
-::: {.callout}
-TODO: what are the limitations of purely inferential metrics (bias, coverage)? and vice versa: when might plausibility mislead users into believing the imputations are statistically valid? e.g. PMM with parse data might lead to imputations that are too close?
-
-- think about case where stat eval is ok, but not the com eval
-- imp stays a custom job: conv of imp is conditional on imp model
-:::
-
-<!-- Gerko: "How does comp eval differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
+<!-- Gerko: "How does computational evaluation differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
 <!-- Example: {irmi} package by mattias temple yields unbiased estimates, but coverage of 0 because variance was 0 -->
 <!-- Gerko: "Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology." -->
 <!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
@@ -172,11 +167,7 @@ TODO: what are the limitations of purely inferential metrics (bias, coverage)? a
 - typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or entirely missing variables)
 - missing observations in incomplete cases/variables can be filled in using an imputation model
 - in the FCS framework [vanbuuren2006], we need an imputation model for each incomplete variable 
-
-::: {.callout}
-TODO: explain framework here? while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
-:::
-
+- while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
 - imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
 - recurring question: how do we choose an appropriate imputation model?
 - [in the building stage] how do we know which functional form to choose?
@@ -203,11 +194,15 @@ TODO: link imputation methodology back to computational evaluation. "Imputation 
 TODO: sharper RQ. what is the generalizable scientific contribution of this dissertation?
 :::
 
-Sub-questions per chapter: 
+- computational evaluation at different levels: 
+  - building imputation models (`ggmice`), 
+  - assessing imputation models (`ggmice` and convergence), 
+  - developing new imputation models/methods (evaluation paper)
 
-- 'What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)?'
-- 'How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed?'
-- 'How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?'
+- Sub-questions per chapter: 
+  - 'What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)?'
+  - 'How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed?'
+  - 'How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?'
 
 ::: {.callout}
 TODO: clearly define scope: FCS, item non-response, statistical inference (not prediction or causal inference), M(C)AR
@@ -256,17 +251,17 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 
 - Grammar of Graphics: layered plots [@wilkinson2012]
 - Open Source Software development/FAIR
-- evaluation of the distribution of observed and imputed data -> imp model should fit the observed part, imp model should be congenial
+- evaluation of the distribution of observed and imputed data -> imputation model should fit the observed part, imputation model should be congenial
 
 *Hoe zijn deze principes in de software vertaald* <br>
 
 - `ggmice` produces `ggplot` objects: layered, easily adjustable
 - GitHub, CRAN, Zenodo, ...
-- providing tools to see obs and imp side-by-side
+- providing tools to see obs and imputation side-by-side
 
 *Welke onderliggende aannames zijn hierbij gebruikt* <br>
 
-- make explicit what these plots/analyses can and cannot tell us: imp models should fit the observed part of the data, but no way to determinately state miss mech.
+- make explicit what these plots/analyses can and cannot tell us: imputation models should fit the observed part of the data, but no way to determinately state miss mech.
 
 *Hoe kun je de huidige en nieuwe gereedschappen het beste met elkaar vergelijken* <br>
 
@@ -325,8 +320,10 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 - **RQ: FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?**
 - simulation study, published as pre-print (11x cited according to Google Scholar), presented at ICML
 
-- today, imp are not generated for 1 analysis prob, but all analyses that may be fitted on the data --> all imp models should be compatible and congenieal --> more 'omvattende' imp models required
-- liefst wil je parameters tracken, daarom is dit zo belangrijk
+- even without convergence, we can get valid inference at sample/population level, but not at individual cell level
+- imputation stays a custom job: convergence of imputation is conditional on imputation model
+- today, imputation are not generated for 1 analysis prob, but all analyses that may be fitted on the data --> all imputation models should be compatible and congenieal --> more 'omvattende' imputation models required
+- liefst wil je analysemodel parameters tracken, daarom is computational evaluation zo belangrijk
 
 ## Introducing chapter 3: evaluation
 
@@ -391,7 +388,7 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 ## Limitations
 
 - Computational evaluation is not a substitute for thinking. It may give a false sense of certainty, e.g. against MNAR mechanism (untestable assumption).
-  - Use expert insight: use comp eval as complement to (not a replacement for) substantive knowledge and sensitivity analyses
+  - Use expert insight: use computational evaluation as complement to (not a replacement for) substantive knowledge and sensitivity analyses
   - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
   - ...?
 
@@ -403,11 +400,11 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
   - GitHub issues and StackOverflow are indication
   - Onmogelijk om evidence-based conclusies te trekken, maar misschien wel evidence-informed?
 
-- The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data, which is not supported by `mice` currently). Future research on: associations of cat vars with miss indicators, and conv parameter other than SD of imputed values.
+- The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data, which is not supported by `mice` currently). Future research on: associations of cat vars with miss indicators, and convergence  parameter other than SD of imputed values.
 
 ::: {.callout}
 - TODO: rephrase `haven't's into future research (positive phrasing: reframe as scope conditions, not shortcomings)
-- maybe future: comp eval of variable importance within imp models
+- maybe future: computational evaluation of variable importance within imputation models
 :::
 
 ## Outlook
