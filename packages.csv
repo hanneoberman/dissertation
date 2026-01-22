@@ -1,0 +1,12 @@
+﻿ ,ggmice,mice,naniar,VIM
+\textbf{Incomplete data} (\texttt{data.frame} object), , , , 
+$-$ joint & marginal distributions,$+$,$-$,$+$,$+$
+$-$ missing data patterns,$+$,$+$,$\pm$,$+$
+$-$ imputation models,$+$,$-$,$-$,$-$
+\textbf{Imputed data} (\texttt{mids} object), , , , 
+$-$ joint & marginal distributions,$+$,$+$,$-$,$-$
+$-$ imputation models,$+$,$-$,$-$,$-$
+$-$ trace plot of the imputation algorithm,$+$,$+$,$-$,$-$
+\textbf{User utility}, , , , 
+$-$ flexibility/extensibility of visualization types,$+$,$-$,$\pm$,$-$
+$-$ adaptability/publication readiness of visualizations,$+$,$-$,$+$,$-$

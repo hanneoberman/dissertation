@@ -110,7 +110,7 @@ csl: apa.csl
 ## What is this dissertation about?
 
 - Missing data are a nuisance in many data analysis efforts. 
-- Missing data are widespread, and so is imputation.
+- Missing data may be widespread, but so is imputation.
 - Imputation = filling in missing values to fix the missing data problem.
 <!-- - The nuisance of missing data is often relieved using imputation methods.  -->
 - To 'impute' means to fill in, so 'imputation' is the practice of replacing missing values with synthetic substitutes. 
@@ -119,13 +119,8 @@ csl: apa.csl
 - But good imputation is very hard still.
 - How do we know if we have a good imputation method?
 - In this dissertation, I study computational evaluation of imputation methodology.
-  
-<!-- TODO check req info: imputation = filling in. then phil about evaluation, then deeper into imputation -->
 
-## What is computational evaluation of imputation methodology?
-
-### Computational evaluation
-
+### What is computational evaluation?
 - Computational evaluation is not equal to statistical evaluation. Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
 - Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
 - Computational evaluation is originally from information retrieval research [see e.g. @wiki]
@@ -135,15 +130,17 @@ csl: apa.csl
 - Translated to statistics, a model may be statistically valid, but not fit for purpose. For example, computations that take too long to converge for use in a production pipeline/real-time use in patient care.
 - Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
 - We can use this when a statistical process has different purposes and thus different usability/requirements. For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
-- Since the term is not defines for statistics, there is no definition for imputation methodology.
+- Since the term is not defined for statistics, there is no definition to use for the computational evaluation of imputation methodology.
 - In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology?
-- Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
+- Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. 
+- These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
 
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
+### Why should we care about computational evaluation of imputation methodology?
 - Computational evaluation thus goes beyond statistical evaluation.
 - Even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution. A question to consider is: do the imputed values lie within the range of the observed values?
-- Imputation thoery does not require the imputed values to be plausible. 
+- Imputation theory does not require the imputed values to be plausible. 
 - Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample.
 - Bluntly stated: imputation pragmatists/purists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
 - But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) 
@@ -160,33 +157,19 @@ csl: apa.csl
 <!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
 <!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
 
-### Imputation methodology
-
-- imputation methods are developed to solve missing data problems
-- what types of missing data problems? incomplete samples
-- typically, some but not all entries are missing per row/column (i.e., item non-response, not unit non-response or entirely missing variables)
-- missing observations in incomplete cases/variables can be filled in using an imputation model
-- in the FCS framework [vanbuuren2006], we need an imputation model for each incomplete variable 
+### What is the scope of this dissertation?
+::: {.callout}
+TODO: clearly define scope: FCS, item non-response, statistical inference (not prediction or causal inference), M(C)AR
+:::
+- In general, imputation methods are developed to solve missing data problems.
+- What types of missing data problems are we considering in this dissertation? Incomplete samples where some---but not all---entries are missing per row or per column. Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. We are interested in data with incomplete cases/variables, or 'item non-response'.
+- Missing observations in incomplete cases/variables can be filled in using an imputation model
+- In the FCS framework [@vanbuuren2006], we need an imputation model for each incomplete variable 
 - while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
 - imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
-- recurring question: how do we choose an appropriate imputation model?
-- [in the building stage] how do we know which functional form to choose?
-  - rely on defaults, tested in simulation studies ($\rightarrow$ evaluation chapter)
-  - assess the distribution of the incomplete variable (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
-  - ...? (maybe ad transformations?)
-- [in the building stage] how do we know which imputation model predictors to select?
-  - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter) ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021]
-  - association of missingness indicator with other variables in the data ($\rightarrow$ `ggmice` chapter)
-  - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
-  - ...?
-- [after imputation] how do we assess imputation model misfit?
-  - non-convergence in the algorithm ($\rightarrow$ convergence chapter)
-  - mismatch between observed and imputed data distributions (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
-  - ...?
-
-::: {.callout}
-TODO: link imputation methodology back to computational evaluation. "Imputation models bypass the need to specify P(Y, X, R), though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
-:::
+- recurring questions: how do we choose an appropriate imputation model? and how do we know whether we have chosen an appropriate imputation model?
+- "Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
+- That's where computational evaluation comes in!
 
 **RQ: how can applied researchers be aided in developing and evaluating imputation methods?**
 
@@ -194,26 +177,46 @@ TODO: link imputation methodology back to computational evaluation. "Imputation 
 TODO: sharper RQ. what is the generalizable scientific contribution of this dissertation?
 :::
 
-- computational evaluation at different levels: 
-  - building imputation models (`ggmice`), 
-  - assessing imputation models (`ggmice` and convergence), 
-  - developing new imputation models/methods (evaluation paper)
+- computational evaluation at different stages: 
+  1. building imputation models, 
+  2. assessing imputation models, 
+  3. developing new imputation models/methods 
 
-- Sub-questions per chapter: 
-  - 'What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)?'
-  - 'How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed?'
-  - 'How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?'
+### Computational evaluation in imputation model building 
 
-::: {.callout}
-TODO: clearly define scope: FCS, item non-response, statistical inference (not prediction or causal inference), M(C)AR
-:::
+- Model building: how do we know which functional form to choose?
+  - rely on defaults, tested in simulation studies ($\rightarrow$ evaluation chapter)
+  - assess the distribution of the incomplete variable (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
+  - ...? (maybe ad transformations?)
+- Model building: how do we know which imputation model predictors to select?
+  - association of incomplete variable with other variables in the data ($\rightarrow$ `ggmice` chapter) ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021]
+  - association of missingness indicator with other variables in the data ($\rightarrow$ `ggmice` chapter)
+  - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
+  - ...?
+
+### Computational evaluation in imputation model assessment 
+
+- Model evaluation: how do we assess imputation model misfit?
+  - non-convergence in the algorithm ($\rightarrow$ convergence chapter)
+  - mismatch between observed and imputed data distributions (e.g., visual inspection $\rightarrow$ `ggmice` chapter)
+  - ...?
+
+### Computational evaluation in imputation model development and validation 
+
+- Model development: how can we compare imputation methods? $\rightarrow$ evaluation chapter
+
+### Sub-questions per chapter
+
+- 'What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)?'
+- 'How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed?'
+- 'How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?'
 
 ## Introducing chapter 1: `ggmice`
 
 - **RQ: how can incomplete and imputed data be visualized?**
-- software published on Zenodo @oberman2022, with open code and bug reporting via GitHub
+- software published on Zenodo [@oberman2022], with open code and bug reporting via GitHub
 - peer-review not formal via journal, but via Issues and Pull Requests on GitHub (10x external Issue, 13x external PR)
-- impact as citations (5x according to Google Scholar), CRAN downloads (852x/month; 21k total) and conda downloads (100+/month; https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview)
+- impact: citations (5x according to Google Scholar), CRAN downloads (852x/month; 21k total) and conda downloads (100+/month; https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview)
 
 *Wat is het probleem* <br> 
 
@@ -233,7 +236,7 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 *Wat zijn de voor- en nadelen van de huidige methoden* <br>
 
 - missing visualization tool compatible with both incomplete data and `mice` imputations: `mice` lacks incomplete data, other packages lack support for `mice`-imputed data
-- missing visualization tool for imputation models (i.e., pred and meth)
+- missing visualization tool for imputation models (i.e., `pred` and `meth` objects)
 
 *Welke nadelen/problemen beoogt de nieuwe aanpak op te lossen* <br>
 
@@ -257,7 +260,7 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 
 - `ggmice` produces `ggplot` objects: layered, easily adjustable
 - GitHub, CRAN, Zenodo, ...
-- providing tools to see obs and imputation side-by-side
+- providing tools to see observed and imputation side-by-side
 
 *Welke onderliggende aannames zijn hierbij gebruikt* <br>
 
@@ -271,11 +274,17 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 - number of downloads* <br> `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
 
 <!-- TODO: table with visualization types in all packages (compare `VIM`, `naniar`, `amelia`) -->
+```{r}
+#| echo: false
+# library(kableExtra)
+packages <- read.csv("packages.csv")
+knitr::kable(packages, col.names = c("", names(packages)[-1])) 
+```
 
 
 |                   Functionaliteit                  |  ggmice  |        VIM       |  naniar  |   amelia  |   mice (lattice)   |
 |:--------------------------------------------------|:--------:|:----------------:|:--------:|:---------:|:------------------:|
-| Visualisatie van de missingness                    | V        | V                | V        | (beperkt) | V                  |
+| Visualisatie van de missingness                    | $\checkmark$       | V                | V        | (beperkt) | V                  |
 | Visalisatie van het imputatie EN nonresponse model | V        | X                | X        | X         | X                  |
 | Imputatie diagnostiek (visueel) + evt in cijfer?   | V        | V (gedeeltelijk) | X        | V         | V                  |
 | Ondersteuning mids en andere data typen            | V        | X                | X        | X         | V (alleen lattice) |
