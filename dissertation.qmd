@@ -227,7 +227,7 @@ TODO: sharper RQ. what is the generalizable scientific contribution of this diss
 
 *Welke methoden bestaan al* <br>
 
-- `naniar` for incomplete data
+- `naniar` for incomplete and imputed data (but not `mice`)
 - `VIM` for incomplete and imputed data (but not `mice`)
 - `mice` for imputed (but not `ggplot2`)
 - 'artisinal' code solutions
@@ -293,6 +293,12 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 | Tidyverse compatible?                              | volledig | beperkt          | volledig | beperkt   | geen               |
 | Meteen klaar voor publicatie?                      | hoog     | middel           | hoog     | laag      | laag               |
 
+<!-- https://cranlogs.r-pkg.org/badges/ggmice -->
+<!-- https://naniar.njtierney.com/reference/gg_miss_upset.html -->
+<!-- https://github.com/njtierney/naniar -->
+<!-- https://statistikat.github.io/VIM/articles/VisualImp.html -->
+<!-- https://github.com/statistikat/VIM -->
+<!-- https://github.com/IQSS/amelia -->
 
 *Levert het nieuwe gereedschap in de praktijk betere resultaten* <br>
 
@@ -320,7 +326,7 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 *Wat zijn vragen voor nader onderzoek* <br>
 
 - visualizing `mira` objects
-- add posterior predictive check plots
+- add posterior predictive check plots & over-imputation
 - quantifying uncertainty at pattern/cell level
 - tools for sensitivity analyses
 
