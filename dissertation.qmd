@@ -137,6 +137,13 @@ csl: apa.csl
 
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
+::: {.callout}
+- kwaliteit van imputatie model kun je pas bepalen op basis van complete data model
+- meest ingewikkelde nemen, en da checken
+- de simpelste nemen zou betekenen dat je systematisch de relaties onderdrukt (b=0 forceren)
+- met smc-fcs: we nemen een complete data model aan, en leiden daaruit imputaties af
+:::
+
 ### Why should we care about computational evaluation of imputation methodology?
 - Computational evaluation thus goes beyond statistical evaluation.
 - Even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution. A question to consider is: do the imputed values lie within the range of the observed values?
