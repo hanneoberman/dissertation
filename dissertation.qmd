@@ -138,7 +138,7 @@ csl: apa.csl
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
 ::: {.callout}
-- the quality of the imputation model can only be determined/asessesed based on the complete data model
+- the quality of the imputation model can only be determined/assessed based on the complete data model --> TODO: specify terminology!! --> comp eval also possible without analysis model vs stat eval relies on known analysis model (prangender vandaag want imp gebruikt voor meer analyses) fcs is substantive model agnostic
 - what if that model is not (yet) available? then take the most complex possible model and check that, because if you would take the simplest model, then that would implcitly mean you are holding/constraining parameters (forcing b=0), systematically suppressing relations.
 - another option would be like smc-fcs: we assume a complete data model and derive the imputations from there.
 :::
@@ -149,8 +149,9 @@ csl: apa.csl
 - Imputation theory does not require the imputed values to be plausible. 
 - Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample.
 - Bluntly stated: imputation pragmatists/purists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
-- But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) 
-- and vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? when 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation, or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals.
+- But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) --> PPC would show problem with sparse region
+- and vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? when 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stoch reg), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp?
+- stat eval not possible IRL? bias/cov impossible to determine without assumed truth --> only wrt estimand with PPC (e.g. bootstrapping is also stat/comp)
 - statistical evaluation vs computational evaluation: does one come before the other? not necessarily.
 - implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained?
 - computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure
@@ -163,10 +164,19 @@ csl: apa.csl
 <!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
 <!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
 
+::: {.callout}
+- polynomials (ignoring the U in imps could still get stat val)
+- example: psych study with baseline, some of which are missing; baseline, intervention, follow-up --> mice would inflate baseline and follow-up if both are incomplete; stat eval will not show this (unbiased, cov ok, etc.); over-imp or postpred check would show diff distr for obs and imp; circularity should be removed: follow-up should not predict baseline
+- fcs iterations not stable, but estimand ok (in sim study true value) --> conv at cell level??
+- PMM with part of sample space with too little donors
+:::
+
 ### What is the scope of this dissertation?
+
 ::: {.callout}
 TODO: clearly define scope: FCS, item non-response, statistical inference (not prediction or causal inference), M(C)AR
 :::
+
 - In general, imputation methods are developed to solve missing data problems.
 - What types of missing data problems are we considering in this dissertation? Incomplete samples where some---but not all---entries are missing per row or per column. Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. We are interested in data with incomplete cases/variables, or 'item non-response'.
 - Missing observations in incomplete cases/variables can be filled in using an imputation model
@@ -180,7 +190,10 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 **RQ: how can applied researchers be aided in developing and evaluating imputation methods?**
 
 ::: {.callout}
-TODO: sharper RQ. what is the generalizable scientific contribution of this dissertation?
+- TODO: sharper RQ. what is the generalizable scientific contribution of this dissertation?
+- --> can we use existing tools or do we need more? and how? is the status quo sufficient? no, and I contribute to the new status quo ("verleggen")
+- **wat is er nodig om ontwikkeling en evaulatie en toepassing van imp methods te waarborgen?** stat eval is required, but not sufficient. how Rubin developed the methodology is not enough & is this present in imputors toolbox? no, that's what I'm doing
+- verenigen van hoe maak en evalueer je imputaties
 :::
 
 - computational evaluation at different stages: 
@@ -305,6 +318,10 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 <!-- https://statistikat.github.io/VIM/articles/VisualImp.html -->
 <!-- https://github.com/statistikat/VIM -->
 <!-- https://github.com/IQSS/amelia -->
+
+* only diffs, not included what all packages can --> maybe as appendix?
+
+TODO: paragraph to explain all aspects of the table.
 
 *Levert het nieuwe gereedschap in de praktijk betere resultaten* <br>
 
