@@ -105,13 +105,17 @@ csl: apa.csl
 
 # Introduction
 
-<!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
-
 ## What is this dissertation about?
 
-For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences when the incomplete data at hand is in any way different from the data one would like to analyze. For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment. Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. Missing values force data analysts to treat the missingness in some way. Even a common default such as list-wise deletion is a type of missing data method, which can severely impact the accuracy and validity of the subsequent analyses. Therefore, missing data methods should be applied carefully. Missing data may be widespread, but so are missing data treatment methods. In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate the popular missing data method 'MICE'.
+Missing data problems are timeless, but technological advances have made treating missingness easier than ever. A single line of code can 'impute' (i.e., fill in) every missing data point in an incomplete dataset many times, thereby generating several completed versions of the data. This practice of replacing missing values with synthetic substitutes is called 'multiple imputation'. Multiple imputation is a popular and flexible splits the missing data problem from the analysis of scientific interest. Imputation allows data analysts to first fill in the missingness, to then be able to analyze the completed data as if they were completely observed. So, the nuisance of missing data is conveniently resolved through imputation.
 
-Technological advances have made treating missing data easier than ever. A single line of code can 'impute' every missing data point in an incomplete dataset. To 'impute' means to fill in, so 'imputation' is the practice of replacing missing values with synthetic substitutes. Imputation splits the missing data problem from the analysis of scientific interest. Imputation allows data analysts to first fill in the missingness, to then be able to analyze the completed data as if they were completely observed. Imputation is a convenient and popular missing data method. 
+For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. Firstly, because incomplete data always require some treatment for the missingness. Even methods that seemingly ignore the missing data, such as complete case analysis, are a type of missing data treatment. Missing data treatment can severely impact the accuracy and validity of any subsequent analyses. Therefore, missing data methods should be applied carefully. Secondly, because many missing data methods lead to biased estimates if the incomplete data are in any way different from the complete data one would have liked to obtain. For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment. 
+
+Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. Missing values force data analysts to treat the missingness in some way. 
+
+Missing data may be widespread, but so are missing data treatment methods. In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate the popular missing data method 'MICE'.
+
+ Imputation is a convenient and popular missing data method. 
 
 Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is very hard still. 
 
@@ -124,6 +128,8 @@ Although imputation is widely supported with software, and many implementations 
 <!-- - But good imputation is very hard still. -->
 <!-- - How do we know if we have a good imputation method? -->
 <!-- - In this dissertation, I study computational evaluation of imputation methodology. -->
+
+<!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
 
 ::: {.callout}
 TODO: add image for missingness/imputation?
