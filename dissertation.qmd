@@ -107,9 +107,22 @@ csl: apa.csl
 
 ## What is this dissertation about?
 
-Missing data problems are timeless, but technological advances have made treating missingness easier than ever. A single line of code can generate several completed versions of an incomplete dataset, which allows data analysts to analyze the completed datasets as if they were completely observed. 
+- Algorithms are everywhere. 
+- How can we know when to trust the output of algorithms?
+  - Theoretical properties: analytically (often impossible)
+  - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized)
+  - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic)
+- In this dissertation, I investigate how the quality of the output of one specific algorithm can be evaluated.
 
-'impute' (i.e., fill in) every missing data point in an incomplete dataset many times, thereby generating . This practice of replacing missing values with synthetic substitutes is called 'multiple imputation'. Multiple imputation is a popular and flexible splits the missing data problem from the analysis of scientific interest. Imputation allows data analysts to first fill in the missingness, to then be able to analyze the completed data as if they were completely observed. So, the nuisance of missing data is conveniently resolved through imputation.
+- The algorithm central to this dissertation is MICE: multivariate imputation by chained equations. The MICE algorithm is developed to generate 'imputed values': synthetic substitutes to replace missing values in incomplete data, based on multivariate associations. 
+
+- MICE is an iterative algorithm. It produces imputations on a variable-by-variable basis. After a full pass through the data, the algorithm cycles back to the first column to replace the imputed value from the first iteration with an updated entry.
+
+---
+
+Missing data problems are timeless, but technological advances have made treating missingness easier than ever. A single line of code can generate several completed versions of an incomplete dataset, which allows data analysts to handle the completed datasets as if they were completely observed. 
+
+ This practice of replacing missing values with synthetic substitutes is called 'multiple imputation'. Multiple imputation is a popular and flexible splits the missing data problem from the analysis of scientific interest. Imputation allows data analysts to first fill in the missingness, to then be able to analyze the completed data as if they were completely observed. So, the nuisance of missing data is conveniently resolved through imputation.
 
 For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. Firstly, because incomplete data always require some treatment for the missingness. Even methods that seemingly ignore the missing data, such as complete case analysis, are a type of missing data treatment. Missing data treatment can severely impact the accuracy and validity of any subsequent analyses. Therefore, missing data methods should be applied carefully. Secondly, because many missing data methods lead to biased estimates if the incomplete data are in any way different from the complete data one would have liked to obtain. For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment. 
 
@@ -557,6 +570,7 @@ The 'ggmice' package aims to solve the following problems:
 - change the way we evaluate science: this dissertation is an example of the new recognition and rewards vision. it includes software as an actual chapter, not something extra.
 - I hope to inspire others to reflect on their own view of what scientific output is. And most of all, I hope to set an example for other PhD candidates to do the same
 
+- imp is not always the way to go: missingness can tell you about mismatch between data collection method and lived experience
 
 \newpage
 
