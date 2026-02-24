@@ -120,6 +120,68 @@ csl: apa.csl
 - How do we know if we have a good imputation method?
 - In this dissertation, I study computational evaluation of imputation methodology.
 
+::: {.callout}
+TODO: add image for missingness/imputation?
+:::
+
+### What is MI?
+
+- MI = replace each missing value with a synthetic substitute multiple times.
+- for each missing datapoint, we draw samples from the posterior predictive distribution: distribution of values that *might have* been.
+- this generates several complete*d* datasets.
+- imputed datasets can be analyzed as if the data were complete.
+- obtain estimates of the analysis of scientific interest on each imputation.
+- estimates are then combined to obtain one pooled estimate.
+- the variance of the estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
+- the variability between imputations reflects uncertainty due to the missingness.
+
+::: {.callout}
+TODO: add image MI workflow
+:::
+
+### What is FCS?
+
+- In general, imputation methods are developed to solve missing data problems.
+- What types of missing data problems are we considering in this dissertation? Incomplete samples where some---but not all---entries are missing per row or per column. Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. We are interested in data with incomplete cases/variables, or 'item non-response'.
+- Missing observations in incomplete cases/variables can be filled in using an imputation model
+- In the FCS framework [@vanbuuren2006], we need an imputation model for each incomplete variable 
+- fcs is substantive model agnostic, and does not assume any specific joint distribution.
+- while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
+- imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
+- recurring questions: how do we choose an appropriate imputation model? and how do we know whether we have chosen an appropriate imputation model?
+- "Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
+- That's where computational evaluation comes in!
+
+::: {.callout}
+# FCS =/= SMC
+- the quality of the imputation model can only be determined/assessed based on the complete data model --> TODO: specify terminology!! --> comp eval also possible without analysis model vs stat eval relies on known analysis model (prangender vandaag want imp gebruikt voor meer analyses) fcs is substantive model agnostic
+- what if that model is not (yet) available? then take the most complex possible model and check that, because if you would take the simplest model, then that would implcitly mean you are holding/constraining parameters (forcing b=0), systematically suppressing relations.
+- another option would be like smc-fcs: we assume a complete data model and derive the imputations from there.
+:::
+
+```{mermaid}
+%%| fig-height: 7
+
+flowchart TB
+    inc[/"Incomplete data"/] --> miss{{"Inspect missingness"}}
+    miss --> mod[\"`Define imputation model(s)`"/]
+    mod --> imp[[Run imputation algorithm]]
+    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
+    imps --> conv[\"`Inspect convergence`"/]
+    conv --> iterate{"`Non-<br>convergence?`"}
+    iterate -- "yes" --> imp
+    iterate -- "no" --> check[\"`Inspect imputed values`"/]
+    check --> misfit{"`Misfit?`"}
+    misfit -- "yes" --> mod
+    misfit -- "no" --> analyses[\"`Run analyses`"/]
+    analyses --> pool["Pool analyses"]
+    inc@{ shape: doc}
+    imps@{ shape: docs}
+    analyses@{ shape: procs}
+    pool@{ shape: tri}
+
+```
+
 ### What is computational evaluation?
 - Computational evaluation is not equal to statistical evaluation. Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
 - Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
@@ -137,20 +199,15 @@ csl: apa.csl
 
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
-::: {.callout}
-- the quality of the imputation model can only be determined/assessed based on the complete data model --> TODO: specify terminology!! --> comp eval also possible without analysis model vs stat eval relies on known analysis model (prangender vandaag want imp gebruikt voor meer analyses) fcs is substantive model agnostic
-- what if that model is not (yet) available? then take the most complex possible model and check that, because if you would take the simplest model, then that would implcitly mean you are holding/constraining parameters (forcing b=0), systematically suppressing relations.
-- another option would be like smc-fcs: we assume a complete data model and derive the imputations from there.
-:::
-
 ### Why should we care about computational evaluation of imputation methodology?
-- Computational evaluation thus goes beyond statistical evaluation.
+- Computational evaluation goes beyond statistical evaluation.
 - Even if we know the process yields correct inferences, we can evaluate the usability/appropriateness/plausibility of the solution. A question to consider is: do the imputed values lie within the range of the observed values?
 - Imputation theory does not require the imputed values to be plausible. 
 - Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample.
 - Bluntly stated: imputation pragmatists/purists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
 - But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) --> PPC would show problem with sparse region
 - and vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? when 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stoch reg), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp?
+- Statistical evaluation of bias and coverage is not possible in practice, only in simulation studies.
 - stat eval not possible IRL? bias/cov impossible to determine without assumed truth --> only wrt estimand with PPC (e.g. bootstrapping is also stat/comp)
 - statistical evaluation vs computational evaluation: does one come before the other? not necessarily.
 - implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained?
@@ -165,6 +222,7 @@ csl: apa.csl
 <!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
 
 ::: {.callout}
+# Examples of stat but not comp
 - polynomials (ignoring the U in imps could still get stat val)
 - example: psych study with baseline, some of which are missing; baseline, intervention, follow-up --> mice would inflate baseline and follow-up if both are incomplete; stat eval will not show this (unbiased, cov ok, etc.); over-imp or postpred check would show diff distr for obs and imp; circularity should be removed: follow-up should not predict baseline
 - fcs iterations not stable, but estimand ok (in sim study true value) --> conv at cell level??
@@ -176,16 +234,6 @@ csl: apa.csl
 ::: {.callout}
 TODO: clearly define scope: FCS, item non-response, statistical inference (not prediction or causal inference), M(C)AR
 :::
-
-- In general, imputation methods are developed to solve missing data problems.
-- What types of missing data problems are we considering in this dissertation? Incomplete samples where some---but not all---entries are missing per row or per column. Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. We are interested in data with incomplete cases/variables, or 'item non-response'.
-- Missing observations in incomplete cases/variables can be filled in using an imputation model
-- In the FCS framework [@vanbuuren2006], we need an imputation model for each incomplete variable 
-- while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
-- imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
-- recurring questions: how do we choose an appropriate imputation model? and how do we know whether we have chosen an appropriate imputation model?
-- "Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
-- That's where computational evaluation comes in!
 
 **RQ: how can applied researchers be aided in developing and evaluating imputation methods?**
 
@@ -296,21 +344,21 @@ TODO: clearly define scope: FCS, item non-response, statistical inference (not p
 ```{r}
 #| echo: false
 # library(kableExtra)
-packages <- read.csv("packages.csv")
+packages <- read.csv("pkg_table.csv")
 knitr::kable(packages, col.names = c("", names(packages)[-1])) 
 ```
 
 
-|                   Functionaliteit                  |  ggmice  |        VIM       |  naniar  |   amelia  |   mice (lattice)   |
-|:--------------------------------------------------|:--------:|:----------------:|:--------:|:---------:|:------------------:|
-| Visualisatie van de missingness                    | $\checkmark$       | V                | V        | (beperkt) | V                  |
-| Visalisatie van het imputatie EN nonresponse model | V        | X                | X        | X         | X                  |
-| Imputatie diagnostiek (visueel) + evt in cijfer?   | V        | V (gedeeltelijk) | X        | V         | V                  |
-| Ondersteuning mids en andere data typen            | V        | X                | X        | X         | V (alleen lattice) |
-| Grammar of Graphics                                | V        | X                | V        | X         | X                  |
-| Aanpasbaarheid                                     | hoog     | laag             | hoog     | laag      | laag               |
-| Tidyverse compatible?                              | volledig | beperkt          | volledig | beperkt   | geen               |
-| Meteen klaar voor publicatie?                      | hoog     | middel           | hoog     | laag      | laag               |
+<!-- |                   Functionaliteit                  |  ggmice  |        VIM       |  naniar  |   amelia  |   mice (lattice)   | -->
+<!-- |:--------------------------------------------------|:--------:|:----------------:|:--------:|:---------:|:------------------:| -->
+<!-- | Visualisatie van de missingness                    | $\checkmark$       | V                | V        | (beperkt) | V                  | -->
+<!-- | Visalisatie van het imputatie EN nonresponse model | V        | X                | X        | X         | X                  | -->
+<!-- | Imputatie diagnostiek (visueel) + evt in cijfer?   | V        | V (gedeeltelijk) | X        | V         | V                  | -->
+<!-- | Ondersteuning mids en andere data typen            | V        | X                | X        | X         | V (alleen lattice) | -->
+<!-- | Grammar of Graphics                                | V        | X                | V        | X         | X                  | -->
+<!-- | Aanpasbaarheid                                     | hoog     | laag             | hoog     | laag      | laag               | -->
+<!-- | Tidyverse compatible?                              | volledig | beperkt          | volledig | beperkt   | geen               | -->
+<!-- | Meteen klaar voor publicatie?                      | hoog     | middel           | hoog     | laag      | laag               | -->
 
 <!-- https://cranlogs.r-pkg.org/badges/ggmice -->
 <!-- https://naniar.njtierney.com/reference/gg_miss_upset.html -->
@@ -371,19 +419,19 @@ TODO: paragraph to explain all aspects of the table.
 
 \newpage
 
-# Chapter 1
+# Chapter 1: ggmice
 
 [TODO: link/insert]
 
 \newpage
 
-# Chapter 2
+# Chapter 2: convergence
 
 [TODO: link/insert]
 
 \newpage
 
-# Chapter 3
+# Chapter 3: evaluation
 
 [TODO: link/insert]
 
