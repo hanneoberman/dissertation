@@ -118,21 +118,34 @@ csl: apa.csl
 
 - MICE is an iterative algorithm. It produces imputations on a variable-by-variable basis. After a full pass through the data, the algorithm cycles back to the first column to replace the imputed value from the first iteration with an updated entry.
 
+::: {.callout}
+## TODO: verwerken
+
+Kern: waarheid. qua zeitgeist kun je wat met truth. in sim study kun je waarheid maken, maar in de praktijk moet je aannames doen. die aannames zijn belangrijk, juist omdat ze niet/ten dele te bewijzen zijn. --> waarheid vs belief. dat is waar stat als veld zich bevindt. waarheid en onzekerheid. stat = deel van de wiskunde waar we geloof nodig hebben. zonder prob desn function kune je bewijzen. je hebt het toch nooit goed, dus onderhoek hoe fout je zit.
+niet angst over algos.
+
+start met anekdote/exemplarisch verhaal.
+:::
+
 ---
+
+::: {.callout}
+@Gerko: please review
+:::
 
 Missing data problems are timeless, but technological advances have made treating missingness easier than ever. A single line of code can generate several completed versions of an incomplete dataset, which allows data analysts to handle the completed datasets as if they were completely observed. 
 
  This practice of replacing missing values with synthetic substitutes is called 'multiple imputation'. Multiple imputation is a popular and flexible splits the missing data problem from the analysis of scientific interest. Imputation allows data analysts to first fill in the missingness, to then be able to analyze the completed data as if they were completely observed. So, the nuisance of missing data is conveniently resolved through imputation.
 
-For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. Firstly, because incomplete data always require some treatment for the missingness. Even methods that seemingly ignore the missing data, such as complete case analysis, are a type of missing data treatment. Missing data treatment can severely impact the accuracy and validity of any subsequent analyses. Therefore, missing data methods should be applied carefully. Secondly, because many missing data methods lead to biased estimates if the incomplete data are in any way different from the complete data one would have liked to obtain. For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment. 
+<!-- For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. Firstly, because incomplete data always require some treatment for the missingness. Even methods that seemingly ignore the missing data, such as complete case analysis, are a type of missing data treatment. Missing data treatment can severely impact the accuracy and validity of any subsequent analyses. Therefore, missing data methods should be applied carefully. Secondly, because many missing data methods lead to biased estimates if the incomplete data are in any way different from the complete data one would have liked to obtain. For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment.  -->
 
-Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. Missing values force data analysts to treat the missingness in some way. 
+<!-- Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. Missing values force data analysts to treat the missingness in some way.  -->
 
-Missing data may be widespread, but so are missing data treatment methods. In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate the popular missing data method 'MICE'.
+<!-- Missing data may be widespread, but so are missing data treatment methods.  -->
 
- Imputation is a convenient and popular missing data method. 
+<!-- Imputation is a convenient and popular missing data method.  -->
 
-Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is very hard still. 
+Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is very hard still. In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate the popular missing data method 'MICE'.
 
 <!-- - Missing data may be widespread, but so are missing data treatment methods. -->
 <!-- - Imputation = filling in missing values to fix the missing data problem. -->
@@ -209,7 +222,22 @@ flowchart TB
     mira@{ shape: tri}
 ```
 
+::: {.callout}
+## TODO: verwerken
+
+misfit en non-conv next to each other
+
 Computational evaluation is in every trapezoid: processes that require human intervention. Statistical evaluation is mainly focused on the relation between the pooled estimates and 
+
+Paragraph after this: convince reviewers that this is the right choice. Giswerk/gebrek aan controle leidt to suboptimale estimates
+
+missing: draw inference
+
+tussen inspect miss en def imp mods: involve all stakeholders
+crips dm (data mining)
+
+--> pre vs post imp facilitator functies om te checken of er nieuwe verbanden in zitten (kruistabel)
+:::
 
 ### What is computational evaluation?
 - Computational evaluation is not equal to statistical evaluation. Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
@@ -234,14 +262,13 @@ Computational evaluation is in every trapezoid: processes that require human int
 - Imputation theory does not require the imputed values to be plausible. 
 - Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample.
 - Bluntly stated: imputation pragmatists/purists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
-- But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) --> PPC would show problem with sparse region
-- and vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? when 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stoch reg), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp?
+- But what are the limitations of purely inferential metrics (bias, coverage)? e.g. imputing negative values for age, using PMM for a variable with a sparse region (yielding 'unrealistic' imputed values), or evaluating imputed values of non-converged chain (?), or not knowing the analysis model up front so congeniality is at risk (???) -> PPC would show problem with sparse region
+- And vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? when 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stoch reg), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp?
 - Statistical evaluation of bias and coverage is not possible in practice, only in simulation studies.
-- stat eval not possible IRL? bias/cov impossible to determine without assumed truth --> only wrt estimand with PPC (e.g. bootstrapping is also stat/comp)
-- statistical evaluation vs computational evaluation: does one come before the other? not necessarily.
-- implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained?
-- computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure
-- what do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
+- Stat evalualtion may not possible IRL? Bias and confidence interval coverage are impossible to determine without a comparative truth (although PPC and bootstrapping allows us to compare with respect to an estimand).
+<!-- - statistical evaluation vs computational evaluation: does one come before the other? not necessarily. -->
+- Computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure. E.g., implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained?
+- What do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
 - In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
 
 <!-- Gerko: "How does computational evaluation differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
