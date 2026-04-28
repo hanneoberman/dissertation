@@ -145,13 +145,24 @@ csl: apa.csl
 
 
 
-Missing data problems are timeless, but technological advances have made treating missingness easier than ever. A single line of code can seem to solve your missing data problem nowadays. But is that solution really what you expect? That is what my dissertation is about.
+Missing data problems are timeless, but technological advances have made treating missingness easier than ever. 
+A single line of code can seem to solve your missing data problem nowadays. 
+But is that solution really what you expect? 
+That is what my dissertation is about.
 
 <!-- generate several completed versions of an incomplete dataset, which allows data analysts to handle the completed datasets as if they were completely observed.  -->
 
-This practice of drawing inference by replacing missing values with synthetic substitutes is called 'multiple imputation'. Multiple imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
+This practice of drawing inference by replacing missing values with synthetic substitutes is called 'multiple imputation'. 
+Multiple imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
+Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
 
-<!-- For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. Firstly, because incomplete data always require some treatment for the missingness. Even methods that seemingly ignore the missing data, such as complete case analysis, are a type of missing data treatment. Missing data treatment can severely impact the accuracy and validity of any subsequent analyses. Therefore, missing data methods should be applied carefully. Secondly, because many missing data methods lead to biased estimates if the incomplete data are in any way different from the complete data one would have liked to obtain. For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment.  -->
+<!-- For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. 
+Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. 
+Firstly, because incomplete data always require some treatment for the missingness. 
+Even methods that seemingly ignore the missing data, such as complete case analysis, are a type of missing data treatment. Missing data treatment can severely impact the accuracy and validity of any subsequent analyses. 
+Therefore, missing data methods should be applied carefully. 
+Secondly, because many missing data methods lead to biased estimates if the incomplete data are in any way different from the complete data one would have liked to obtain. 
+For example, when drop-out in a clinical trial is related to the severity of side-effects from the treatment.  -->
 
 <!-- Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. Missing values force data analysts to treat the missingness in some way.  -->
 
@@ -159,7 +170,10 @@ This practice of drawing inference by replacing missing values with synthetic su
 
 <!-- Imputation is a convenient and popular missing data method.  -->
 
-Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. Evaluating whether these imputations should be trusted remains challenging. In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. I thereby focus on the imputation procedure 'MICE' as implemented in the R package `mice`.
+Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
+Evaluating whether these imputations should be trusted remains challenging. 
+In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
+I thereby focus on the imputation procedure 'MICE' as implemented in the R package `mice`.
 
 <!-- - Missing data may be widespread, but so are missing data treatment methods. -->
 <!-- - Imputation = filling in missing values to fix the missing data problem. -->
@@ -285,14 +299,19 @@ flowchart TB
 
 - In practice, you cannot validate whether the imputation model was appropriate (???), because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
 - The best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offers insight and tools to do so.
-- The only setting where we do have the comparative truth (the true but missing values) is simulation studies. Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. That's why simulation studies for imputation methodology should be comparable with one another, so imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one. --> example: NRI search for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
+- The only setting where we do have the comparative truth (the true but missing values) is simulation studies. 
+Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. 
+That's why simulation studies for imputation methodology should be comparable with one another.
+Then, imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one. 
+Example: NRI search for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
 
 - [in simulation study kun je waarheid maken, maar in de praktijk moet je aannames doen. die aannames zijn belangrijk, juist omdat ze niet/ten dele te bewijzen zijn]
 - [what is a simulation study? add a brief methodological background section on simulation studies in statistics]
 
 ### What is computational evaluation?
 
-- Computational evaluation is not equal to statistical evaluation. Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
+- Computational evaluation is not equal to statistical evaluation. 
+Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
 - Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
 - Computational evaluation is originally from information retrieval research [see e.g. @wiki]
 - The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008]
@@ -300,7 +319,8 @@ flowchart TB
 - One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] 
 - Translated to statistics, a model may be statistically valid, but not fit for purpose. For example, computations that take too long to converge for use in a production pipeline/real-time use in patient care.
 - Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
-- We can use this when a statistical process has different purposes and thus different usability/requirements. For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
+- We can use this when a statistical process has different purposes and thus different usability/requirements. 
+For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
 - Since the term is not defined for statistics, there is no definition to use for the computational evaluation of imputation methodology.
 - In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology?
 - Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. 
@@ -611,9 +631,14 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 - Computational evaluation of imputation methodology is never finished.
 
 - The main findings in this thesis are...
-  - Defining and testing new imputation methods through simulation studies requires careful consideration of the simulation design and evaluation to make imputation methods comparable across studies. We need simulation studies to know imputation methods work. But we cannot be certain they actually *did* work whenever we apply them. The missing part of the data is by definition not available, so we cannot definitively state anything about the imputation model fit to the unobserved part of the data. Moreover, there's untestable assumptions (e.g., MNAR) and lack of clear diagnostic cut offs (e.g., convergence).
-  - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so. There is a mismatch between theoretical convergence criteria and practical algorithmic behavior. That's why we still have to rely on visual inspection.
-  - Visual inspection aids imputers in developing and evaluating imputation models, because formal tests are not available. The R package `ggmice` offers tools for the computational evaluation of the imputations models that were previously unavailable.
+  - Defining and testing new imputation methods through simulation studies requires careful consideration of the simulation design and evaluation to make imputation methods comparable across studies. 
+  We need simulation studies to know imputation methods work. 
+  But we cannot be certain they actually *did* work whenever we apply them. The missing part of the data is by definition not available, so we cannot definitively state anything about the imputation model fit to the unobserved part of the data. Moreover, there's untestable assumptions (e.g., MNAR) and lack of clear diagnostic cut offs (e.g., convergence).
+  - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so. 
+  There is a mismatch between theoretical convergence criteria and practical algorithmic behavior. 
+  That's why we still have to rely on visual inspection.
+  - Visual inspection aids imputers in developing and evaluating imputation models, because formal tests are not available. 
+  The R package `ggmice` offers tools for the computational evaluation of the imputations models that were previously unavailable.
 
 - Recommendations for fellow missing data methodologists:
   - design simulation studies structured and reproducible (e.g., report design choices, publish code)
