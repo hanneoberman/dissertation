@@ -1,9 +1,16 @@
 ---
 title: "Dissertation"
 format: pdf
+execute:
+  echo: false
 bibliography: dissertation.bib
 csl: apa.csl
 ---
+
+```{r}
+library(ggplot2)
+library(ggmice)
+```
 
 <!-- # Outline -->
 
@@ -139,6 +146,10 @@ csl: apa.csl
   - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic)
 - In this dissertation, I investigate how the quality of the output of *imputation* algorithms can be evaluated: algorithms with the purpose of generating plausible values that may replace missing values in incomplete data.  
 
+- verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE)
+- validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE)
+- verification asks whether the system has been built right whereas validation asks whether the right system has been built
+
 <!-- - The algorithm central to this dissertation is MICE: multivariate imputation by chained equations. The MICE algorithm is developed to generate 'imputed values': synthetic substitutes to replace missing values in incomplete data, based on observed information.  -->
 
 <!-- - MICE is an iterative algorithm. It produces imputations on a variable-by-variable basis. After a full pass through the data, the algorithm cycles back to the first column to replace the imputed value from the first iteration with an updated entry. -->
@@ -192,6 +203,117 @@ TODO: add image for missingness/imputation?
 :::
 
 [TODO: add aim of bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods. current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient.]
+
+```{mermaid}
+flowchart LR
+    A["Incomplete data"]
+    B1["Imputed data"]
+    B2["Imputed data"]
+    B3["Imputed data"]
+    C1["Analysis results"]
+    C2["Analysis results"]
+    C3["Analysis results"]
+    D["Pooled result"]
+
+    A --> B1
+    A --> B2
+    A --> B3
+
+    B1 --> C1
+    B2 --> C2
+    B3 --> C3
+
+    C1 --> D
+    C2 --> D
+    C3 --> D
+```
+
+```{dot}
+digraph MultipleImputation {
+    rankdir=LR;
+
+    // Default node style: empty circles
+    node [shape=circle, width=1.1, fixedsize=true, label=""];
+
+    // Column 1: single incomplete-data circle
+    I;
+
+    // Column 2: three imputed-data circles
+    IM1; IM2; IM3;
+
+    // Column 3: three analysis-results circles
+    AN1; AN2; AN3;
+
+    // Column 4: single pooled-result circle
+    P;
+
+    // Vertical alignment for each column
+    { rank=same; IM1; IM2; IM3 }
+    { rank=same; AN1; AN2; AN3 }
+
+    // Arrows matching the original figure
+    I  -> IM1;
+    I  -> IM2;
+    I  -> IM3;
+
+    IM1 -> AN1;
+    IM2 -> AN2;
+    IM3 -> AN3;
+
+    AN1 -> P;
+    AN2 -> P;
+    AN3 -> P;
+
+    // Column labels (placed under representative node)
+    I   [xlabel="Incomplete data"];
+    IM2 [xlabel="Imputed data"];
+    AN2 [xlabel="Analysis results"];
+    P   [xlabel="Pooled result"];
+}
+```
+
+
+```{r}
+load("dat_xy.RData")
+# dat_xy[6, 2] <- 5.5
+ggmice(dat_xy, aes(X, Y)) + 
+  geom_point() + 
+  theme_classic()
+a <- mice::mice(dat_xy, m = 3, method = "norm", seed = 1, print = FALSE)
+ggmice(a, aes(X, Y)) + 
+  geom_point() + 
+  theme_classic()
+# dat_xy[6, 2] <- 7.8
+# mod <- lm(Y ~ X, data = dat_xy) 
+# b <- mod |> coef()
+# ci <- confint(mod)
+# est <- paste0(round(b[2], 2), " [", round(ci[2,1], 2), ", ", round(ci[2,2], 2), "]")
+# ggmice(dat_xy, aes(X, Y)) + 
+#   geom_point() + 
+#   geom_smooth(method = "lm", se = FALSE) + 
+#   theme_classic() + 
+#   labs(title = paste("Regression coefficient =", est))
+# dat_xy[6, 1] <- 8.2
+# mod <- lm(Y ~ X, data = dat_xy) 
+# b <- mod |> coef()
+# ci <- confint(mod)
+# est <- paste0(round(b[2], 2), " [", round(ci[2,1], 2), ", ", round(ci[2,2], 2), "]")
+# ggmice(dat_xy, aes(X, Y)) + 
+#   geom_point() + 
+#   geom_smooth(method = "lm", se = FALSE) + 
+#   theme_classic() + 
+#   labs(title = paste("Regression coefficient =", est))
+# dat_xy[6, 1] <- 2
+# mod <- lm(Y ~ X, data = dat_xy) 
+# b <- mod |> coef()
+# ci <- confint(mod)
+# est <- paste0(round(b[2], 2), " [", round(ci[2,1], 2), ", ", round(ci[2,2], 2), "]")
+# ggmice(dat_xy, aes(X, Y)) + 
+#   geom_point() + 
+#   geom_smooth(method = "lm", se = FALSE) + 
+#   theme_classic() + 
+#   labs(title = paste("Regression coefficient =", est))
+```
 
 ### What is MI?
 
