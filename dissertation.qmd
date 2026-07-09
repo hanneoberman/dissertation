@@ -1,13 +1,18 @@
 ---
 title: "Dissertation"
-format: pdf
+format:
+  pdf:
+    mermaid:
+      theme: neutral
 execute:
   echo: false
+fig-cap-location: top
 bibliography: dissertation.bib
 csl: apa.csl
 ---
 
 ```{r}
+#| message: false
 library(ggplot2)
 library(ggmice)
 ```
@@ -202,117 +207,90 @@ I thereby focus on the imputation procedure 'MICE' as implemented in the R packa
 TODO: add image for missingness/imputation?
 :::
 
-[TODO: add aim of bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods. current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient.]
+[TODO: add aim of bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods. current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient.] $\ell$
+
+<!-- $$Y = \{Y_{obs}, \dot{Y}_{\text{mis}}\}$$ -->
+
+::: {#fig-workflow}
 
 ```{mermaid}
+%%| fig-width: 6.25
 flowchart LR
-    A["Incomplete data"]
-    B1["Imputed data"]
-    B2["Imputed data"]
-    B3["Imputed data"]
-    C1["Analysis results"]
-    C2["Analysis results"]
-    C3["Analysis results"]
-    D["Pooled result"]
-
+    subgraph 1["Incomplete data"]
+    A(("$$Y$$"))
+    end
+    subgraph 2["Imputed data"]
+    B1("$$\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$$")
+    B2("$$\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$$")
+    B3("$$\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$$")
+    end
+    subgraph 3["Analysis results"]
+    C1("$$\hat{Q}_{\ell}$$")
+    C2("$$\hat{Q}_{\ell}$$")
+    C3("$$\hat{Q}_{\ell}$$")
+    end
+    subgraph 4["Pooled result"]
+    D(("$$\bar{Q}$$"))
+    end
+    
     A --> B1
-    A --> B2
+    A --  impute --> B2
     A --> B3
 
     B1 --> C1
-    B2 --> C2
+    B2 -- estimate --> C2
     B3 --> C3
 
     C1 --> D
-    C2 --> D
+    C2 -- pool --> D
     C3 --> D
+    
 ```
 
-```{dot}
-digraph MultipleImputation {
-    rankdir=LR;
+*Note*. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.
 
-    // Default node style: empty circles
-    node [shape=circle, width=1.1, fixedsize=true, label=""];
+MI workflow
 
-    // Column 1: single incomplete-data circle
-    I;
+:::
 
-    // Column 2: three imputed-data circles
-    IM1; IM2; IM3;
-
-    // Column 3: three analysis-results circles
-    AN1; AN2; AN3;
-
-    // Column 4: single pooled-result circle
-    P;
-
-    // Vertical alignment for each column
-    { rank=same; IM1; IM2; IM3 }
-    { rank=same; AN1; AN2; AN3 }
-
-    // Arrows matching the original figure
-    I  -> IM1;
-    I  -> IM2;
-    I  -> IM3;
-
-    IM1 -> AN1;
-    IM2 -> AN2;
-    IM3 -> AN3;
-
-    AN1 -> P;
-    AN2 -> P;
-    AN3 -> P;
-
-    // Column labels (placed under representative node)
-    I   [xlabel="Incomplete data"];
-    IM2 [xlabel="Imputed data"];
-    AN2 [xlabel="Analysis results"];
-    P   [xlabel="Pooled result"];
-}
-```
+<!-- See @fig-workflow. 
+%%| fig-cap: "MI workflow"
+%%| fig-cap: "MI workflow" -->
 
 
 ```{r}
+#| fig-height: 3
 load("dat_xy.RData")
 # dat_xy[6, 2] <- 5.5
 ggmice(dat_xy, aes(X, Y)) + 
   geom_point() + 
-  theme_classic()
+  scale_x_continuous(limits = c(1.7, 9), breaks = c(2, 4, 6, 8)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  annotate(
+    geom = "curve", x = 2.5, y = 6.5, xend = 1.8, yend = 5.7, 
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate("text", x = 3.6, y = 6.5, label = "missing value")
 a <- mice::mice(dat_xy, m = 3, method = "norm", seed = 1, print = FALSE)
 ggmice(a, aes(X, Y)) + 
   geom_point() + 
-  theme_classic()
-# dat_xy[6, 2] <- 7.8
-# mod <- lm(Y ~ X, data = dat_xy) 
-# b <- mod |> coef()
-# ci <- confint(mod)
-# est <- paste0(round(b[2], 2), " [", round(ci[2,1], 2), ", ", round(ci[2,2], 2), "]")
-# ggmice(dat_xy, aes(X, Y)) + 
-#   geom_point() + 
-#   geom_smooth(method = "lm", se = FALSE) + 
-#   theme_classic() + 
-#   labs(title = paste("Regression coefficient =", est))
-# dat_xy[6, 1] <- 8.2
-# mod <- lm(Y ~ X, data = dat_xy) 
-# b <- mod |> coef()
-# ci <- confint(mod)
-# est <- paste0(round(b[2], 2), " [", round(ci[2,1], 2), ", ", round(ci[2,2], 2), "]")
-# ggmice(dat_xy, aes(X, Y)) + 
-#   geom_point() + 
-#   geom_smooth(method = "lm", se = FALSE) + 
-#   theme_classic() + 
-#   labs(title = paste("Regression coefficient =", est))
-# dat_xy[6, 1] <- 2
-# mod <- lm(Y ~ X, data = dat_xy) 
-# b <- mod |> coef()
-# ci <- confint(mod)
-# est <- paste0(round(b[2], 2), " [", round(ci[2,1], 2), ", ", round(ci[2,2], 2), "]")
-# ggmice(dat_xy, aes(X, Y)) + 
-#   geom_point() + 
-#   geom_smooth(method = "lm", se = FALSE) + 
-#   theme_classic() + 
-#   labs(title = paste("Regression coefficient =", est))
+  scale_x_continuous(limits = c(1.7, 9), breaks = c(2, 4, 6, 8)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  annotate(
+    geom = "curve", x = 5, y = 7.5, xend = 4.5, yend = 6, 
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(
+    geom = "curve", x = 6, y = 7.4, xend = 5.8, yend = 6, 
+    curvature = .2, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(
+    geom = "curve", x = 7.8, y = 7.5, xend = 8.3, yend = 6, 
+    curvature = -.3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate("text", x = 6.5, y = 8, label = "imputed values")  
 ```
 
 ### What is MI?
