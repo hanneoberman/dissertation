@@ -480,16 +480,15 @@ flowchart TB
     miss --> mod[\"`Define imputation model(s)`"/]
     mod --> imp[[Run imputation algorithm]]
     imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
-    imps --> iterate{"`Non-<br>convergence?`"}
-    imps --> misfit{"`Misfit?`"}    
-    subgraph 1["Inspect convergence \& imputed values"]
-    iterate{"`Non-<br>convergence?`"}
-    misfit{"`Misfit?`"}
+    imps --> conv
+    subgraph eval[" "]
+      direction LR
+      conv[\"`Inspect convergence`"/] <--> check[\"`Inspect imputed values`"/]
     end
-    iterate -- "yes" --> imp
-    iterate -- "no" --> analyses[\"`Run analyses`"/]
-    misfit -- "yes" --> mod
-    misfit -- "no" --> analyses[\"`Run analyses`"/]
+    conv -- "✘ non-convergence" --> imp
+    conv -- "✓ algorithmic convergence" --> analyses[\"`Run analyses`"/]
+    check -- "✘ misfit" --> mod
+    check -- "✓ imputation model fit" --> analyses[\"`Run analyses`"/]
     analyses --> mira["Extract estimates"]
     mira --> pool(["Pool estimates"])
     pool --> mipo["Pooled estimate"]
@@ -499,9 +498,8 @@ flowchart TB
     mira@{ shape: tri}
 ```
 
-    <!-- imps --> conv[\"`Inspect convergence`"/] -->
-    <!-- imps --> check[\"`Inspect imputed values`"/] -->
-    
+<!-- conv -.-> mod -->
+
 ::: {.callout}
 ## TODO: verwerken in flow chart
 
