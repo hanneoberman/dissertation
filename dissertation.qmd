@@ -481,6 +481,7 @@ flowchart TB
     mod --> imp[[Run imputation algorithm]]
     imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
     imps --> conv
+    imps ~~~~ check
     subgraph eval[" "]
       direction LR
       conv[\"`Inspect convergence`"/] <--> check[\"`Inspect imputed values`"/]
@@ -500,15 +501,16 @@ flowchart TB
 
 <!-- conv -.-> mod -->
 
-::: {.callout}
-## TODO: verwerken in flow chart
 
-- misfit en non-conv next to each other? = do the imputation models fit the data?
-- Computational evaluation is in every trapezoid: processes that require human intervention. Statistical evaluation is mainly focused on the relation between the pooled estimates and 
-- Paragraph after this: convince reviewers that this is the right choice. Giswerk/gebrek aan controle leidt to suboptimale estimates
-- missing: draw inference after pooled est; use external info after inspect miss to involva all stakeholders (CRISP-DM step)
-- in simulation studies, focus is often just on incomplete data and pooled estimates
-:::
+- Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).
+<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
+
+Computational evaluation is in every trapezoid: processes that require human intervention. 
+In the box with converence and imputed values, the question is 'do the imputation models fit the data?'.
+Statistical evaluation is mainly focused on the relation between the pooled estimates and the incomplete data. 
+In simulation studies, focus is often just on incomplete data and pooled estimates.
+
+
 
 ### Building and evaluating imputation models
 
