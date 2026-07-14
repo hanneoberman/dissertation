@@ -4,15 +4,20 @@ format:
   pdf:
     mermaid:
       theme: neutral
+toc: true
+toc-depth: 2
+fig-cap-location: top
 execute:
   echo: false
-fig-cap-location: top
 bibliography: dissertation.bib
 csl: apa.csl
 ---
 
 ```{r}
+#| label: setup
 #| message: false
+#| warning: false
+#| include: false
 library(ggplot2)
 library(ggmice)
 ```
@@ -131,7 +136,7 @@ library(ggmice)
 <!-- Conceptual tool: Introduce and define “computational evaluation” framework for imputation. -->
 <!-- Research questions and scope and how each chapter answers part of the overarching question. -->
 
-## Why this dissertation?
+### Why this dissertation?
 
 [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?]
 
@@ -139,6 +144,8 @@ library(ggmice)
 - Methodology and statistics as a tool for expressing/quantifying uncertainty. 
 - While it is also a research discipline in itself, we develop tools that are domain-agnostic.
 - I want to contribute methodology that facilitates social and biomedical scientists in drawing valid inferences. 
+
+"Statistics is both the science of uncertainty and the technology of extracting information from data." - featured in the International Encyclopedia of Statistical Science (Hand, 2010). 
 
 ## What is this dissertation about?
 
@@ -151,9 +158,28 @@ library(ggmice)
   - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic)
 - In this dissertation, I investigate how the quality of the output of *imputation* algorithms can be evaluated: algorithms with the purpose of generating plausible values that may replace missing values in incomplete data.  
 
-- verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE)
-- validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE)
-- verification asks whether the system has been built right whereas validation asks whether the right system has been built
+missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).
+
+::: {#fig-mis}
+
+```{mermaid}
+%%| fig-height: 2
+
+flowchart TD
+  A1[population] --sampling--> B1([complete<br> sample])
+  B1 --inference--> A1
+
+x:::hidden ~~~ y:::hidden
+classDef hidden display: none;
+
+  A2[population] --sampling--> B2([complete<br> sample]) --non-response--> C2([incomplete<br> sample])
+  style B2 stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+  C2 --inference--> A2
+```
+
+Inference with missing data
+
+:::
 
 <!-- - The algorithm central to this dissertation is MICE: multivariate imputation by chained equations. The MICE algorithm is developed to generate 'imputed values': synthetic substitutes to replace missing values in incomplete data, based on observed information.  -->
 
@@ -171,6 +197,47 @@ That is what my dissertation is about.
 This practice of drawing inference by replacing missing values with synthetic substitutes is called 'multiple imputation'. 
 Multiple imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
 Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
+
+::: {#fig-imp}
+
+```{r}
+#| layout-ncol: 2
+#| fig-height: 3
+load("dat_xy.RData")
+# dat_xy[6, 2] <- 5.5
+ggmice(dat_xy, aes(X, Y)) + 
+  geom_point() + 
+  theme_classic() +
+  theme(legend.position = "none") +
+  annotate(
+    geom = "curve", x = 2.5, y = 7.5, xend = 1.8, yend = 6, 
+    curvature = .1, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate("text", x = 3.6, y = 8, label = "missing value")
+a <- mice::mice(dat_xy, m = 3, method = "norm", seed = 1, print = FALSE)
+ggmice(a, aes(X, Y)) + 
+  geom_point() + 
+  scale_x_continuous(limits = c(1.7, 9), breaks = c(2, 4, 6, 8)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  annotate(
+    geom = "curve", x = 5, y = 7.5, xend = 4.5, yend = 6, 
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(
+    geom = "curve", x = 6, y = 7.4, xend = 5.8, yend = 6, 
+    curvature = .2, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(
+    geom = "curve", x = 7.8, y = 7.5, xend = 8.3, yend = 6, 
+    curvature = -.3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate("text", x = 6.5, y = 8, label = "imputed values")  
+```
+
+Imputation of a missing value
+
+:::
 
 <!-- For data analysts, missing data are a nuisance. Missingness stands in the way of unbiased and confidence-valid statistical inferences. 
 Whenever there is just one missing value present in a dataset, extrapolation from the sample to the population may be hindered. 
@@ -203,13 +270,57 @@ I thereby focus on the imputation procedure 'MICE' as implemented in the R packa
 
 <!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
 
-::: {.callout}
-TODO: add image for missingness/imputation?
-:::
-
-[TODO: add aim of bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods. current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient.] $\ell$
+[TODO: add aim of bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods. current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient.] 
 
 <!-- $$Y = \{Y_{obs}, \dot{Y}_{\text{mis}}\}$$ -->
+
+
+
+<!-- See @fig-workflow. 
+%%| fig-cap: "MI workflow"
+%%| fig-cap: "MI workflow" -->
+
+### Why are missing data problematic?
+
+When there are missing values in a dataset, statistical analyses cannot be performed.
+We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. 
+We will investigate which strategies you may employ when faced with such a missing data problem.
+To obtain results from your incomplete dataset anyways, you will employ a missing data strategy–whether deliberately or not. The default strategy in most statistical software packages is to ignore all cases that have missing values (Van Buuren, 2018). 
+This is referred to as ‘list-wise deletion’ (LWD). 
+Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018).
+
+Imputation refers to ‘filling in’ the missing values in your dataset, based on a model of the observed information.
+Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
+The result of MI as missing data strategy is that the uncertainty in the data due to missingness is preserved in the inference. 
+Under the right conditions, MI yields valid, unbiased estimates (Schafer, 1997).
+The modeling assumptions inherent to a model-based technique like MI, however, cannot be tested.
+
+FCS has no (deductive) proof, only by simulation.
+
+With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases. 
+Induction thus only grants *plausible* conclusions--not certainty. 
+
+Statistical analyses are a means to infer conclusions about a certain population after observing only a subset of this population (a sample). With statistical inferences, we aim to distinguish between real-world effects and random noise (Rosenberg & Curtain, 2015). Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).  There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017). I will use the definition by Gelman & Shalizi, according to whom “statistical models are tools that let us draw inductive inferences on a deductive background” (2013, p. 27). Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population. 
+
+In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic (or distribution) to the data that was obtained. The resulting probability (distribution) is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013). The interpretation of confidence intervals (CIs), for instance, is the result of a deductive pattern of reasoning. It is a mathematical fact that at least 95% of all possible sample CIs from a certain population will contain the true population parameter. We do not know, however, whether the CI that we observed in our sample is one of the 95% (or more) that does indeed cover the true population parameter, or that we obtained one of the (less than) 5% CIs without this value. And if we don’t know whether the specific CI observed in our sample contains the true population parameter value or not, we cannot deduce the probability that the true population parameter lies within the bounds of the CI that we observed. To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction. Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning.
+
+MI enables researchers with missing data problems to correct for differences due to missingness. Correcting for missingness happens at two levels: 1) modeling the relation between missing cases and covariates; 2) adding the appropriate variance to the models to represent the uncertainty due to missingness. 
+
+The result is a probability distribution for each missing value, from which we subsequently draw several values as imputations. If we would use infinitely many values as imputations, we would obtain the entire probability distribution. In practice, however, we use a limited number of imputations. With that, we approximate the probability distributions of missing values. The more imputations are used, the better we can represent the uncertainty in the data due to missingness.
+
+statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample. 
+
+### What is MI?
+
+- MI = replace each missing value with a synthetic substitute multiple times.
+- For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution).
+- this generates several imputations: complete*d* datasets.
+- completed data can be analyzed as if the data were complete to begin with.
+- obtain estimates of the analysis of scientific interest on each imputation.
+- estimates are then combined to obtain one pooled estimate [TODO: add SI?].
+- the variance of the estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
+- the variability between imputations reflects uncertainty due to the missingness.
+- [TODO: why single imputation may yield implausible inference]
 
 ::: {#fig-workflow}
 
@@ -234,7 +345,7 @@ flowchart LR
     end
     
     A --> B1
-    A --  impute --> B2
+    A -- " impute" --> B2
     A --> B3
 
     B1 --> C1
@@ -247,66 +358,12 @@ flowchart LR
     
 ```
 
+::: {style="font-size: 50%;"}
 *Note*. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.
+:::
 
 MI workflow
 
-:::
-
-<!-- See @fig-workflow. 
-%%| fig-cap: "MI workflow"
-%%| fig-cap: "MI workflow" -->
-
-
-```{r}
-#| fig-height: 3
-load("dat_xy.RData")
-# dat_xy[6, 2] <- 5.5
-ggmice(dat_xy, aes(X, Y)) + 
-  geom_point() + 
-  scale_x_continuous(limits = c(1.7, 9), breaks = c(2, 4, 6, 8)) +
-  theme_classic() +
-  theme(legend.position = "none") +
-  annotate(
-    geom = "curve", x = 2.5, y = 6.5, xend = 1.8, yend = 5.7, 
-    curvature = .3, arrow = arrow(length = unit(2, "mm"))
-  ) +
-  annotate("text", x = 3.6, y = 6.5, label = "missing value")
-a <- mice::mice(dat_xy, m = 3, method = "norm", seed = 1, print = FALSE)
-ggmice(a, aes(X, Y)) + 
-  geom_point() + 
-  scale_x_continuous(limits = c(1.7, 9), breaks = c(2, 4, 6, 8)) +
-  theme_classic() +
-  theme(legend.position = "none") +
-  annotate(
-    geom = "curve", x = 5, y = 7.5, xend = 4.5, yend = 6, 
-    curvature = .3, arrow = arrow(length = unit(2, "mm"))
-  ) +
-  annotate(
-    geom = "curve", x = 6, y = 7.4, xend = 5.8, yend = 6, 
-    curvature = .2, arrow = arrow(length = unit(2, "mm"))
-  ) +
-  annotate(
-    geom = "curve", x = 7.8, y = 7.5, xend = 8.3, yend = 6, 
-    curvature = -.3, arrow = arrow(length = unit(2, "mm"))
-  ) +
-  annotate("text", x = 6.5, y = 8, label = "imputed values")  
-```
-
-### What is MI?
-
-- MI = replace each missing value with a synthetic substitute multiple times.
-- For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution).
-- this generates several imputations: complete*d* datasets.
-- completed data can be analyzed as if the data were complete to begin with.
-- obtain estimates of the analysis of scientific interest on each imputation.
-- estimates are then combined to obtain one pooled estimate [TODO: add SI?].
-- the variance of the estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
-- the variability between imputations reflects uncertainty due to the missingness.
-- [TODO: why single imputation may yield implausible inference]
-
-::: {.callout}
-TODO: add image MI workflow
 :::
 
 ### What is FCS?
@@ -430,6 +487,11 @@ Dimensions of computational evaluation: e.g. inferential validity, algorithmic b
 
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
+- verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE)
+- validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE)
+- verification asks whether the system has been built right whereas validation asks whether the right system has been built
+
+
 ### Why should we care about computational evaluation of imputation methodology?
 
 - What do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
@@ -474,7 +536,7 @@ Dimensions of computational evaluation: e.g. inferential validity, algorithmic b
 
 [TODO: remove what I will not address! Maybe add a sentence 'You might expect me to go into...' In the category non-response: just item, and M(C)AR mech. In the category imputation algo: just FCS. In the category substantive models: just GLM for stat inference.] In this dissertation, we will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models. The applications are aimed at statistical inference (not prediction or causal inference).
 
-## Chapters
+### Chapters
 
 1. Evaluation paper: evaluating (new) imputation methods via simulation studies/how we know FCS works 
 2. Convergence paper: evaluating imputation algorithm quantitatively
