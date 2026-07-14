@@ -2,8 +2,13 @@
 title: "Dissertation"
 format:
   pdf:
-    mermaid:
-      theme: neutral
+      include-in-header:
+        text: |
+          \usepackage[labelfont={bf}]{caption}
+          \usepackage{ragged2e}
+          \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
+      mermaid:
+        theme: neutral
 toc: true
 toc-depth: 2
 fig-cap-location: top
@@ -20,8 +25,10 @@ csl: apa.csl
 #| include: false
 library(ggplot2)
 library(ggmice)
+load("dat_xy.RData")
 ```
 
+<!-- figure captions: https://stackoverflow.com/questions/73775001/quarto-pdf-document-figure-caption-size -->
 <!-- # Outline -->
 
 <!-- ## Eisen onderzoek -->
@@ -108,6 +115,7 @@ library(ggmice)
 
 \newpage
 
+<!-- # TOC -->
 
 \tableofcontents
 
@@ -123,11 +131,15 @@ library(ggmice)
 
 # Glossary
 
+[TODO: complete]
+
 - complete
 - imputed
 - missing
 - observed
 - synthetic
+
+\newpage
 
 # Introduction
 
@@ -136,74 +148,49 @@ library(ggmice)
 <!-- Conceptual tool: Introduce and define “computational evaluation” framework for imputation. -->
 <!-- Research questions and scope and how each chapter answers part of the overarching question. -->
 
-### Why this dissertation?
+<!-- ### TL;DR -->
 
-[Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?]
 
-- My motivation is to contribute to trust in science. How? By showing uncertainty in data analysis efforts/inferences/graphs
-- Methodology and statistics as a tool for expressing/quantifying uncertainty. 
-- While it is also a research discipline in itself, we develop tools that are domain-agnostic.
-- I want to contribute methodology that facilitates social and biomedical scientists in drawing valid inferences. 
+<!-- [TODO: add take-home message in 1-2 sentences without jargon] -->
 
-"Statistics is both the science of uncertainty and the technology of extracting information from data." - featured in the International Encyclopedia of Statistical Science (Hand, 2010). 
+### TL;DR (or: the quality of the solution)
 
-## What is this dissertation about?
 
-[TODO: add take-home message in 1-2 sentences without jargon]
+<!-- Algorithms are everywhere.  -->
 
-- Algorithms are everywhere. 
-- How can we know when to trust the output of algorithms?
-  - Theoretical properties: analytically (often impossible)
-  - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized)
-  - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic)
-- In this dissertation, I investigate how the quality of the output of *imputation* algorithms can be evaluated: algorithms with the purpose of generating plausible values that may replace missing values in incomplete data.  
+This dissertation is about algorithms and the quality of their output. 
+I investigate how a specific type of data-generating algorithm can be evaluated for use in statistical inferences. 
+The type algorithm in question is the imputation algorithm. 
+Imputation algorithms are algorithms with the purpose of generating plausible values based on a model of the observed information. 
+This type of algorithm is popular for solving missing data problems.  
 
-missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).
-
-::: {#fig-mis}
-
-```{mermaid}
-%%| fig-height: 2
-
-flowchart TD
-  A1[population] --sampling--> B1([complete<br> sample])
-  B1 --inference--> A1
-
-x:::hidden ~~~ y:::hidden
-classDef hidden display: none;
-
-  A2[population] --sampling--> B2([complete<br> sample]) --non-response--> C2([incomplete<br> sample])
-  style B2 stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
-  C2 --inference--> A2
-```
-
-Inference with missing data
-
-:::
-
+<!-- The data-generating algorithms in question are 'imputation' algorithms. -->
 <!-- - The algorithm central to this dissertation is MICE: multivariate imputation by chained equations. The MICE algorithm is developed to generate 'imputed values': synthetic substitutes to replace missing values in incomplete data, based on observed information.  -->
 
 <!-- - MICE is an iterative algorithm. It produces imputations on a variable-by-variable basis. After a full pass through the data, the algorithm cycles back to the first column to replace the imputed value from the first iteration with an updated entry. -->
 
 
-
-Missing data problems are timeless, but technological advances have made treating missingness easier than ever. 
-A single line of code can seem to solve your missing data problem nowadays. 
-But is that solution really what you expect? 
-That is what my dissertation is about.
-
 <!-- generate several completed versions of an incomplete dataset, which allows data analysts to handle the completed datasets as if they were completely observed.  -->
 
-This practice of drawing inference by replacing missing values with synthetic substitutes is called 'multiple imputation'. 
-Multiple imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
+Imputation algorithms are designed to 'impute' (i.e., fill in) missing values in incomplete datasets. 
+Imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
 Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
+
+The practice of drawing inference by replacing missing values with several synthetic substitutes is called 'multiple imputation'. 
+@fig-imp provides an example of multiple imputation, where a missing value is replaced several times with plausible substitutes.
+The variability between imputations will reflect the uncertainty due to non-response in the final estimate.
+
+```{r}
+#| eval: false
+#| include: false
+knitr::kable(dplyr::arrange(dat_xy, Y))
+```
 
 ::: {#fig-imp}
 
 ```{r}
 #| layout-ncol: 2
 #| fig-height: 3
-load("dat_xy.RData")
 # dat_xy[6, 2] <- 5.5
 ggmice(dat_xy, aes(X, Y)) + 
   geom_point() + 
@@ -235,6 +222,8 @@ ggmice(a, aes(X, Y)) +
   annotate("text", x = 6.5, y = 8, label = "imputed values")  
 ```
 
+<!-- `\fignote{This is plain text turned as LaTeX caption.}`{=latex} -->
+
 Imputation of a missing value
 
 :::
@@ -255,6 +244,13 @@ For example, when drop-out in a clinical trial is related to the severity of sid
 
 Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
 Evaluating whether these imputations should be trusted remains challenging. 
+
+How can we know when to trust the output imputation algorithms?
+
+  - Theoretical properties: analytically (often impossible)
+  - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized)
+  - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic)
+  
 In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
 I thereby focus on the imputation procedure 'MICE' as implemented in the R package `mice`.
 
@@ -270,10 +266,43 @@ I thereby focus on the imputation procedure 'MICE' as implemented in the R packa
 
 <!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
 
-[TODO: add aim of bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods. current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient.] 
+Why? Because current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient. 
+
+How? By bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods.
 
 <!-- $$Y = \{Y_{obs}, \dot{Y}_{\text{mis}}\}$$ -->
 
+
+### How did we get here? (or: statistical inference is just a tool)
+
+<!-- [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?] -->
+
+My academic tag line has long been "statistician, interdisciplinarian, open scientist". 
+And while there's no doubt I am an interdisciplinarian and an open scientist, I am no longer sure that I am a statistician necessarily.
+I am more inclined to call myself a methodologist rather than statistician. 
+
+As a methodologist, I am interested in how science is done, and how it can be done better.
+Especially in the social and biomedical sciences, research should not be purely quantitative. 
+Statistics is just *one* way of doing science. 
+Don't get me wrong, statistics is still a favorite of mine. I love stats (I even have a mug that says so). 
+Statistics is the science of uncertainty and extracting information from data (Hand, 2010).
+Extracting information from data and turn them into insights can feel magical. 
+Statistical inference allows us to distinguish between real-world effects and random noise (Rosenberg & Curtain, 2015). 
+I am most fan of the uncertainty of it all.
+<!-- Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).   -->
+<!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017).  -->
+<!-- Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.  -->
+<!-- "Statistics is both the science of uncertainty and the technology of extracting information from data." - featured in the International Encyclopedia of Statistical Science (Hand, 2010).  -->
+I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. In this dissertation, I hope to achieve this for missing data methodology.
+
+<!-- The topic of this dissertation is missing data. -->
+<!-- - Methodology and statistics as a tool for expressing/quantifying uncertainty.  -->
+<!-- While statistics is also a research discipline in itself, we develop tools that are domain-agnostic. -->
+Missing data problems are timeless, but technological advances have made treating missingness easier than ever. 
+A single line of code can seem to solve your missing data problem nowadays. 
+But is that solution really what you expect? 
+That is what my dissertation is about.
+I want to contribute methodology that facilitates social and biomedical scientists in drawing valid inferences from incomplete data. 
 
 
 <!-- See @fig-workflow. 
@@ -282,45 +311,70 @@ I thereby focus on the imputation procedure 'MICE' as implemented in the R packa
 
 ### Why are missing data problematic?
 
-When there are missing values in a dataset, statistical analyses cannot be performed.
-We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. 
-We will investigate which strategies you may employ when faced with such a missing data problem.
-To obtain results from your incomplete dataset anyways, you will employ a missing data strategy–whether deliberately or not. The default strategy in most statistical software packages is to ignore all cases that have missing values (Van Buuren, 2018). 
+<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset.  -->
+<!-- We will investigate which strategies you may employ when faced with such a missing data problem. -->
+
+<!-- According to Gelman & Shalizi “statistical models are tools that let us draw inductive inferences on a deductive background” (2013, p. 27).  -->
+
+When there are missing values in a dataset, statistical inference cannot be performed. 
+With just one incomplete observation, simple statistics such as the mean are mathematically undefined.
+Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population (a sample). 
+Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample). 
+
+:::: {#fig-mis}
+
+```{mermaid}
+%%| fig-height: 2
+
+flowchart TD
+  A1[population] --sampling--> B1([complete<br> sample])
+  B1 --inference--> A1
+
+x:::hidden ~~~ y:::hidden
+classDef hidden display: none;
+
+  A2[population] --sampling--> B2([complete<br> sample]) --non-response--> C2([incomplete<br> sample])
+  style B2 stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+  C2 --inference--> A2
+```
+
+`\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., business as usual). Right: incomplete sample due to non-response.}`{=latex} 
+
+<!-- ::: {style="font-size: 50%;"} -->
+
+
+
+<!-- ::: -->
+
+Inference with missing data
+
+::::
+
+<!-- %%| fig-cap: test -->
+
+
+To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not. 
+The default strategy in most statistical software packages is to ignore all cases that have missing values (Van Buuren, 2018). 
 This is referred to as ‘list-wise deletion’ (LWD). 
-Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018).
+Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018). 
+List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
+It is better to treat the missing data than to ignore it.
+Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates. 
+Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic.
+All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
 
-Imputation refers to ‘filling in’ the missing values in your dataset, based on a model of the observed information.
-Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
-The result of MI as missing data strategy is that the uncertainty in the data due to missingness is preserved in the inference. 
-Under the right conditions, MI yields valid, unbiased estimates (Schafer, 1997).
-The modeling assumptions inherent to a model-based technique like MI, however, cannot be tested.
+<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
 
-FCS has no (deductive) proof, only by simulation.
+### Multiple imputation
 
-With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases. 
-Induction thus only grants *plausible* conclusions--not certainty. 
-
-Statistical analyses are a means to infer conclusions about a certain population after observing only a subset of this population (a sample). With statistical inferences, we aim to distinguish between real-world effects and random noise (Rosenberg & Curtain, 2015). Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).  There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017). I will use the definition by Gelman & Shalizi, according to whom “statistical models are tools that let us draw inductive inferences on a deductive background” (2013, p. 27). Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population. 
-
-In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic (or distribution) to the data that was obtained. The resulting probability (distribution) is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013). The interpretation of confidence intervals (CIs), for instance, is the result of a deductive pattern of reasoning. It is a mathematical fact that at least 95% of all possible sample CIs from a certain population will contain the true population parameter. We do not know, however, whether the CI that we observed in our sample is one of the 95% (or more) that does indeed cover the true population parameter, or that we obtained one of the (less than) 5% CIs without this value. And if we don’t know whether the specific CI observed in our sample contains the true population parameter value or not, we cannot deduce the probability that the true population parameter lies within the bounds of the CI that we observed. To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction. Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning.
-
-MI enables researchers with missing data problems to correct for differences due to missingness. Correcting for missingness happens at two levels: 1) modeling the relation between missing cases and covariates; 2) adding the appropriate variance to the models to represent the uncertainty due to missingness. 
-
-The result is a probability distribution for each missing value, from which we subsequently draw several values as imputations. If we would use infinitely many values as imputations, we would obtain the entire probability distribution. In practice, however, we use a limited number of imputations. With that, we approximate the probability distributions of missing values. The more imputations are used, the better we can represent the uncertainty in the data due to missingness.
-
-statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample. 
-
-### What is MI?
-
-- MI = replace each missing value with a synthetic substitute multiple times.
-- For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution).
-- this generates several imputations: complete*d* datasets.
-- completed data can be analyzed as if the data were complete to begin with.
-- obtain estimates of the analysis of scientific interest on each imputation.
-- estimates are then combined to obtain one pooled estimate [TODO: add SI?].
-- the variance of the estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
-- the variability between imputations reflects uncertainty due to the missingness.
-- [TODO: why single imputation may yield implausible inference]
+MI is the practice of replacing each missing value with a synthetic substitute, multiple times.
+For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution).
+This generates several imputations: complete*d* datasets.
+The completed datasets can be analyzed as if the data were complete to begin with.
+On each completed dataset, we obtain estimates of the analysis of scientific interest.
+These estimates per imputation are then combined to obtain one pooled estimate.
+The variance of the estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
+The variability between imputations reflects uncertainty due to the missingness.
 
 ::: {#fig-workflow}
 
@@ -358,13 +412,43 @@ flowchart LR
     
 ```
 
-::: {style="font-size: 50%;"}
-*Note*. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.
-:::
+`\fignote{Read left to right. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.}`{=latex} 
 
-MI workflow
+
+Multiple imputation workflow ($m=3$)
 
 :::
+Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
+The result of MI is that the uncertainty in the data due to missingness is preserved in the inference. 
+
+<!-- In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic to the data that was obtained. The resulting probability is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013).  -->
+<!-- The interpretation of confidence intervals (CIs), for instance, is the result of a deductive pattern of reasoning.  -->
+<!-- It is a mathematical fact that at least 95% of all possible sample CIs from a certain population will contain the true population parameter.  -->
+<!-- We do not know, however, whether the CI that we observed in our sample is one of the 95% (or more) that does indeed cover the true population parameter, or that we obtained one of the (less than) 5% CIs without this value.  -->
+<!-- And if we don’t know whether the specific CI observed in our sample contains the true population parameter value or not, we cannot deduce the probability that the true population parameter lies within the bounds of the CI that we observed.  -->
+<!-- To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction.  -->
+<!-- Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning. -->
+
+MI enables researchers with missing data problems to correct for differences due to missingness. 
+Correcting for missingness happens at two levels: 1) modeling the relation between missing cases and covariates; 2) adding the appropriate variance to the models to represent the uncertainty due to missingness. 
+
+The result is a probability distribution for each missing value, from which we subsequently draw several values as imputations.
+If we would use infinitely many values as imputations, we would obtain the entire probability distribution. 
+In practice, however, we use a limited number of imputations. 
+With that, we approximate the probability distributions of missing values. 
+The more imputations are used, the better we can represent the uncertainty in the data due to missingness.
+
+
+<!-- With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases.  -->
+<!-- Induction thus only grants *plausible* conclusions--not certainty.  -->
+
+Under the right conditions, MI yields valid, unbiased estimates (Schafer, 1997).
+The modeling assumptions inherent to a model-based technique like MI cannot be tested.
+Statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample. 
+
+FCS has no (deductive) proof, only by simulation.
+
+
 
 ### What is FCS?
 
@@ -463,7 +547,7 @@ Then, imputers can make a 'grounded' assessment which imputation methods may be 
 Example: NRI search for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
 
 - [in simulation study kun je waarheid maken, maar in de praktijk moet je aannames doen. die aannames zijn belangrijk, juist omdat ze niet/ten dele te bewijzen zijn]
-- [what is a simulation study? add a brief methodological background section on simulation studies in statistics]
+- [what is a simulation study? add a brief methodological background section on simulation studies in statistics?]
 
 ### What is computational evaluation?
 
