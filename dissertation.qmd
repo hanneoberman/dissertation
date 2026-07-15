@@ -28,6 +28,8 @@ library(ggmice)
 load("dat_xy.RData")
 ```
 
+<!-- `\fignote{...}`{=latex}  -->
+
 <!-- figure captions: https://stackoverflow.com/questions/73775001/quarto-pdf-document-figure-caption-size -->
 <!-- # Outline -->
 
@@ -324,7 +326,7 @@ Missing data are not a problem with purely descriptive statistics; the problems 
 :::: {#fig-mis}
 
 ```{mermaid}
-%%| fig-height: 2
+%%| fig-height: 2.2
 
 flowchart TD
   A1[population] --sampling--> B1([complete<br> sample])
@@ -334,11 +336,11 @@ x:::hidden ~~~ y:::hidden
 classDef hidden display: none;
 
   A2[population] --sampling--> B2([complete<br> sample]) --non-response--> C2([incomplete<br> sample])
-  style B2 stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
-  C2 --inference--> A2
+  style B2 stroke:#f66,stroke-width:1px,stroke-dasharray: 4
+  C2 --inference with<br>missing data<br>method--> A2
 ```
 
-`\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., business as usual). Right: incomplete sample due to non-response.}`{=latex} 
+`\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., ideal circumstances/business as usual). Right: incomplete sample due to non-response, so no complete sample could be obtained}`{=latex} 
 
 <!-- ::: {style="font-size: 50%;"} -->
 
@@ -346,7 +348,7 @@ classDef hidden display: none;
 
 <!-- ::: -->
 
-Inference with missing data
+Inference with incomplete data
 
 ::::
 
@@ -376,7 +378,7 @@ These estimates per imputation are then combined to obtain one pooled estimate.
 The variance of the estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
 The variability between imputations reflects uncertainty due to the missingness.
 
-::: {#fig-workflow}
+::: {#fig-scheme}
 
 ```{mermaid}
 %%| fig-width: 6.25
@@ -414,8 +416,7 @@ flowchart LR
 
 `\fignote{Read left to right. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.}`{=latex} 
 
-
-Multiple imputation workflow ($m=3$)
+Multiple imputation scheme ($m=3$)
 
 :::
 Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
@@ -472,25 +473,31 @@ FCS has no (deductive) proof, only by simulation.
 - another option would be like smc-fcs: we assume a complete data model and derive the imputations from there.
 :::
 
+::: {#fig-steps}
+
 ```{mermaid}
-%%| fig-height: 8
+%%| fig-height: 7.5
 
 flowchart TB
     inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
+    subgraph build[" "]
+      miss
+      mod
+    end
     miss --> mod[\"`Define imputation model(s)`"/]
     mod --> imp[[Run imputation algorithm]]
     imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
     imps --> conv
-    imps ~~~~ check
     subgraph eval[" "]
-      direction LR
-      conv[\"`Inspect convergence`"/] <--> check[\"`Inspect imputed values`"/]
+      direction TB
+      conv[\"`Inspect convergence`"/] 
+      check[\"`Inspect imputed values`"/]
+      conv <--> check
     end
     conv -- "✘ non-convergence" --> imp
-    conv -- "✓ algorithmic convergence" --> analyses[\"`Run analyses`"/]
     check -- "✘ misfit" --> mod
-    check -- "✓ imputation model fit" --> analyses[\"`Run analyses`"/]
-    analyses --> mira["Extract estimates"]
+    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
+    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
     mira --> pool(["Pool estimates"])
     pool --> mipo["Pooled estimate"]
     inc@{ shape: doc}
@@ -499,16 +506,18 @@ flowchart TB
     mira@{ shape: tri}
 ```
 
-<!-- conv -.-> mod -->
 
-
-- Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).
 <!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
+<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
 
-Computational evaluation is in every trapezoid: processes that require human intervention. 
-In the box with converence and imputed values, the question is 'do the imputation models fit the data?'.
-Statistical evaluation is mainly focused on the relation between the pooled estimates and the incomplete data. 
-In simulation studies, focus is often just on incomplete data and pooled estimates.
+`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
+
+
+Multiple imputation flowchart 
+
+:::
+
+
 
 
 
