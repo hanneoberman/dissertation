@@ -353,18 +353,72 @@ Inference with incomplete data
 ::::
 
 <!-- %%| fig-cap: test -->
+Missing data are annoying because it is impossible to do statistical inferences with incomplete data. 
+It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population. 
+For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population. 
 
-
+Even without a missing data method, there is an implicit missing data method. 
 To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not. 
 The default strategy in most statistical software packages is to ignore all cases that have missing values (Van Buuren, 2018). 
 This is referred to as ‘list-wise deletion’ (LWD). 
 Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018). 
 List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
 It is better to treat the missing data than to ignore it.
-Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates. 
-Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic.
-All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
 
+List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data.
+List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case. 
+<!-- This corresponds to a missing completely at random (MCAR) mechanism; when MCAR does not hold, listwise deletion yields biased estimates. -->
+
+### Why are the missing and observed parts not equivalent? (or: missing data mechanisms)
+
+In that study about trusting the government during the Covid 19 pandemic, it was not random who had missing data on the question about trust in the government. 
+The technical term is 'Missing Not At Random'. 
+The missingness depends on unobserved values themselves (i.e., people who distrust the government are less likely to respond to the trust item); this cannot be resolved from the observed data alone and requires assumptions or external information.
+If we can model the missingness probability based on known data, for example, previous observations or demographic data, we have 'Missing At Random'.
+<!-- We can model the missingness probability using known variables and obtain valid inference if this model is adequate -->
+That is, conditional on this information, we can get to 'missing at random' or 'seen data dependent'. 
+This is in contrast to the 'unseen data dependent' missingness mechanism or 'missing not at random'. 
+If there would be purely random missingness independent of individual characteristics, there is missing completely at random missingness mechanism, for example, due to a glitch in the service software. 
+In human subjects research, pure MCAR is unlikely; methods that implicitly assume MCAR (like listwise deletion) are therefore likely to cause bias.
+In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
+So don't just use list-wise deletion. 
+Treat the missingness to accommodate differences between the observed part of the data and the missing part. 
+
+### How to treat the missing data problem?
+
+There are three broad categories: deletion based methods (e.g. list-wise deletion), methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a regression model), and imputation methods.
+Deletion-based methods do not generally accomodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+Modeling methods do accommodate MAR, but are often quite complex. 
+For example, using 'Bayesian' methods that incorporate the missingness into the analysis model: they jointly specify the data model and missingness model per analysis.
+You have to specify the model for each analysis separately, and there are no null hypothesis significance tests which is a problem when working with applied researchers. 
+Another option to incorporate the missingness in the analysis model is expectation maximization. 
+But this yields many parameters and might not be available for a complex multi-level model like the Covid 19 data. 
+Both of these techniques are tied to a specific analysis model, which might not be suitable for contemporary practitioners who run several models in a data science workflow. 
+Imputation methods do not have these drawbacks of being computationally advanced and analysis-model specific.
+
+Imputation separates the missing data problem from the analysis model and is the focus of this dissertation.
+Why impute?
+Imputation splits the missing data problem from the analysis of scientific interest: first solve missingness, then analyze completed data “as if” they were fully observed.
+This helps when different people are responsible for different parts of a project (e.g., a missing data specialist vs. domain analyst) and when many different analyses are planned on the same data.
+It allows the use of familiar complete‑data methods instead of bespoke incomplete‑data models, and it is widely supported in software: one line of code can resolve the missing data problem.
+Compared to listwise deletion, imputation methods can accommodate MAR mechanisms, and reduce research waste by retaining incomplete cases. 
+Compared to missing data methods that incorporate the missing data like Bayesian methods or EM-based approaches, imputation is more flexible and often less complex for non‑experts.
+
+### How does imputation work? 
+
+We generate imputations to fill in the missing part of the data. We explicitly model the distribution of this missing part based on what is observed. So we use the observed part of the data to fix the missing part of the data. 
+Which types of model or models do we use? 
+The simplest model is no model at all.
+With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
+
+Another simple technique is a univariate statistic such as the mean. Unfortunately, the mean will bias your scientific estimates even worse than list-wise deletion would, because there is no correction for the missing at random missingness mechanism. 
+Mean imputation (and other univariate imputation methods) severely biases estimates and fails to account for MAR mechanisms.
+
+<!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
+Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic.
+Multivariate models such as stochastic regression imputation correct for MAR missingness, but underestimate variance if used as single imputation.
+All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
+Thus, repeat stochastic draws to create a distribution of plausible values per missing datapoint, reflecting the uncertainty due to non‑response.
 <!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
 
 ### Multiple imputation
