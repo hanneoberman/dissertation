@@ -380,7 +380,7 @@ classDef hidden display: none;
   C2 --inference +<br>missing data<br>method--> A2
 ```
 
-`\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., ideal circumstances/business as usual). Right: incomplete sample due to non-response, so no complete sample could be obtained}`{=latex} 
+`\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., ideal circumstances/business as usual). Right: incomplete sample due to non-response, so no complete sample could be obtained. What types of missing data problems are we considering? We are interested in data with incomplete cases and/or variables, or 'item non-response'. Incomplete samples where some---but not all---entries are missing per row or per column. Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables.}`{=latex} 
 
 <!-- ::: {style="font-size: 50%;"} -->
 
@@ -403,14 +403,12 @@ This is referred to as ‘list-wise deletion’ (LWD).
 Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018). 
 List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
 It is better to treat the missing data than to ignore it.
-
-List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data.
 List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case. 
 <!-- This corresponds to a missing completely at random (MCAR) mechanism; when MCAR does not hold, listwise deletion yields biased estimates. -->
 
 ### Why are the missing and observed parts not equivalent? (or: missing data mechanisms)
 
-[TODO: edit!] In that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
+[TODO: edit!] List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data. In that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
 The technical term is 'Missing Not At Random'. 
 The missingness depends on unobserved values themselves (i.e., people who distrust the government are less likely to respond to the trust item); this cannot be resolved from the observed data alone and requires assumptions or external information.
 If we can model the missingness probability based on known data, for example, previous observations or demographic data, we have 'Missing At Random'.
@@ -464,7 +462,7 @@ subgraph MCAR
 
 ```
 
-`\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y}`{=latex} 
+`\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y (Schafer \& Graham)}`{=latex} 
 
 Missing data mechanisms
 :::
@@ -483,27 +481,32 @@ Imputation methods do not have these drawbacks of being computationally advanced
 
 Imputation separates the missing data problem from the analysis model and is the focus of this dissertation.
 Why impute?
-Imputation splits the missing data problem from the analysis of scientific interest: first solve missingness, then analyze completed data “as if” they were fully observed.
-This helps when different people are responsible for different parts of a project (e.g., a missing data specialist vs. domain analyst) and when many different analyses are planned on the same data.
-It allows the use of familiar complete‑data methods instead of bespoke incomplete‑data models, and it is widely supported in software: one line of code can resolve the missing data problem.
-Compared to listwise deletion, imputation methods can accommodate MAR mechanisms, and reduce research waste by retaining incomplete cases. 
+Imputation splits the missing data problem from the analysis of scientific interest: first solve missingness, then analyze completed data 'as if' they were fully observed.
+It allows the use of familiar complete‑data methods instead of bespoke incomplete‑data models.
+This helps when different people are responsible for different parts of a project (e.g., a missing data methodologist vs. domain expert). 
+And when many different analyses are planned on the same data, it is possible to run several analyses without having to incorporate the missingness into the scientific model each time.
+This makes it better suitable within contemporary data science workflows than missing data methods that incorporate the missingness in the substantive model.
+Another advantage is that it is easier.
+Imputation is widely supported in software: one line of code can resolve the missing data problem at once.
 Compared to missing data methods that incorporate the missing data like Bayesian methods or EM-based approaches, imputation is more flexible and often less complex for non‑experts.
+Compared to list-wise deletion, imputation methods offer the ability to accommodate MAR mechanisms, and they reduce research waste by retaining incomplete cases. 
 
 ### How does imputation work? 
 
-We generate imputations to fill in the missing part of the data. We explicitly model the distribution of this missing part based on what is observed. So we use the observed part of the data to fix the missing part of the data. 
+We generate imputations to fill in the missing part of the data. We model the distribution of this missing part based on what is observed. So we use the observed part of the data to fix the missing part of the data. 
 Which types of model or models do we use? 
 The simplest model is no model at all.
-With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
+With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. 
+The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
 
 Another simple technique is a univariate statistic such as the mean. Unfortunately, the mean will bias your scientific estimates even worse than list-wise deletion would, because there is no correction for the missing at random missingness mechanism. 
 Mean imputation (and other univariate imputation methods) severely biases estimates and fails to account for MAR mechanisms.
 
 <!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
 Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic.
-Multivariate models such as stochastic regression imputation correct for MAR missingness, but underestimate variance if used as single imputation.
+Multivariate models such as stochastic regression imputation do correct for MAR missingness, but underestimate variance if used as single imputation.
 All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
-Thus, repeat stochastic draws to create a distribution of plausible values per missing datapoint, reflecting the uncertainty due to non‑response.
+We therefore have to repeat the stochastic draws to create a distribution of plausible values per missing datapoint, reflecting the uncertainty due to non‑response.
 <!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
 
 ### Multiple imputation
@@ -558,6 +561,7 @@ flowchart LR
 Multiple imputation scheme ($m=3$)
 
 :::
+
 Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
 The result of MI is that the uncertainty in the data due to missingness is preserved in the inference. 
 
@@ -594,23 +598,40 @@ FCS has no (deductive) proof, only by simulation.
 
 [TODO: reframe as 'Why MI in the flavor of mice?' I.e., FCS is a flexible and agnostic way to specify conditionals to arrive at a joint. MICE also allows JOMO: a direct and inflexible way to arrive at a joint. With MICE, it's easy to generate synthetic values. mice is not just imputation software, but rather an 'information generating machine'. Describe imputation models, analysis models, non-response model and SMC.]
 
-- In general, imputation methods are developed to solve missing data problems.
-- What types of missing data problems are we considering in this dissertation? Incomplete samples where some---but not all---entries are missing per row or per column. Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. We are interested in data with incomplete cases/variables, or 'item non-response'.
-- Missing observations in incomplete cases/variables can be filled in using an imputation model
-- In the FCS framework [@vanbuuren2006], we need an imputation model for each incomplete variable 
-- fcs is substantive model agnostic, and does not assume any specific joint distribution.
-- while "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
-- imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data)
-- recurring questions: how do we choose an appropriate imputation model? and how do we know whether we have chosen an appropriate imputation model?
-- "Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
-- That's where computational evaluation comes in!
+<!-- - In general, imputation methods are developed to solve missing data problems. -->
 
-::: {.callout}
-# FCS =/= SMC
-- the quality of the imputation model can only be determined/assessed based on the complete data model --> TODO: specify terminology!! --> comp eval also possible without analysis model vs statistical evaluation relies on known analysis model (prangender vandaag want imputation gebruikt voor meer analyses) fcs is substantive model agnostic
-- what if that model is not (yet) available? then take the most complex possible model and check that, because if you would take the simplest model, then that would implcitly mean you are holding/constraining parameters (forcing b=0), systematically suppressing relations.
-- another option would be like smc-fcs: we assume a complete data model and derive the imputations from there.
-:::
+How do we model the missing part of the data based on the observed part of the data?
+Historically, this would be done in two steps: a modeling step and an imputation step.
+In the modeling step, a multivariate distribution of the full dataset would be defined, after which imputations could be drawn from the joint model.
+The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved. 
+But we do not need this joint model.
+Missing observations in incomplete cases/variables can be filled in using one or more imputation models instead.
+In the FCS framework [@vanbuuren2006], we only need an imputation model for each incomplete variable.
+FCS is substantive model agnostic, and does not assume any specific joint distribution.
+FCS will create an implicit joint model.
+While "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
+Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
+We define an imputation model per incomplete variable. And we need two things for this: 1) We need to specify the functional form of the model. For example a semi parametric method such as predictive mean matching for Likert scale items such as trust in the government. And 2) we need to choose imputation model predictors. For example, variables with a high linear association with this incomplete variable, or variables that are related to the missingness indicator of this incomplete variable (such as demographic data). 
+
+Imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data).
+Some things to keep in mind: 
+With FCS, the quality of the imputation model can only be determined/assessed based on the complete data model.
+But what if that model is not (yet) available? 
+Then take the most complex possible model and check that, because if you would take the simplest model, then that would implicitly mean you are constraining parameters (forcing b=0), systematically suppressing relations.
+Don't forget to add the effect of interest in your model of scientific interest. 
+Otherwise, you are constraining the relation between the variables to be zero. 
+If there is a specific data analysis model for the effect of scientific interest that you already have in mind, consider substantive model compatible fully conditional specification. 
+SMC-FCS is optimized for known analysis model models: we assume a complete data model and derive the imputations from there.
+But what if the analysis model is unknown? 
+Well, Fully conditional specification is the substantive model agnostic. 
+So we build an imputation model based on the most complex analysis model that we might want to test. 
+
+FCS implicitly relies on the joint distribution.
+The nice thing about joint modeling is that convergence of the model is guaranteed, whereas this is not the case with fully conditional specification.
+"Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
+The question becomes: how do we choose an appropriate imputation model? And how do we know whether we have chosen an appropriate imputation model?
+<!-- That's where computational evaluation comes in! -->
+
 
 ::: {#fig-steps}
 
@@ -659,6 +680,45 @@ Multiple imputation flowchart
 
 
 
+### How to evaluate imputation models? 
+
+There are three main routes to evaluate imputation models. One can evaluate:
+
+- the formal statistical properties of the method via analytical derivations;
+- the empirical estimates of the method's attributes via simulation studies; and
+- the practical performance in real data.
+
+The first and preferred option is to obtain the formal statistical properties of the imputation method using analytic derivations. 
+Often this is impossible or unfeasible with fully conditional specification, when no known joint model exists. 
+Without this, we cannot definitively conclude that an imputation method is an unbiased estimator. 
+Instead, we estimate the empirical performance of these methods using simulation studies. This is the default evaluation in the missing data methodology field. 
+
+Simulation studies are the standard, but not standardized. 
+If we have a specific analysis model of interest, we can calculate performance metrics such as bias and confidence interval coverage to conclude whether a method is unbiased and confidence valid for a certain estimand.
+This requires a specific analysis model, which might not be the case.
+And it is impossible to cover all the potential use cases. 
+Another problem is that this is not standardized, so it's difficult to compare different simulation studies.
+We could also calculate the imputation accuracy by comparing the imputations against the complete data, but this is ill-advised. 
+
+The third option is the practical performance. 
+This is case by case in applied use with real data applications. 
+We check the imputation model itself, for example to see whether the algorithm has converged. 
+We also inspect the output and we might run sensitivity analyses. 
+This is not systematic at all currently. 
+That is a problem. 
+Users of the method then do not know whether they have correctly applied the method. 
+
+### Verification and validation
+
+Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'. 
+So with verification, we can check the quality of a system by plugging in an input with a known output. Do we get the correct output in return? 
+This is what we do with simulation studies and with unit tests in software. 
+We want to check whether the system or the method in this case conforms to the requirements that we set (e.g. accuracy). 
+
+Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. Is a system able to accomplish its intended use? We can, for example, use integration tests. 
+
+How do methodologists know whether an imputation method works? Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations). 
+How do imputers know whether their imputation models worked? Our current answer is well, they don't know for sure. And that's what this dissertation is all about. 
 
 ### Building and evaluating imputation models
 
@@ -679,6 +739,8 @@ Multiple imputation flowchart
   - ...?
 
 ### Evaluating imputations
+
+- comp eval also possible without analysis model vs statistical evaluation relies on known analysis model (prangender vandaag want imputation gebruikt voor meer analyses) fcs is substantive model agnostic
 
 - FCS has no analytical proof --> rely on evidence from simulation studies
 - has been shown that it works under many conditions
