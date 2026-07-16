@@ -141,9 +141,20 @@ load("dat_xy.RData")
 
 [TODO: complete]
 
-- complete
+- $Y$ = complete data (sized $n \times p$) = $Y=(Y_\mathrm{obs},Y_\mathrm{mis})$ = hypothetically complete data
+- $n$ = number of units (indexed $i=1,\dots,n$)
+- $p$ = number of variables (indexed $j=1,\dots,p$)
+
+- Incomplete data = $Y_\mathrm{obs}$ = observed data (elements of $y_{ij}$ where $r_{ij}=1$)
+- Missing data = $Y_\mathrm{mis}$ = missing data (elements of $y_{ij}$ where $r_{ij}=0$)
+- Response indicator (matrix) = $R$ = response indicator (sized $n \times p$) = The matrix $R$ stores the locations of the missing data in $Y.$ 
+
+- Complete-data model = the model of scientific interest/the model we would like to fit if we had complete data
+- Missing data model = $P(R|...)$ = missing data model (simplified) = The model that explains what is observed, or 'probability to be missing' (often not of direct scientific interest), such as MCAR ($P(R|\psi)$), MAR ($P(R|Y^\mathrm{obs}, X, \psi)$), and MNAR ($P(R|Y^\mathrm{obs}, Y^\mathrm{mis}, X, \psi)$), where $\psi$ = 	parameters of the missing data model that relates $Y$ to $R$ and $X$ = set of covariates, possibly a subset of $Y$
+
+- MCAR: Missing Completely at Random
+
 - imputed
-- missing
 - observed
 - synthetic
 
@@ -261,10 +272,10 @@ For example, when drop-out in a clinical trial is related to the severity of sid
 
 Although imputation is widely supported with software and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
 How can we know when to trust the output of imputation algorithms?
-The ideal route of studying the formal statistical properties of the method via analytical derivations is often impossible for imputation algorithms. Instead, the de facto standard way is to estimate its empirical performance via simulation studies, but these are not standardized across studies and therefore hard to compare. 
-Moreover, simulation study results might not translate to applied use. 
-And finally, there is no systematic format for evaluating the practical performance of imputation algorithms in real-world applications, such as diagnostics for algorithmic convergence. 
-Evaluating whether imputations should be trusted remains challenging. 
+The ideal route of studying the formal statistical properties of the method via analytical derivations is often impossible for imputation algorithms. Instead, the de facto standard way is to estimate their empirical performance via simulation studies, but these are not standardized across studies and therefore hard to compare. 
+Moreover, simulation study results might not always translate to applied use. 
+And for these real-world applications, there is no systematic format for evaluating the practical performance of imputation algorithms, such as diagnostics for algorithmic convergence. 
+Ergo, evaluating whether imputations should be trusted remains challenging. 
 
   <!-- - Theoretical properties: analytically (often impossible) -->
   <!-- - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized) -->
@@ -298,11 +309,11 @@ How? By bridging inferential evaluation and data-/algorithm-level diagnostics fo
 
 My academic tag line has long been "statistician, interdisciplinarian, open scientist". 
 And while there's no doubt I am an interdisciplinarian and an open scientist, I am no longer keen on calling myself a statistician necessarily.
-I am more inclined to call myself a methodologist rather than statistician. 
-
+I am more inclined to say I am a methodologist rather than a statistician. 
 As a methodologist, I am interested in how science is done, and how it can be done better.
 Especially in the social and biomedical sciences, research should not be purely quantitative. 
 Statistics is just *one* way of doing science. 
+
 Don't get me wrong, statistics is still a favorite of mine. I love stats (I even have a mug that says so). 
 Statistics is the science of uncertainty and extracting information from data (Hand, 2010).
 Extracting information from data and turn them into insights can feel magical. 
@@ -335,16 +346,24 @@ In this dissertation, I hope to achieve this for missing data methodology.
 Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population (a sample). 
 If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
 Statisticians call this uncertainty the 'sampling error' due to observing only a subset of the population, which is often expressed as part of the 'standard error' (SE) surrounding the estimates.
-Standard errors then get translated into decision tools for inference such as $p$-values and confidence intervals (CIs).
-These help researchers distinguish between real-world associations (or signal) and noise. 
-Statistics are a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty.
-For example, when sociologists wanted to study the trust in the government during the COVID-19 pandemic, they did not survey all Dutch citizens, but instead used a representative sample. 
-However, when there is just one incomplete observation, statistical inference cannot be performed. 
-With missing values in a dataset, even simple statistics such as the mean of variables are mathematically undefined.
-It is not possible to use an incomplete sample to infer about a larger population without some kind of missing data method. 
+Standard errors then get translated into decision tools for inference such as $p$-values and confidence intervals (CIs), which help researchers distinguish between signal and noise. 
+So, statistics is a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty. 
+
+Generally speaking, statistical inference works really well. 
+For example, when sociologists wanted to study trust in the government during the COVID-19 pandemic, it was not feasible to survey all Dutch citizens. 
+Instead, they used a representative sample. 
+Some thousands of people were asked to fill in a questionnaire about their trust in the government over the course of the pandemic. 
+By repeating the questionnaire over time, the researchers wanted to gain insight into the development of (dis)trust among different subgroups in Dutch society.
+The estimates from this sample would have been used to infer back to the population and inform policy, if it had not been for missing data...
+
+Missing data are a nuisance because it is impossible to do statistical inferences with incomplete data. 
+When there is just one missing value in a dataset, statistical inference cannot be performed. 
+With incomplete data, even simple statistics such as the mean of variables are mathematically undefined.
+<!-- It is not possible to use an incomplete sample to infer about a larger population without .  -->
+To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not. 
 <!-- Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).  -->
 
-:::: {#fig-mis}
+::: {#fig-mis}
 
 ```{mermaid}
 %%| fig-height: 2.2
@@ -358,7 +377,7 @@ classDef hidden display: none;
 
   A2[population] --sampling--> B2([complete<br> sample]) --non-response--> C2([incomplete<br> sample])
   style B2 stroke:#f66,stroke-width:1px,stroke-dasharray: 4
-  C2 --inference with<br>missing data<br>method--> A2
+  C2 --inference +<br>missing data<br>method--> A2
 ```
 
 `\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., ideal circumstances/business as usual). Right: incomplete sample due to non-response, so no complete sample could be obtained}`{=latex} 
@@ -371,15 +390,14 @@ classDef hidden display: none;
 
 Inference with incomplete data
 
-::::
+:::
 
 <!-- %%| fig-cap: test -->
-Missing data are a nuisance because it is impossible to do statistical inferences with incomplete data. 
+To get an estimate from incomplete data, some kind of missing data method has to be employed. 
+Even without specifying a missing data method explicitly, there will be  handling of the missing data. 
 <!-- It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population.  -->
-For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population. 
-
-Even without a missing data method, there is an implicit missing data method. 
-To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not. 
+<!-- For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population.  -->
+<!-- To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not.  -->
 The default strategy in most statistical software packages is to ignore all cases that have missing values (Van Buuren, 2018). 
 This is referred to as ‘list-wise deletion’ (LWD). 
 Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018). 
@@ -392,7 +410,7 @@ List-wise deletion results in bias because it assumes that the observed part of 
 
 ### Why are the missing and observed parts not equivalent? (or: missing data mechanisms)
 
-In that study about trusting the government during the Covid 19 pandemic, it was not random who had missing data on the question about trust in the government. 
+[TODO: edit!] In that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
 The technical term is 'Missing Not At Random'. 
 The missingness depends on unobserved values themselves (i.e., people who distrust the government are less likely to respond to the trust item); this cannot be resolved from the observed data alone and requires assumptions or external information.
 If we can model the missingness probability based on known data, for example, previous observations or demographic data, we have 'Missing At Random'.
@@ -404,6 +422,51 @@ In human subjects research, pure MCAR is unlikely; methods that implicitly assum
 In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
 So don't just use list-wise deletion. 
 Treat the missingness to accommodate differences between the observed part of the data and the missing part. 
+
+::: {#fig-mech}
+```{mermaid}
+%%| fig-width: 6.25
+flowchart TB
+ subgraph MNAR[MNAR]
+    X3["X"]
+    Y3["Y"]
+    Z3["Ψ"]
+    R3["R"]
+
+    X3 <--> Y3
+    Z3 --> R3
+    X3 --> R3
+    Y3 --> R3
+ end
+
+ subgraph MAR
+    X2["X"]
+    Y2["Y"]
+    Z2["Ψ"]
+    R2["R"]
+
+    X2 <--> Y2
+    Z2 --> R2
+    X2 --> R2
+ end
+
+subgraph MCAR
+    X1["X"]
+    Y1["Y"]
+    Z1["Ψ"]
+    R1["R"]
+
+    X1 <--> Y1
+    Z1 --> R1
+
+ end
+
+```
+
+`\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y}`{=latex} 
+
+Missing data mechanisms
+:::
 
 ### How to treat the missing data problem?
 
