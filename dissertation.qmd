@@ -149,7 +149,7 @@ load("dat_xy.RData")
 - Missing data = $Y_\mathrm{mis}$ = missing data (elements of $y_{ij}$ where $r_{ij}=0$)
 - Response indicator (matrix) = $R$ = response indicator (sized $n \times p$) = The matrix $R$ stores the locations of the missing data in $Y.$ 
 
-- Complete-data model = the model of scientific interest/the model we would like to fit if we had complete data
+- Complete-data model = the model of scientific interest/the model we would like to fit if we had complete data = model that yields $Q$, the quantity of scientific interest
 - Missing data model = $P(R|...)$ = missing data model (simplified) = The model that explains what is observed, or 'probability to be missing' (often not of direct scientific interest), such as MCAR ($P(R|\psi)$), MAR ($P(R|Y^\mathrm{obs}, X, \psi)$), and MNAR ($P(R|Y^\mathrm{obs}, Y^\mathrm{mis}, X, \psi)$), where $\psi$ = 	parameters of the missing data model that relates $Y$ to $R$ and $X$ = set of covariates, possibly a subset of $Y$
 
 - MCAR: Missing Completely at Random
@@ -201,6 +201,7 @@ Imputation algorithms are designed to 'impute' (i.e., fill in) missing values in
 Incomplete data occur often in scientific disciplines with human subjects, such as the social science and biomedical research.
 A participant might, for example, drop out of a longitudinal study, or refuse to answer a sensitive question, resulting in gaps in the research data.
 These gaps, or missing values, complicate data analysis and may lead to biased and invalid study results.
+Missing data are ubiquitous and cannot be ignored without risking bias.
 Imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
 Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
 
@@ -469,8 +470,8 @@ Missing data mechanisms
 
 ### How to treat the missing data problem?
 
-There are three broad categories: deletion based methods (e.g. list-wise deletion), methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a regression model), and imputation methods.
-Deletion-based methods do not generally accomodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+[TODO: edit!] There are three broad categories: deletion based methods (e.g. list-wise deletion), methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a regression model), and imputation methods.
+Deletion-based methods do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
 Modeling methods do accommodate MAR, but are often quite complex. 
 For example, using 'Bayesian' methods that incorporate the missingness into the analysis model: they jointly specify the data model and missingness model per analysis.
 You have to specify the model for each analysis separately, and there are no null hypothesis significance tests which is a problem when working with applied researchers. 
@@ -493,7 +494,7 @@ Compared to list-wise deletion, imputation methods offer the ability to accommod
 
 ### How does imputation work? 
 
-We generate imputations to fill in the missing part of the data. We model the distribution of this missing part based on what is observed. So we use the observed part of the data to fix the missing part of the data. 
+[TODO: edit!] We generate imputations to fill in the missing part of the data. We model the distribution of this missing part based on what is observed. So we use the observed part of the data to fix the missing part of the data. 
 Which types of model or models do we use? 
 The simplest model is no model at all.
 With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. 
@@ -708,7 +709,46 @@ This is not systematic at all currently.
 That is a problem. 
 Users of the method then do not know whether they have correctly applied the method. 
 
-### Verification and validation
+In this dissertation, I focus on the second and third routes. 
+We will borrow some terms from related fields.
+I will connect it to concepts from systems and software engineering, and the information retrieval sub-field of computer science.
+
+
+### Computational evaluation, verification and validation
+
+“Systems engineering (White et al. 1993; Stevens et al. 1998; Thayer 2002) is the activity of designing entire systems, taking into account the characteristics of hardware, software, and human elements of these systems. Systems engineering includes everything to do with procuring, specifying, developing, deploying, operating, and maintaining both technical and sociotechnical systems. Systems engineers have to consider the capabilities of hardware and software as well as the system’s interactions with users and its environment. They must think about the system’s services, the constraints under which the system must be built and operated, and the ways in which the system is used.” (p. 552)
+
+“system is more than simply the sum of its parts. … A useful working definition of these types of system is as follows: A system is a purposeful collection of interrelated components of different kinds that work together to deliver a set of services to the system owner and its users.” (p. 556)
+
+“The successful functioning of each system component depends on the functioning of other components” (p. 556)
+
+--> ‘interoperability’ with other systems --> ggmice + ggplot2 + mice
+
+"Human, social, and organizational issues affect the requirements and design of software systems".
+
+Systems engineering is dedicated to the study and development of systems "to support human activities" (Sommerville, 2015, p. 552). 
+
+“Systems that include software fall into two categories: 1. Technical computer-based systems [and] 2 Sociotechnical systems”. (Sommerville, 2015, p. 552)
+“For example, this book was created through a sociotechnical publishing system that includes various processes (creation, editing, layout, etc.) and technical systems (Microsoft Word and Excel, Adobe Illustrator, Indesign, etc.).” (p. 552)
+
+“Sociotechnical systems: include one or more technical systems but, crucially, also people, who understand the purpose of the system, within the system itself. Sociotechnical systems have defined operational processes, and people (the operators) are inherent parts of the system.” (p. 552)
+
+--> imputing is a sociotechnical system, not technical system, while mice is technical. (Sommerville, 2015, p. 552). 
+
+"sociotech systems “do not just include software and hardware but also people, processes, and organizational policies” p. 556)
+
+“a sociotechnical system as a set of layers, where each layer contributes, in some way, to the functioning of the system. At the core is a software-intensive technical system and its operational processes” (p.557)
+
+“Sociotechnical systems are complex systems, which means that it is practically impossible to have a complete understanding, in advance, of their behavior. This complexity leads to three important characteristics of sociotechnical systems: 1. They have emergent properties that are properties of the system as a whole, rather than associated with individual parts of the system. Emergent properties depend on both the system components and the relationships between them. Some of these relationships only come into existence when the system is integrated from its components, so the emergent properties can only be evaluated at that time. Security and dependability are examples of important emergent system properties. 2. They are nondeterministic, so that when presented with a specific input, they may not always produce the same output. The system’s behavior depends on the human operators, and people do not always react in the same way. Furthermore, use of the system may create new relationships between the system components and hence change its emergent behavior. 3. The system’s success criteria are subjective rather than objective. The extent to which the system supports organizational objectives does not just depend on the system itself. It also depends on the stability of these objectives, the relationships
+
+(p. 558)
+
+"Systems have properties that only become apparent when their components are integrated and operate together."
+
+In system life cycle research, there are standards for the evaluation of a system.
+
+When the 'high road' of analytical derivations and proofs are impossible or unfeasible, computer scientists use computational evaluation to assess systems (e.g. algorithms).
+Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies.
 
 Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'. 
 So with verification, we can check the quality of a system by plugging in an input with a known output. Do we get the correct output in return? 
@@ -719,6 +759,24 @@ Then validation, on the other hand, asks whether the system is suitable for oper
 
 How do methodologists know whether an imputation method works? Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations). 
 How do imputers know whether their imputation models worked? Our current answer is well, they don't know for sure. And that's what this dissertation is all about. 
+
+<!-- - verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE) -->
+<!-- - validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE) -->
+<!-- - verification asks whether the system has been built right whereas validation asks whether the right system has been built -->
+
+verification and validation (V&V)
+
+1. process of determining whether the requirements for a system or component are complete and correct, the products of each development phase fulfill the requirements or conditions imposed by the previous phase, and the final system or component complies with specified requirementscf. independent verification and validation
+
+verification and validation (V&V) effort
+
+1. work associated with performing the V&V processes, activities, and tasks [IEEE 1012-2012 IEEE Standard for System and Software Verification and Validation, 3.1.37]
+
+
+validation test
+
+1. test to determine whether an implemented system fulfils its specified requirements [ISO/IEC 2382:2015, Information technology — Vocabulary]
+
 
 ### Building and evaluating imputation models
 
@@ -754,7 +812,7 @@ How do imputers know whether their imputation models worked? Our current answer 
 - some assumptions are impossible to definitively determine (e.g. MNAR), some we can evaluate by looking at the data
 - this is what this dissertation is about: computational evaluation
 
-- In practice, you cannot validate whether the imputation model was appropriate (???), because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
+- In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
 - The best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. This dissertation offers insight and tools to do so.
 - The only setting where we do have the comparative truth (the true but missing values) is simulation studies. 
 Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. 
@@ -787,9 +845,7 @@ Dimensions of computational evaluation: e.g. inferential validity, algorithmic b
 
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
-- verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE)
-- validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE)
-- verification asks whether the system has been built right whereas validation asks whether the right system has been built
+
 
 
 ### Why should we care about computational evaluation of imputation methodology?
