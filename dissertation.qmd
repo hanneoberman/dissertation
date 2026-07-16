@@ -9,8 +9,7 @@ format:
           \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
       mermaid:
         theme: neutral
-toc: true
-toc-depth: 2
+toc: false
 fig-cap-location: top
 execute:
   echo: false
@@ -119,7 +118,14 @@ load("dat_xy.RData")
 
 <!-- # TOC -->
 
+```{=latex}
+\clearpage
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
 \tableofcontents
+}
+```
 
 [TODO: fix which sections are included]
 
@@ -162,8 +168,8 @@ load("dat_xy.RData")
 
 This dissertation is about algorithms and the quality of their output. 
 I investigate how a specific type of data-generating algorithm can be evaluated for use in statistical inferences. 
-The type algorithm in question is the imputation algorithm. 
-Imputation algorithms are algorithms with the purpose of generating plausible values based on a model of the observed information. 
+The type algorithm in question are imputation algorithms. 
+Imputation algorithms are algorithms with the purpose of generating plausible values based on a model of some observed information. 
 This type of algorithm is popular for solving missing data problems.  
 
 <!-- The data-generating algorithms in question are 'imputation' algorithms. -->
@@ -174,7 +180,16 @@ This type of algorithm is popular for solving missing data problems.
 
 <!-- generate several completed versions of an incomplete dataset, which allows data analysts to handle the completed datasets as if they were completely observed.  -->
 
+Missing data problems are timeless, but technological advances have made treating missingness easier than ever. 
+A single line of code can seem to solve your missing data problem nowadays. 
+But is that solution really what you expect? 
+That is what my dissertation is about.
+I want to contribute methodology that facilitates social and biomedical scientists in drawing valid inferences from incomplete data. 
+
 Imputation algorithms are designed to 'impute' (i.e., fill in) missing values in incomplete datasets. 
+Incomplete data occur often in scientific disciplines with human subjects, such as the social science and biomedical research.
+A participant might, for example, drop out of a longitudinal study, or refuse to answer a sensitive question, resulting in gaps in the research data.
+These gaps, or missing values, complicate data analysis and may lead to biased and invalid study results.
 Imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
 Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
 
@@ -226,7 +241,7 @@ ggmice(a, aes(X, Y)) +
 
 <!-- `\fignote{This is plain text turned as LaTeX caption.}`{=latex} -->
 
-Imputation of a missing value
+Multiple imputation of a missing value
 
 :::
 
@@ -244,14 +259,16 @@ For example, when drop-out in a clinical trial is related to the severity of sid
 
 <!-- Imputation is a convenient and popular missing data method.  -->
 
-Although imputation is widely supported with software, and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
-Evaluating whether these imputations should be trusted remains challenging. 
+Although imputation is widely supported with software and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
+How can we know when to trust the output of imputation algorithms?
+The ideal route of studying the formal statistical properties of the method via analytical derivations is often impossible for imputation algorithms. Instead, the de facto standard way is to estimate its empirical performance via simulation studies, but these are not standardized across studies and therefore hard to compare. 
+Moreover, simulation study results might not translate to applied use. 
+And finally, there is no systematic format for evaluating the practical performance of imputation algorithms in real-world applications, such as diagnostics for algorithmic convergence. 
+Evaluating whether imputations should be trusted remains challenging. 
 
-How can we know when to trust the output imputation algorithms?
-
-  - Theoretical properties: analytically (often impossible)
-  - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized)
-  - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic)
+  <!-- - Theoretical properties: analytically (often impossible) -->
+  <!-- - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized) -->
+  <!-- - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic) -->
   
 In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
 I thereby focus on the imputation procedure 'MICE' as implemented in the R package `mice`.
@@ -280,7 +297,7 @@ How? By bridging inferential evaluation and data-/algorithm-level diagnostics fo
 <!-- [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?] -->
 
 My academic tag line has long been "statistician, interdisciplinarian, open scientist". 
-And while there's no doubt I am an interdisciplinarian and an open scientist, I am no longer sure that I am a statistician necessarily.
+And while there's no doubt I am an interdisciplinarian and an open scientist, I am no longer keen on calling myself a statistician necessarily.
 I am more inclined to call myself a methodologist rather than statistician. 
 
 As a methodologist, I am interested in how science is done, and how it can be done better.
@@ -295,16 +312,13 @@ I am most fan of the uncertainty of it all.
 <!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017).  -->
 <!-- Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.  -->
 <!-- "Statistics is both the science of uncertainty and the technology of extracting information from data." - featured in the International Encyclopedia of Statistical Science (Hand, 2010).  -->
-I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. In this dissertation, I hope to achieve this for missing data methodology.
+I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. 
+In this dissertation, I hope to achieve this for missing data methodology.
 
 <!-- The topic of this dissertation is missing data. -->
 <!-- - Methodology and statistics as a tool for expressing/quantifying uncertainty.  -->
 <!-- While statistics is also a research discipline in itself, we develop tools that are domain-agnostic. -->
-Missing data problems are timeless, but technological advances have made treating missingness easier than ever. 
-A single line of code can seem to solve your missing data problem nowadays. 
-But is that solution really what you expect? 
-That is what my dissertation is about.
-I want to contribute methodology that facilitates social and biomedical scientists in drawing valid inferences from incomplete data. 
+
 
 
 <!-- See @fig-workflow. 
@@ -318,10 +332,17 @@ I want to contribute methodology that facilitates social and biomedical scientis
 
 <!-- According to Gelman & Shalizi “statistical models are tools that let us draw inductive inferences on a deductive background” (2013, p. 27).  -->
 
-When there are missing values in a dataset, statistical inference cannot be performed. 
-With just one incomplete observation, simple statistics such as the mean are mathematically undefined.
 Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population (a sample). 
-Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample). 
+If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
+Statisticians call this uncertainty the 'sampling error' due to observing only a subset of the population, which is often expressed as part of the 'standard error' (SE) surrounding the estimates.
+Standard errors then get translated into decision tools for inference such as $p$-values and confidence intervals (CIs).
+These help researchers distinguish between real-world associations (or signal) and noise. 
+Statistics are a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty.
+For example, when sociologists wanted to study the trust in the government during the COVID-19 pandemic, they did not survey all Dutch citizens, but instead used a representative sample. 
+However, when there is just one incomplete observation, statistical inference cannot be performed. 
+With missing values in a dataset, even simple statistics such as the mean of variables are mathematically undefined.
+It is not possible to use an incomplete sample to infer about a larger population without some kind of missing data method. 
+<!-- Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).  -->
 
 :::: {#fig-mis}
 
@@ -353,8 +374,8 @@ Inference with incomplete data
 ::::
 
 <!-- %%| fig-cap: test -->
-Missing data are annoying because it is impossible to do statistical inferences with incomplete data. 
-It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population. 
+Missing data are a nuisance because it is impossible to do statistical inferences with incomplete data. 
+<!-- It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population.  -->
 For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population. 
 
 Even without a missing data method, there is an implicit missing data method. 
