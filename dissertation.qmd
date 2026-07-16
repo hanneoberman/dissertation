@@ -426,7 +426,8 @@ Treat the missingness to accommodate differences between the observed part of th
 ::: {#fig-mech}
 ```{mermaid}
 %%| fig-width: 6.25
-flowchart TB
+graph TB
+linkStyle default interpolate basis
  subgraph MNAR[MNAR]
     X3["X"]
     Y3["Y"]
