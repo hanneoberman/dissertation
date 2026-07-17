@@ -149,7 +149,7 @@ load("dat_xy.RData")
 - - $R$
   - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R=1$) and missing ($R=0$) parts of $Y$ 
 - - $Y_\mathrm{obs}$
-  - observed data (elements of $Y_{ij}$ where $R_{ij}=1$), also called the **incomplete data**
+  - **observed data** (elements of $Y_{ij}$ where $R_{ij}=1$), also called the **incomplete data**
 - - $Y_\mathrm{mis}$
   - **missing data** (elements of $Y_{ij}$ where $R_{ij}=0$)\linebreak
 
@@ -167,14 +167,16 @@ load("dat_xy.RData")
 - - MCAR
   - 'Missing Completely At Random'; missing data mechanism with missing data model $P(R|\psi)$, also called 'not data dependent'
 - - MAR
-  - 'Missing At Random'; missing data mechanism with missing data model $P(R|Y^\mathrm{obs}, X, \psi)$, also called 'seen data dependent'
+  - 'Missing At Random'; missing data mechanism with missing data model $P(R|Y_\mathrm{obs}, X, \psi)$, also called 'seen data dependent'
 - - MNAR
-  - 'Missing Not At Random'; missing data mechanism with  missing data model $P(R|Y^\mathrm{obs}, Y^\mathrm{mis}, X, \psi)$, also called 'unseen data dependent'\linebreak
+  - 'Missing Not At Random'; missing data mechanism with  missing data model $P(R|Y_\mathrm{obs}, Y_\mathrm{mis}, X, \psi)$, also called 'unseen data dependent'\linebreak
   
 - - LWD
   - list-wise deletion
 - - CCA
   - complete case analysis
+- - MI
+  - multiple imputation
 - - JM
   - joint modeling; imputation technique
 - - FCS
@@ -188,22 +190,42 @@ load("dat_xy.RData")
 
 - - $m$
   - number of imputations, indexed $\ell=1,\dots,m$
-- - $\dot{Y}_{\text{imp}, \ell}$
-  - imputed data in imputation number $\ell$ (of $m$ total)
-- - $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$
-  - **completed data** in imputation number $\ell$ (of $m$ total)\linebreak
+- - $\dot{Y}_{\ell}$
+  - **imputed data** in imputation number $\ell$ (of $m$ total)
+- - $Y_\ell$
+  - **completed data** in imputation number $\ell$, consisting of $\{Y_{\text{obs}}, \dot{Y}_\ell\}$ \linebreak
 
 - - $\hat{Q_{\ell}}$
-  - estimate of $Q$ calculated from completed data in imputation number $\ell$ (of $m$ total)
+  - estimate of $Q$ calculated from completed data in imputation number $\ell$
 - - $\bar{Q}$
-  - pooled estimate
+  - pooled estimate based on $m$ imputations
+- - $T$
+  - total variance of $Q - \bar{Q}$
+- - $U$
+  - within-imputation variance due to sampling
+- - $B$
+  - between-imputation variance due to nonresponse
+- - SE
+  - standard error
+- - CI
+  - confidence interval
+- - $\gamma$
+  - fraction of information missing due to nonresponse, also called  'fraction of missing information' (FMI)
+
+- - $Y_j$
+  - incomplete variable; univariate subset of $Y$ (sized $n \times 1$)
+- - $Y_{-j}$
+  - all data in $Y$ except for column $j$ (sized $n \times (p-1)$)
+- - $P(Y_{\text{mis}, j} | ...)$
+  - **imputation model** for column $j$, where  $P(Y_j^\mathrm{mis}|Y_j^\mathrm{obs}, Y_{-j}, R)$ would indicate all other variables are imputation model predictors
+- - PMM
+  - predictive mean matching; imputation method
+
+
 :::
 
 <!-- , consisting of observed data $Y_\mathrm{obs}$ and missing data $Y_\mathrm{mis}$ -->
-<!-- - - $y$ -->
-<!--   - univariate (subset of) $Y$ -->
-<!-- - - $\dot{y}$ -->
-<!--   - imputed values in $y$ -->
+
 
 \newpage
 
@@ -577,9 +599,9 @@ flowchart LR
     A(("$$Y$$"))
     end
     subgraph 2["Imputed data"]
-    B1("$$\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$$")
-    B2("$$\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$$")
-    B3("$$\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$$")
+    B1("$$\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$$")
+    B2("$$\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$$")
+    B3("$$\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$$")
     end
     subgraph 3["Analysis results"]
     C1("$$\hat{Q}_{\ell}$$")
@@ -604,7 +626,7 @@ flowchart LR
     
 ```
 
-`\fignote{Read left to right. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.}`{=latex} 
+`\fignote{Read left to right. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.}`{=latex} 
 
 Multiple imputation scheme ($m=3$)
 
