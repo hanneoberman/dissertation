@@ -137,26 +137,73 @@ load("dat_xy.RData")
 
 \newpage
 
-# Glossary
+# Abbreviations and symbols
 
-[TODO: complete]
+::: {.list-table header-rows=0 tbl-colwidths="[12,88]"}
+- - $n$
+  - number of units or rows in a sample, indexed $i=1,\dots,n$
+- - $p$
+  - number of variables or columns in a sample, indexed $j=1,\dots,p$
+- - $Y$
+  - partially observed sample data (sized $n \times p$), also called the (hypothetically) **complete data**
+- - $R$
+  - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R=1$) and missing ($R=0$) parts of $Y$ 
+- - $Y_\mathrm{obs}$
+  - observed data (elements of $Y_{ij}$ where $R_{ij}=1$), also called the **incomplete data**
+- - $Y_\mathrm{mis}$
+  - **missing data** (elements of $Y_{ij}$ where $R_{ij}=0$)\linebreak
 
-- $Y$ = complete data (sized $n \times p$) = $Y=(Y_\mathrm{obs},Y_\mathrm{mis})$ = hypothetically complete data
-- $n$ = number of units (indexed $i=1,\dots,n$)
-- $p$ = number of variables (indexed $j=1,\dots,p$)
+- - $Q$
+  - quantity of scientific interest; the scientific estimand we would like to estimate if we had complete data
+- - $P(Q | ...)$
+  - **complete-data model**; the analysis model we would like to fit if we had complete data, also called the 'model of scientific interest'
+- - $P(R|...)$ 
+  - **missing data model**; the model that relates $Y$ to $R$, which is interpreted as the 'probability to be missing'; also called the 'response model'
+- - $X$
+  - fully observed sample data for covariate(s) of $Y$
+- - $\psi$
+  - parameter(s) of the missing data model that represent any cause of the missingness unrelated to $X$ and $Y$\linebreak
 
-- Incomplete data = $Y_\mathrm{obs}$ = observed data (elements of $y_{ij}$ where $r_{ij}=1$)
-- Missing data = $Y_\mathrm{mis}$ = missing data (elements of $y_{ij}$ where $r_{ij}=0$)
-- Response indicator (matrix) = $R$ = response indicator (sized $n \times p$) = The matrix $R$ stores the locations of the missing data in $Y.$ 
+- - MCAR
+  - 'Missing Completely At Random'; missing data mechanism with missing data model $P(R|\psi)$, also called 'not data dependent'
+- - MAR
+  - 'Missing At Random'; missing data mechanism with missing data model $P(R|Y^\mathrm{obs}, X, \psi)$, also called 'seen data dependent'
+- - MNAR
+  - 'Missing Not At Random'; missing data mechanism with  missing data model $P(R|Y^\mathrm{obs}, Y^\mathrm{mis}, X, \psi)$, also called 'unseen data dependent'\linebreak
+  
+- - LWD
+  - list-wise deletion
+- - CCA
+  - complete case analysis
+- - JM
+  - joint modeling; imputation technique
+- - FCS
+  - fully conditional specification; imputation technique
+- - SMC-FCS
+  - substantive model compatible fully conditional specification; imputation technique
+- - MICE
+  - multivariate imputation by chained equations algorithm
+- - `mice`
+  - multivariate imputation by chained equations software\linebreak
 
-- Complete-data model = the model of scientific interest/the model we would like to fit if we had complete data = model that yields $Q$, the quantity of scientific interest
-- Missing data model = $P(R|...)$ = missing data model (simplified) = The model that explains what is observed, or 'probability to be missing' (often not of direct scientific interest), such as MCAR ($P(R|\psi)$), MAR ($P(R|Y^\mathrm{obs}, X, \psi)$), and MNAR ($P(R|Y^\mathrm{obs}, Y^\mathrm{mis}, X, \psi)$), where $\psi$ = 	parameters of the missing data model that relates $Y$ to $R$ and $X$ = set of covariates, possibly a subset of $Y$
+- - $m$
+  - number of imputations, indexed $\ell=1,\dots,m$
+- - $\dot{Y}_{\text{imp}, \ell}$
+  - imputed data in imputation number $\ell$ (of $m$ total)
+- - $\{Y_{\text{obs}}, \dot{Y}_{\text{imp}, \ell}\}$
+  - **completed data** in imputation number $\ell$ (of $m$ total)\linebreak
 
-- MCAR: Missing Completely at Random
+- - $\hat{Q_{\ell}}$
+  - estimate of $Q$ calculated from completed data in imputation number $\ell$ (of $m$ total)
+- - $\bar{Q}$
+  - pooled estimate
+:::
 
-- imputed
-- observed
-- synthetic
+<!-- , consisting of observed data $Y_\mathrm{obs}$ and missing data $Y_\mathrm{mis}$ -->
+<!-- - - $y$ -->
+<!--   - univariate (subset of) $Y$ -->
+<!-- - - $\dot{y}$ -->
+<!--   - imputed values in $y$ -->
 
 \newpage
 
