@@ -114,6 +114,19 @@ load("dat_xy.RData")
 
 [TODO: write; may be added after uploading dissertation to MyPhD]
 
+<!-- Stef, Gerko, Thom, Florian, previous MICE members and students (bijv. Mingyang) -->
+<!-- M&S colleagues with shoutout to collabs (bijv. Peter) en mentor Hidde -->
+<!-- UMC colleagues -->
+<!-- OS mensen zoals Bawan & Flavio, OSCU team, OSC-NL (Anna & Mel!), FOST & COSiE -->
+<!-- andere mentorfiguren zoals Merel & Iris, Ella & Heather & rainbowR team -->
+<!-- inspiratoren zoals Ionica en Hanna en Saloni? -->
+<!-- andere teams waar ik bij zat? Daniel & Dong, project met Ed, accreditaties via Rens, scriptie bij Irene en Arjan -->
+
+<!-- niet noemen, wel uitnodiging: -->
+<!-- - CNBP coordinator Stella -->
+<!-- - COSiE team -->
+<!-- - vrienden, koor, fam (incl. oppas Ida) -->
+
 \newpage
 
 <!-- # TOC -->
@@ -141,13 +154,13 @@ load("dat_xy.RData")
 
 ::: {.list-table header-rows=0 tbl-colwidths="[12,88]"}
 - - $n$
-  - number of units or rows in a sample, indexed $i=1,\dots,n$
+  - number of units in a sample or rows in a dataset, indexed $i=1,\dots,n$
 - - $p$
-  - number of variables or columns in a sample, indexed $j=1,\dots,p$
+  - number of variables in a sample or columns in a dataset, indexed $j=1,\dots,p$
 - - $Y$
   - partially observed sample data (sized $n \times p$), also called the (hypothetically) **complete data**
 - - $R$
-  - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R=1$) and missing ($R=0$) parts of $Y$ 
+  - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R_{ij}=1$) and missing ($R_{ij}=0$) parts of $Y$ 
 - - $Y_\mathrm{obs}$
   - **observed data** (elements of $Y_{ij}$ where $R_{ij}=1$), also called the **incomplete data**
 - - $Y_\mathrm{mis}$
@@ -174,7 +187,7 @@ load("dat_xy.RData")
 - - LWD
   - list-wise deletion
 - - CCA
-  - complete case analysis
+  - complete case analysis 
 - - MI
   - multiple imputation
 - - JM
@@ -190,15 +203,24 @@ load("dat_xy.RData")
 
 - - $m$
   - number of imputations, indexed $\ell=1,\dots,m$
+- - PMM
+  - predictive mean matching; imputation method
+- - $Y_j$
+  - incomplete variable; univariate subset of $Y$ (sized $n \times 1$)
+- - $Y_{-j}$
+  - all data in $Y$ except for column $j$ (sized $n \times (p-1)$)
+- - $P(Y_{\text{mis}, j} | ...)$
+  - **imputation model** for column $j$, where  $P(Y_j^\mathrm{mis}|Y_j^\mathrm{obs}, Y_{-j}, R)$ would indicate all other variables are imputation model predictors \linebreak
+  
 - - $\dot{Y}_{\ell}$
   - **imputed data** in imputation number $\ell$ (of $m$ total)
 - - $Y_\ell$
-  - **completed data** in imputation number $\ell$, consisting of $\{Y_{\text{obs}}, \dot{Y}_\ell\}$ \linebreak
-
+  - **completed data** in imputation number $\ell$, consisting of $\{Y_{\text{obs}}, \dot{Y}_\ell\}$
 - - $\hat{Q_{\ell}}$
   - estimate of $Q$ calculated from completed data in imputation number $\ell$
 - - $\bar{Q}$
-  - pooled estimate based on $m$ imputations
+  - pooled estimate based on $m$ imputations  \linebreak
+  
 - - $T$
   - total variance of $Q - \bar{Q}$
 - - $U$
@@ -210,22 +232,16 @@ load("dat_xy.RData")
 - - CI
   - confidence interval
 - - $\gamma$
-  - fraction of information missing due to nonresponse, also called  'fraction of missing information' (FMI)
+  - fraction of information missing due to nonresponse, also called  'fraction of missing information' (FMI) \linebreak
 
-- - $Y_j$
-  - incomplete variable; univariate subset of $Y$ (sized $n \times 1$)
-- - $Y_{-j}$
-  - all data in $Y$ except for column $j$ (sized $n \times (p-1)$)
-- - $P(Y_{\text{mis}, j} | ...)$
-  - **imputation model** for column $j$, where  $P(Y_j^\mathrm{mis}|Y_j^\mathrm{obs}, Y_{-j}, R)$ would indicate all other variables are imputation model predictors
-- - PMM
-  - predictive mean matching; imputation method
+
 
 
 :::
 
 <!-- , consisting of observed data $Y_\mathrm{obs}$ and missing data $Y_\mathrm{mis}$ -->
 
+<!-- CCA en mean imp noemen als verplichte figuren ter volledigehid, maar niet alle voor en nadelen. dus compact houden. info per pagina is belangrijker dan aantal pagina's. geen uitgebreide verhalen van dingen die je ergens anders kunt vinden. JM wel noemen want mice is niet de enige. er bestaan ook andere methodes, waar de specificatie van het model anders geregeld is. in voor compleetheid: meerdere oplossing voor multivariate probleem. -->
 
 \newpage
 
@@ -247,9 +263,9 @@ load("dat_xy.RData")
 <!-- Algorithms are everywhere.  -->
 
 This dissertation is about algorithms and the quality of their output. 
-I investigate how a specific type of data-generating algorithm can be evaluated for use in statistical inferences. 
-The type algorithm in question are imputation algorithms. 
-Imputation algorithms are algorithms with the purpose of generating plausible values based on a model of some observed information. 
+I investigate how a specific type of data-generating algorithm can be evaluated for its use in statistical inferences. 
+The type of algorithm in question are imputation algorithms. 
+Imputation algorithms are algorithms with the purpose of generating plausible data values based on a model of some observed information. 
 This type of algorithm is popular for solving missing data problems.  
 
 <!-- The data-generating algorithms in question are 'imputation' algorithms. -->
@@ -264,17 +280,18 @@ Missing data problems are timeless, but technological advances have made treatin
 A single line of code can seem to solve your missing data problem nowadays. 
 But is that solution really what you expect? 
 That is what my dissertation is about.
-I want to contribute methodology that facilitates social and biomedical scientists in drawing valid inferences from incomplete data. 
+I want to contribute methodology that facilitates drawing valid inferences from incomplete data. 
 
-Imputation algorithms are designed to 'impute' (i.e., fill in) missing values in incomplete datasets. 
-Incomplete data occur often in scientific disciplines with human subjects, such as the social science and biomedical research.
-A participant might, for example, drop out of a longitudinal study, or refuse to answer a sensitive question, resulting in gaps in the research data.
-These gaps, or missing values, complicate data analysis and may lead to biased and invalid study results.
 Missing data are ubiquitous and cannot be ignored without risking bias.
+Missing data occur often in scientific disciplines with human subjects, such as the social sciences and biomedical research.
+A participant in a study might, for example, drop out of a longitudinal trial or refuse to answer a sensitive question, resulting in gaps in the research data.
+These gaps complicate data analysis and may lead to biased and invalid study results.
+Imputation algorithms are designed to 'impute' (i.e., fill in) missing values in incomplete datasets. 
 Imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
-Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
 
-The practice of drawing inference by replacing missing values with several synthetic substitutes is called 'multiple imputation'. 
+Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
+If done several times in parallel, imputation can yield estimates that are both unbiased as well as confidence valid.
+The practice of drawing inference by replacing missing values with several synthetic substitutes is called 'multiple imputation' (MI). 
 @fig-imp provides an example of multiple imputation, where a missing value is replaced several times with plausible substitutes.
 The variability between imputations will reflect the uncertainty due to non-response in the final estimate.
 
@@ -342,9 +359,13 @@ For example, when drop-out in a clinical trial is related to the severity of sid
 
 Although imputation is widely supported with software and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
 How can we know when to trust the output of imputation algorithms?
-The ideal route of studying the formal statistical properties of the method via analytical derivations is often impossible for imputation algorithms. Instead, the de facto standard way is to estimate their empirical performance via simulation studies, but these are not standardized across studies and therefore hard to compare. 
+There are three approaches.
+The ideal route is studying the formal statistical properties of the method via analytical derivations.
+Unfortunately, this is often impossible for imputation algorithms, many of which do not have formal proofs. 
+Instead, the de facto standard way is to estimate their empirical performance via simulation studies. 
+These studies, however, are not standardized and therefore hard to compare. 
 Moreover, simulation study results might not always translate to applied use. 
-And for these real-world applications, there is no systematic format for evaluating the practical performance of imputation algorithms, such as diagnostics for algorithmic convergence. 
+And thirdly, for these real-world applications there is no systematic format for evaluating the practical performance of imputation algorithms, such as diagnostics for algorithmic convergence. 
 Ergo, evaluating whether imputations should be trusted remains challenging. 
 
   <!-- - Theoretical properties: analytically (often impossible) -->
@@ -388,7 +409,7 @@ Don't get me wrong, statistics is still a favorite of mine. I love stats (I even
 Statistics is the science of uncertainty and extracting information from data (Hand, 2010).
 Extracting information from data and turn them into insights can feel magical. 
 Statistical inference allows us to distinguish between real-world effects and random noise (Rosenberg & Curtain, 2015). 
-I am most fan of the uncertainty of it all.
+I am most fan of the uncertainty aspect.
 <!-- Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).   -->
 <!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017).  -->
 <!-- Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.  -->
@@ -413,7 +434,7 @@ In this dissertation, I hope to achieve this for missing data methodology.
 
 <!-- According to Gelman & Shalizi “statistical models are tools that let us draw inductive inferences on a deductive background” (2013, p. 27).  -->
 
-Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population (a sample). 
+Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population: a sample. 
 If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
 Statisticians call this uncertainty the 'sampling error' due to observing only a subset of the population, which is often expressed as part of the 'standard error' (SE) surrounding the estimates.
 Standard errors then get translated into decision tools for inference such as $p$-values and confidence intervals (CIs), which help researchers distinguish between signal and noise. 
@@ -472,22 +493,37 @@ The default strategy in most statistical software packages is to ignore all case
 This is referred to as ‘list-wise deletion’ (LWD). 
 Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018). 
 List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
-It is better to treat the missing data than to ignore it.
-List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case. 
+List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case.
+<!-- It is better to treat the missing data than to ignore it. -->
+ 
 <!-- This corresponds to a missing completely at random (MCAR) mechanism; when MCAR does not hold, listwise deletion yields biased estimates. -->
 
 ### Why are the missing and observed parts not equivalent? (or: missing data mechanisms)
 
-[TODO: edit!] List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data. In that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
-The technical term is 'Missing Not At Random'. 
-The missingness depends on unobserved values themselves (i.e., people who distrust the government are less likely to respond to the trust item); this cannot be resolved from the observed data alone and requires assumptions or external information.
-If we can model the missingness probability based on known data, for example, previous observations or demographic data, we have 'Missing At Random'.
-<!-- We can model the missingness probability using known variables and obtain valid inference if this model is adequate -->
+[TODO: review!] List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data, which seldom holds in practice.
+In practice, the missing part of the data is often missing due to some non-trivial reason, other than pure chance (or 'bad luck').
+If there is a non-chance cause for the missingness across observations, the observed part of the data is not representative of the missing part of the data.
+This relationship can be formulated in terms of a missing data model.
+Missing data models capture the causal relation between the data ($Y$) and the associated missingness indicator ($R$).
+Missing data models thereby reflect the 'probability to be missing' for any given observation. 
+Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled.
+
+There are three missing data mechanisms described by missing data models.
+If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random', or 'not data dependent' (terminology by Rubin and Hand resp.).
+If there is an association between the missingness and the observed part of the data, the missingness is 'at random' (conditional on the observed data) or 'seen data dependent'.
+If the cause of the missingness is missing too, the missingness is 'not at random', or 'unseen data dependent'.
+For example, in that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
+People with lower trust in institutions were also less likely to respond to the questionnaire.
+This resulted in higher missingness rates across participants with lower trust in the government.
+If we can model the missingness probability based on known data, such as  previous observations or demographic data, we have 'Missing At Random'.
 That is, conditional on this information, we can get to 'missing at random' or 'seen data dependent'. 
 This is in contrast to the 'unseen data dependent' missingness mechanism or 'missing not at random'. 
+If the missingness depended the unobserved values themselves (i.e., people who distrust the government are less likely to respond to the trust item and we have no way of correcting for this), we speak of 'Missing Not At Random'.
+This kind of missingness cannot be resolved from the observed data alone and requires assumptions or external information.
+In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
+<!-- We can model the missingness probability using known variables and obtain valid inference if this model is adequate -->
 If there would be purely random missingness independent of individual characteristics, there is missing completely at random missingness mechanism, for example, due to a glitch in the service software. 
 In human subjects research, pure MCAR is unlikely; methods that implicitly assume MCAR (like listwise deletion) are therefore likely to cause bias.
-In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
 So don't just use list-wise deletion. 
 Treat the missingness to accommodate differences between the observed part of the data and the missing part. 
 
