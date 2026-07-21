@@ -617,57 +617,15 @@ This makes imputation better suited for contemporary data science workflows than
 <!-- Another advantage is that it is easier. -->
 Compared to missing data methods that incorporate the missing data like Bayesian methods or EM-based approaches, imputation is more flexible and often less complex for non‑experts.
 Compared to list-wise deletion, imputation methods offer the ability to accommodate MAR mechanisms, and they reduce research waste by retaining incomplete cases. 
-Imputation is widely supported in software: one line of code can resolve the missing data problem at once.
+Imputation thus has the ability to produce unbiased estimates.
+But are they properly uncertain (i.e., confidence-valid) too?
+<!-- Imputation is widely supported in software: one line of code can resolve the missing data problem at once. -->
+That's where multiple imputation (MI) comes in!
 
-### How does imputation work? (or: univariate, joint, chained -- the imputation flavors)
+### Why multiply impute?
 
-[TODO: edit!] The aim is to generate imputations to fill in the missing part of the data. 
-We model the distribution of this missing part based on what is observed, using the observed part of the data to fix the missing part of the data.
-Which types of model or models do we use? 
-How do we model the missing part of the data based on the observed part of the data?
-
-The simplest model is no model at all.
-With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. 
-The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
-Another simple technique is to impute a univariate statistic such as the mean. 
-Unfortunately, imputing the mean will bias your scientific estimates even worse than list-wise deletion would, because there is no correction for the missing at random missingness mechanism. 
-Mean imputation severely biases any multivariate statistics.
-All univariate imputation methods fail to retain multivariate associations in the data and cannot account for MAR mechanisms.
-Instead of imputing variables univariately, imputations should retain the multivariate structure of the data.
-<!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
-
-Capturing the multivariate structure of incomplete data is historically done in two steps: a modeling step and an imputation step.
-In the modeling step, a multivariate distribution of the full dataset would be defined, after which imputations could be drawn from the joint model.
-In a joint model, one specifies $P(Y, X, R)$: the distribution of the incomplete data, complete covariates, and missingness indicator.
-Joint modeling imputation was originally developed for known distributions, such as multivariate normal data.
-With increasing data complexity and dataset size, specifying a joint model might not be feasible.
-The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved. 
-Joint modeling is a direct and inflexible way to arrive at a joint distribution.
-Good thing we do not need this joint model explicitly.
-
-Missing observations can be filled in using one or more imputation models instead.
-In the FCS framework [@vanbuuren2006], we only need an imputation model for each incomplete variable.
-FCS is substantive model agnostic, and does not assume any specific joint distribution.
-FCS will create an implicit joint model.
-While "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
-Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
-
-How to specify imputation models?
-We define an imputation model per incomplete variable. 
-<!-- Imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data). -->
-And we need two things for this: 
-1) We need to specify the functional form of the model. For example a semi parametric method such as predictive mean matching for Likert scale items such as trust in the government. 
-And 2) we need to choose imputation model predictors. 
-For example, variables with a high linear association with this incomplete variable, or variables that are related to the missingness indicator of this incomplete variable (such as demographic data). 
-
-
-
-<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
-
-### Multiple imputation
-
-Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic.
-Multivariate models such as stochastic regression imputation do correct for MAR missingness, but underestimate variance if used as single imputation.
+<!-- Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic. -->
+<!-- Multivariate models such as stochastic regression imputation do correct for MAR missingness, but underestimate variance if used as single imputation. -->
 All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
 We therefore have to repeat the stochastic draws to create a distribution of plausible values per missing datapoint, reflecting the uncertainty due to non‑response.
 
@@ -724,7 +682,6 @@ Multiple imputation scheme ($m=3$)
 
 Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
 The result of MI is that the uncertainty in the data due to missingness is preserved in the inference. 
-
 <!-- In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic to the data that was obtained. The resulting probability is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013).  -->
 <!-- The interpretation of confidence intervals (CIs), for instance, is the result of a deductive pattern of reasoning.  -->
 <!-- It is a mathematical fact that at least 95% of all possible sample CIs from a certain population will contain the true population parameter.  -->
@@ -732,9 +689,55 @@ The result of MI is that the uncertainty in the data due to missingness is prese
 <!-- And if we don’t know whether the specific CI observed in our sample contains the true population parameter value or not, we cannot deduce the probability that the true population parameter lies within the bounds of the CI that we observed.  -->
 <!-- To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction.  -->
 <!-- Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning. -->
-
-MI enables researchers with missing data problems to correct for differences due to missingness. 
 Correcting for missingness happens at two levels: 1) modeling the relation between missing cases and covariates; 2) adding the appropriate variance to the models to represent the uncertainty due to missingness. 
+Under the right conditions, MI yields valid, unbiased estimates (Schafer, 1997).
+MI enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
+The aim is to generate imputations to fill in the missing part of the data. 
+How do we model the missing part of the data based on the observed part of the data?
+
+### How to generate imputations? (or: univariate, joint, chained -- the imputation flavors)
+
+[TODO: edit!] 
+We model the distribution of this missing part based on what is observed, using the observed part of the data to fix the missing part of the data.
+Which types of model or models do we use? 
+
+The simplest model is no model at all.
+With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. 
+The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
+Another simple technique is to impute a univariate statistic such as the mean. 
+Unfortunately, imputing the mean will bias your scientific estimates even worse than list-wise deletion would, because mean imputation severely biases any multivariate statistics downward, and there is no correction for the missing at random missingness mechanisms.
+In general, all univariate imputation methods fail to retain multivariate associations in the data, and therefore cannot account for MAR mechanisms.
+So, instead of imputing variables univariately, imputations should retain the multivariate structure of the data.
+<!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
+
+Capturing the multivariate structure of incomplete data is historically done in two steps: a modeling step and an imputation step.
+In the modeling step, a multivariate distribution of the full dataset would be defined, after which imputations could be drawn from the joint model.
+In a joint model, one specifies $P(Y, X, R)$: the distribution of the incomplete data, complete covariates, and missingness indicator.
+Joint modeling imputation was originally developed for known distributions, such as multivariate normal data.
+With increasing data complexity and dataset size, specifying a joint model might not be feasible.
+The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved. 
+Joint modeling is a direct and inflexible way to arrive at a joint distribution.
+Good thing we do not need this joint model explicitly.
+
+<!-- Why MI in the flavor of mice? -->
+Missing observations can be filled in using one or more imputation models instead.
+While "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
+In the FCS framework [@vanbuuren2006], we only need an imputation model for each incomplete variable.
+Imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data).
+FCS is substantive model agnostic, and does not assume any specific joint distribution.
+Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
+This makes FCS flexible.
+Just specify an imputation model per variable.
+
+### How to define imputation models?
+
+We define an imputation model per incomplete variable. 
+And we need two things for this: 
+1) We need to specify the functional form of the model. For example a semi parametric method such as predictive mean matching for Likert scale items such as trust in the government. 
+And 2) we need to choose imputation model predictors. 
+For example, variables with a high linear association with this incomplete variable, or variables that are related to the missingness indicator of this incomplete variable (such as demographic data). 
+
+<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
 
 The result is a probability distribution for each missing value, from which we subsequently draw several values as imputations.
 If we would use infinitely many values as imputations, we would obtain the entire probability distribution. 
@@ -742,24 +745,13 @@ In practice, however, we use a limited number of imputations.
 With that, we approximate the probability distributions of missing values. 
 The more imputations are used, the better we can represent the uncertainty in the data due to missingness.
 
+<!-- FCS will create an implicit joint model. -->
 
-<!-- With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases.  -->
-<!-- Induction thus only grants *plausible* conclusions--not certainty.  -->
-
-Under the right conditions, MI yields valid, unbiased estimates (Schafer, 1997).
-The modeling assumptions inherent to a model-based technique like MI cannot be tested.
-Statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample. 
-
-FCS has no (deductive) proof, only by simulation.
-
-
-
-### Why MI in the flavor of mice?
+<!-- ### Why MI in the flavor of mice? -->
 
 <!-- [TODO: reframe as 'Why MI in the flavor of mice?' I.e., FCS is a flexible and agnostic way to specify conditionals to arrive at a joint. MICE also allows JOMO: a direct and inflexible way to arrive at a joint. With MICE, it's easy to generate synthetic values. mice is not just imputation software, but rather an 'information generating machine'. Describe imputation models, analysis models, non-response model and SMC.] -->
 
 <!-- - In general, imputation methods are developed to solve missing data problems. -->
-
 
 Some things to keep in mind: 
 With FCS, the quality of the imputation model can only be determined/assessed based on the complete data model.
@@ -779,52 +771,16 @@ The nice thing about joint modeling is that convergence of the model is guarante
 The question becomes: how do we choose an appropriate imputation model? And how do we know whether we have chosen an appropriate imputation model?
 <!-- That's where computational evaluation comes in! -->
 
-
-::: {#fig-steps}
-
-```{mermaid}
-%%| fig-height: 7.5
-
-flowchart TB
-    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
-    subgraph build[" "]
-      miss
-      mod
-    end
-    miss --> mod[\"`Define imputation model(s)`"/]
-    mod --> imp[[Run imputation algorithm]]
-    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
-    imps --> conv
-    subgraph eval[" "]
-      direction TB
-      conv[\"`Inspect convergence`"/] 
-      check[\"`Inspect imputed values`"/]
-      conv <--> check
-    end
-    conv -- "✘ non-convergence" --> imp
-    check -- "✘ misfit" --> mod
-    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
-    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
-    mira --> pool(["Pool estimates"])
-    pool --> mipo["Pooled estimate"]
-    inc@{ shape: doc}
-    imps@{ shape: docs}
-    analyses@{ shape: procs}
-    mira@{ shape: tri}
-```
+FCS has no (deductive) proof, only by simulation.
+The modeling assumptions inherent to a model-based technique like MI cannot be tested.
+Statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample. 
 
 
-<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
-<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
 
-`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
+<!-- ### How to specify imputation models? -->
 
-
-Multiple imputation flowchart 
-
-:::
-
-
+<!-- With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases.  -->
+<!-- Induction thus only grants *plausible* conclusions--not certainty.  -->
 
 
 ### How to evaluate imputation models? 
@@ -941,6 +897,51 @@ validation test
   - non-convergence in the algorithm 
   - mismatch between observed and imputed data distributions (e.g., visual inspection)
   - ...?
+
+
+::: {#fig-steps}
+
+```{mermaid}
+%%| fig-height: 7.5
+
+flowchart TB
+    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
+    subgraph build[" "]
+      miss
+      mod
+    end
+    miss --> mod[\"`Define imputation model(s)`"/]
+    mod --> imp[[Run imputation algorithm]]
+    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
+    imps --> conv
+    subgraph eval[" "]
+      direction TB
+      conv[\"`Inspect convergence`"/] 
+      check[\"`Inspect imputed values`"/]
+      conv <--> check
+    end
+    conv -- "✘ non-convergence" --> imp
+    check -- "✘ misfit" --> mod
+    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
+    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
+    mira --> pool(["Pool estimates"])
+    pool --> mipo["Pooled estimate"]
+    inc@{ shape: doc}
+    imps@{ shape: docs}
+    analyses@{ shape: procs}
+    mira@{ shape: tri}
+```
+
+
+<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
+<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
+
+`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
+
+
+Multiple imputation flowchart 
+
+:::
 
 ### Evaluating imputations
 
