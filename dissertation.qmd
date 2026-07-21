@@ -2,12 +2,13 @@
 title: "Dissertation"
 format:
   pdf:
-      include-in-header:
-        text: |
-          \usepackage[labelfont={bf}]{caption}
-          \usepackage{ragged2e}
-          \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
-      mermaid:
+    # documentclass: report
+    include-in-header:
+      text: |
+        \usepackage[labelfont={bf}]{caption}
+        \usepackage{ragged2e}
+        \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
+    mermaid:
         theme: neutral
 toc: false
 fig-cap-location: top
@@ -264,9 +265,8 @@ load("dat_xy.RData")
 <!-- Algorithms are everywhere.  -->
 
 This dissertation is about algorithms and the quality of their output. 
-I investigate how a specific type of data-generating algorithm can be evaluated for its use in statistical inferences. 
-The type of algorithm in question are imputation algorithms. 
-Imputation algorithms are algorithms with the purpose of generating plausible data values based on a model of some observed information. 
+I investigate how one specific type of data-generating algorithms can be evaluated for use in statistical inferences. 
+The type of algorithms in question are imputation algorithms: algorithms with the purpose of generating plausible data values, based on a model of some observed information. 
 This type of algorithm is popular for solving missing data problems.  
 
 <!-- The data-generating algorithms in question are 'imputation' algorithms. -->
@@ -499,15 +499,15 @@ List-wise deletion results in bias because it assumes that the observed part of 
  
 <!-- This corresponds to a missing completely at random (MCAR) mechanism; when MCAR does not hold, listwise deletion yields biased estimates. -->
 
-### Why are the missing and observed parts not equivalent? (or: missing data mechanisms)
+### Why are the missing and observed parts not equivalent? (or: the missing data mechanisms)
 
-[TODO: review!] List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data, which seldom holds in practice.
+List-wise deletion (complete‑case analysis) assumes that the observed part of the data is representative of the missing part of the data, which seldom holds in practice.
 In practice, the missing part of the data is often missing due to some non-trivial reason, other than pure chance (or 'bad luck').
 If there is a non-chance cause for the missingness across observations, the observed part of the data is not representative of the missing part of the data.
 This relationship can be formulated in terms of a missing data model.
 Missing data models capture the causal relation between the data ($Y$) and the associated missingness indicator ($R$).
 Missing data models thereby reflect the 'probability to be missing' for any given observation. 
-Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled.
+Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled to arrive at unbiased and confidence-valid results.
 
 There are three missing data mechanisms described by missing data models.
 If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random' (MCAR), or 'not data dependent' (terminology by Rubin and Hand resp.).
@@ -563,12 +563,11 @@ Missing data mechanisms
 
 Modeling the non-response can aid the analysis of incomplete data.
 Together with complete-data models (i.e., the model of scientific interest), data models inform data analysts how the missingness might affect the scientific estimates.
-For example, in that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
+For example, in that study about trust in the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
 People with lower trust in institutions were also less likely to respond to the questionnaire.
 This resulted in higher missingness rates across participants with lower trust in the government.
 Using only the observed data to infer to the population would then leads to biased estimates (over-estimation) of trust in the government.
 Methods that implicitly assume MCAR (like list-wise deletion) are therefore likely to cause bias.
-In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
 
 In human subjects research, pure MCAR missingness is unlikely.
 <!-- In that case, a MCAR missingness mechanism has to be excluded as an option. -->
@@ -582,13 +581,20 @@ This is in contrast to the 'unseen data dependent' missingness mechanism or 'mis
 If the missingness depended the unobserved values themselves, we speak of 'Missing Not At Random'.
 For example, when people who distrust the government are less likely to respond to the trust item, and we have no way of correcting for this.
 This kind of missingness cannot be resolved from the observed data alone and requires assumptions or external information.
+In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions.
 Differences between the observed part of the data and the missing part can be accommodated by treating the missing data problem. 
 
-### How to treat the missing data problem?
+### How to treat the missing data problem? (or: ignore, model, fill in -- the missing data methods)
 
-[TODO: review!] There are three main routes for treating missing data.
+There are three main routes for treating missing data.
 The first one is deletion based methods, such as list-wise deletion.
-Deletion-based methods do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+These methods are easy to apply, sometimes even applied by default in statistical analysis software.
+Deletion-based methods, however, do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+Under non-MCAR missingness, deletion-based methods risk bias.
+Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste.
+Deletion-based methods do little harm is the missingness level is low, and might even be the best missing data method under some conditions (see van Buuren, 2018, $\S$ 2.7).
+Deletion-based methods do not treat the missing data as much as ignore them.
+
 Secondly, there are methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a multiple linear regression model).
 Modeling methods do accommodate MAR, but are often quite complex. 
 These missing data methods jointly specify the complete-data model and missing data model per analysis.
@@ -597,9 +603,9 @@ But you have to specify the model for each analysis separately, and there are no
 Another option to incorporate the missingness in the analysis model is expectation maximization. 
 But this yields many parameters and might not be available for a complex multilevel model like the COVID-19 data. 
 Both of these techniques are tied to a specific analysis model, which might not be suitable for contemporary practitioners who run several models in a data science workflow. 
+
 Thirdly, there are imputation methods.
 Imputation methods do not have these drawbacks of being computationally advanced and analysis-model specific.
-
 <!-- Imputation separates the missing data problem from the analysis model and is the focus of this dissertation. -->
 <!-- Why impute? -->
 Imputation splits the missing data problem from the analysis of scientific interest.
@@ -613,27 +619,57 @@ Compared to missing data methods that incorporate the missing data like Bayesian
 Compared to list-wise deletion, imputation methods offer the ability to accommodate MAR mechanisms, and they reduce research waste by retaining incomplete cases. 
 Imputation is widely supported in software: one line of code can resolve the missing data problem at once.
 
-### How does imputation work? 
+### How does imputation work? (or: univariate, joint, chained -- the imputation flavors)
 
 [TODO: edit!] The aim is to generate imputations to fill in the missing part of the data. 
-We model the distribution of this missing part based on what is observed. 
-So we use the observed part of the data to fix the missing part of the data.
+We model the distribution of this missing part based on what is observed, using the observed part of the data to fix the missing part of the data.
 Which types of model or models do we use? 
+How do we model the missing part of the data based on the observed part of the data?
+
 The simplest model is no model at all.
 With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. 
 The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
-
-Another simple technique is a univariate statistic such as the mean. Unfortunately, the mean will bias your scientific estimates even worse than list-wise deletion would, because there is no correction for the missing at random missingness mechanism. 
-Mean imputation (and other univariate imputation methods) severely biases estimates and fails to account for MAR mechanisms.
-
+Another simple technique is to impute a univariate statistic such as the mean. 
+Unfortunately, imputing the mean will bias your scientific estimates even worse than list-wise deletion would, because there is no correction for the missing at random missingness mechanism. 
+Mean imputation severely biases any multivariate statistics.
+All univariate imputation methods fail to retain multivariate associations in the data and cannot account for MAR mechanisms.
+Instead of imputing variables univariately, imputations should retain the multivariate structure of the data.
 <!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
+
+Capturing the multivariate structure of incomplete data is historically done in two steps: a modeling step and an imputation step.
+In the modeling step, a multivariate distribution of the full dataset would be defined, after which imputations could be drawn from the joint model.
+In a joint model, one specifies $P(Y, X, R)$: the distribution of the incomplete data, complete covariates, and missingness indicator.
+Joint modeling imputation was originally developed for known distributions, such as multivariate normal data.
+With increasing data complexity and dataset size, specifying a joint model might not be feasible.
+The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved. 
+Joint modeling is a direct and inflexible way to arrive at a joint distribution.
+Good thing we do not need this joint model explicitly.
+
+Missing observations can be filled in using one or more imputation models instead.
+In the FCS framework [@vanbuuren2006], we only need an imputation model for each incomplete variable.
+FCS is substantive model agnostic, and does not assume any specific joint distribution.
+FCS will create an implicit joint model.
+While "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
+Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
+
+How to specify imputation models?
+We define an imputation model per incomplete variable. 
+<!-- Imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data). -->
+And we need two things for this: 
+1) We need to specify the functional form of the model. For example a semi parametric method such as predictive mean matching for Likert scale items such as trust in the government. 
+And 2) we need to choose imputation model predictors. 
+For example, variables with a high linear association with this incomplete variable, or variables that are related to the missingness indicator of this incomplete variable (such as demographic data). 
+
+
+
+<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
+
+### Multiple imputation
+
 Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic.
 Multivariate models such as stochastic regression imputation do correct for MAR missingness, but underestimate variance if used as single imputation.
 All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
 We therefore have to repeat the stochastic draws to create a distribution of plausible values per missing datapoint, reflecting the uncertainty due to non‑response.
-<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
-
-### Multiple imputation
 
 MI is the practice of replacing each missing value with a synthetic substitute, multiple times.
 For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution).
@@ -718,26 +754,13 @@ FCS has no (deductive) proof, only by simulation.
 
 
 
-### What is FCS?
+### Why MI in the flavor of mice?
 
-[TODO: reframe as 'Why MI in the flavor of mice?' I.e., FCS is a flexible and agnostic way to specify conditionals to arrive at a joint. MICE also allows JOMO: a direct and inflexible way to arrive at a joint. With MICE, it's easy to generate synthetic values. mice is not just imputation software, but rather an 'information generating machine'. Describe imputation models, analysis models, non-response model and SMC.]
+<!-- [TODO: reframe as 'Why MI in the flavor of mice?' I.e., FCS is a flexible and agnostic way to specify conditionals to arrive at a joint. MICE also allows JOMO: a direct and inflexible way to arrive at a joint. With MICE, it's easy to generate synthetic values. mice is not just imputation software, but rather an 'information generating machine'. Describe imputation models, analysis models, non-response model and SMC.] -->
 
 <!-- - In general, imputation methods are developed to solve missing data problems. -->
 
-How do we model the missing part of the data based on the observed part of the data?
-Historically, this would be done in two steps: a modeling step and an imputation step.
-In the modeling step, a multivariate distribution of the full dataset would be defined, after which imputations could be drawn from the joint model.
-The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved. 
-But we do not need this joint model.
-Missing observations in incomplete cases/variables can be filled in using one or more imputation models instead.
-In the FCS framework [@vanbuuren2006], we only need an imputation model for each incomplete variable.
-FCS is substantive model agnostic, and does not assume any specific joint distribution.
-FCS will create an implicit joint model.
-While "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
-Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
-We define an imputation model per incomplete variable. And we need two things for this: 1) We need to specify the functional form of the model. For example a semi parametric method such as predictive mean matching for Likert scale items such as trust in the government. And 2) we need to choose imputation model predictors. For example, variables with a high linear association with this incomplete variable, or variables that are related to the missingness indicator of this incomplete variable (such as demographic data). 
 
-Imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data).
 Some things to keep in mind: 
 With FCS, the quality of the imputation model can only be determined/assessed based on the complete data model.
 But what if that model is not (yet) available? 
@@ -1013,7 +1036,12 @@ Dimensions of computational evaluation: e.g. inferential validity, algorithmic b
 - lifecycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data.
 - two types of evaluation: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (computational evaluation).
 
-[TODO: remove what I will not address! Maybe add a sentence 'You might expect me to go into...' In the category non-response: just item, and M(C)AR mech. In the category imputation algo: just FCS. In the category substantive models: just GLM for stat inference.] In this dissertation, we will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models. The applications are aimed at statistical inference (not prediction or causal inference).
+In this dissertation, we will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. 
+You might expect me to go into...
+
+- In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. 
+- In the category imputation algorithms: just FCS in the flavor of MICE (not JOMO or SMC-FCS). The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models. 
+- In the category substantive models: just GLM for statistical inference. The applications are aimed at statistical inference (not prediction or causal inference).
 
 ### Chapters
 
