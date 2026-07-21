@@ -410,9 +410,10 @@ Especially in the social and biomedical sciences, research should not be purely 
 Statistics is just *one* way of doing science. 
 
 Don't get me wrong, statistics is still a favorite of mine. I love stats (I even have a mug that says so). 
-Statistics is the science of uncertainty and extracting information from data (Hand, 2010).
+Statistics is the science of uncertainty and extracting information from data [@hand2025].
+<!-- Statistics is both the science of uncertainty and the technology of extracting information from data. (Hand, 2025, p. 2654) -->
 Extracting information from data and turn them into insights can feel magical. 
-Statistical inference allows us to distinguish between real-world effects and random noise (Rosenberg & Curtain, 2015). 
+Statistical inference allows us to distinguish between real-world effects and random noise [@rosenberg2018]. 
 I am most fan of the uncertainty aspect.
 <!-- Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).   -->
 <!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017).  -->
@@ -493,9 +494,9 @@ Even without specifying a missing data method explicitly, there will be  handlin
 <!-- It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population.  -->
 <!-- For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population.  -->
 <!-- To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not.  -->
-The default strategy in most statistical software packages is to ignore all cases that have missing values (Van Buuren, 2018). 
+The default strategy in most statistical software packages is to ignore all cases that have missing values [@buur18]. 
 This is referred to as ‘list-wise deletion’ (LWD). 
-Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; Van Buuren, 2018). 
+Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; [@buur18]). 
 List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
 List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case.
 <!-- It is better to treat the missing data than to ignore it. -->
@@ -534,7 +535,7 @@ If the cause of the missingness is missing too, the missingness is 'not at rando
     \node (Z1) at (2,1.5) {$\psi$};
     \node (R1) at (2,0)   {$R$};
     
-    \draw[->] (X1) -- (Y1);
+    \draw[<->] (X1) -- (Y1);
     \draw[->] (Z1) -- (R1);
     
     \node (mcar) at (1, 2.5) {MCAR};
@@ -548,7 +549,7 @@ If the cause of the missingness is missing too, the missingness is 'not at rando
     \node (Z2) at (2,1.5) {$\psi$};
     \node (R2) at (2,0)   {$R$};
 
-    \draw[->] (X2) -- (Y2);
+    \draw[<->] (X2) -- (Y2);
     \draw[->] (X2) -- (R2);
     \draw[->] (Z2) -- (R2);
 
@@ -563,7 +564,7 @@ If the cause of the missingness is missing too, the missingness is 'not at rando
     \node (Z3) at (2,1.5) {$\psi$};
     \node (R3) at (2,0)   {$R$};
 
-    \draw[->] (X3) -- (Y3);
+    \draw[<->] (X3) -- (Y3);
     \draw[->] (X3) -- (R3);
     \draw[->] (Y3) -- (R3);
     \draw[->] (Z3) -- (R3);
@@ -575,10 +576,12 @@ If the cause of the missingness is missing too, the missingness is 'not at rando
 \end{tikzpicture}
 ```
 
-`\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y (adapted from Schafer \& Graham)}`{=latex} 
+`\fignote{Incomplete data $Y$ and fully observed covariate $X$ covary. Under missing completely at random missingness (MCAR), the missingness indicator $R$ is only affected by $\psi$, causes of the missingness unrelated to $X$ and $Y$. Under MAR, the missingness also depends on observed information ($X$), whereas MNAR entails missingness that is dependent on the missing data itself ($Y$). Figure adapted from Schafer \& Graham.}`{=latex} 
 
 Missing data mechanisms
 :::
+
+<!-- tikz in quarto https://github.com/orgs/quarto-dev/discussions/8925 -->
 
 Modeling the non-response can aid the analysis of incomplete data.
 Together with complete-data models (i.e., the model of scientific interest), data models inform data analysts how the missingness might affect the scientific estimates.
@@ -611,7 +614,7 @@ These methods are easy to apply, sometimes even applied by default in statistica
 Deletion-based methods, however, do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
 Under non-MCAR missingness, deletion-based methods risk bias.
 Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste.
-Deletion-based methods do little harm is the missingness level is low, and might even be the best missing data method under some conditions (see van Buuren, 2018, $\S$ 2.7).
+Deletion-based methods do little harm is the missingness level is low, and might even be the best missing data method under some conditions (see [@buur18], $\S$ 2.7).
 Deletion-based methods do not treat the missing data as much as ignore them.
 
 Secondly, there are methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a multiple linear regression model).
@@ -709,7 +712,7 @@ The result of MI is that the uncertainty in the data due to missingness is prese
 <!-- To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction.  -->
 <!-- Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning. -->
 Correcting for missingness happens at two levels: 1) modeling the relation between missing cases and covariates; 2) adding the appropriate variance to the models to represent the uncertainty due to missingness. 
-Under the right conditions, MI yields valid, unbiased estimates (Schafer, 1997).
+Under the right conditions, MI yields valid, unbiased estimates [@schafer1997].
 MI enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
 The aim is to generate imputations to fill in the missing part of the data. 
 How do we model the missing part of the data based on the observed part of the data?
