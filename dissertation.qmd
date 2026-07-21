@@ -588,33 +588,36 @@ Differences between the observed part of the data and the missing part can be ac
 
 [TODO: review!] There are three main routes for treating missing data.
 The first one is deletion based methods, such as list-wise deletion.
-Secondly, there are methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a multiple linear regression model).
-And thirdly, there are imputation methods.
 Deletion-based methods do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+Secondly, there are methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a multiple linear regression model).
 Modeling methods do accommodate MAR, but are often quite complex. 
+These missing data methods jointly specify the complete-data model and missing data model per analysis.
 For example, Bayesian methods can incorporate the missingness into the analysis model. 
-they jointly specify the data model and missingness model per analysis.
-You have to specify the model for each analysis separately, and there are no null hypothesis significance tests which is a problem when working with applied researchers. 
+But you have to specify the model for each analysis separately, and there are no null hypothesis significance tests which is a problem when working with applied researchers. 
 Another option to incorporate the missingness in the analysis model is expectation maximization. 
-But this yields many parameters and might not be available for a complex multi-level model like the Covid 19 data. 
+But this yields many parameters and might not be available for a complex multilevel model like the COVID-19 data. 
 Both of these techniques are tied to a specific analysis model, which might not be suitable for contemporary practitioners who run several models in a data science workflow. 
+Thirdly, there are imputation methods.
 Imputation methods do not have these drawbacks of being computationally advanced and analysis-model specific.
 
-Imputation separates the missing data problem from the analysis model and is the focus of this dissertation.
-Why impute?
-Imputation splits the missing data problem from the analysis of scientific interest: first solve missingness, then analyze completed data 'as if' they were fully observed.
-It allows the use of familiar complete‑data methods instead of bespoke incomplete‑data models.
-This helps when different people are responsible for different parts of a project (e.g., a missing data methodologist vs. domain expert). 
+<!-- Imputation separates the missing data problem from the analysis model and is the focus of this dissertation. -->
+<!-- Why impute? -->
+Imputation splits the missing data problem from the analysis of scientific interest.
+Imputation methods first solve for the missingness, to then analyze the  completed data 'as if' they were fully observed.
+This allows the use of familiar complete‑data methods instead of bespoke incomplete‑data models.
+Imputation is useful when different people are responsible for different parts of a project (e.g., a missing data methodologist vs. domain expert). 
 And when many different analyses are planned on the same data, it is possible to run several analyses without having to incorporate the missingness into the scientific model each time.
-This makes it better suitable within contemporary data science workflows than missing data methods that incorporate the missingness in the substantive model.
-Another advantage is that it is easier.
-Imputation is widely supported in software: one line of code can resolve the missing data problem at once.
+This makes imputation better suited for contemporary data science workflows than missing data methods that incorporate the missingness in the substantive model.
+<!-- Another advantage is that it is easier. -->
 Compared to missing data methods that incorporate the missing data like Bayesian methods or EM-based approaches, imputation is more flexible and often less complex for non‑experts.
 Compared to list-wise deletion, imputation methods offer the ability to accommodate MAR mechanisms, and they reduce research waste by retaining incomplete cases. 
+Imputation is widely supported in software: one line of code can resolve the missing data problem at once.
 
 ### How does imputation work? 
 
-[TODO: edit!] We generate imputations to fill in the missing part of the data. We model the distribution of this missing part based on what is observed. So we use the observed part of the data to fix the missing part of the data. 
+[TODO: edit!] The aim is to generate imputations to fill in the missing part of the data. 
+We model the distribution of this missing part based on what is observed. 
+So we use the observed part of the data to fix the missing part of the data.
 Which types of model or models do we use? 
 The simplest model is no model at all.
 With hot deck imputation, we use random other person's observation to impute or fill in the values for people with a missing data point. 
