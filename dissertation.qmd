@@ -7,11 +7,14 @@ format:
       text: |
         \usepackage[labelfont={bf}]{caption}
         \usepackage{ragged2e}
+        \usepackage{tikz}
         \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
     mermaid:
         theme: neutral
 toc: false
 fig-cap-location: top
+filters:
+  - diagram
 execute:
   echo: false
 bibliography: dissertation.bib
@@ -516,44 +519,60 @@ If the cause of the missingness is missing too, the missingness is 'not at rando
 @fig-mech provides a graphical representation of these three mechanisms, where the missingness ($R$) in incomplete data $Y$ either depends on $Y$ itself (i.e., MNAR), on observed covariate(s) $X$ (i.e., MAR), or none of these (i.e., MCAR).
 
 ::: {#fig-mech}
-```{mermaid}
-%%| fig-width: 6.25
-graph TB
-linkStyle default interpolate basis
- subgraph MNAR[MNAR]
-    X3["X"]
-    Y3["Y"]
-    Z3["Ψ"]
-    R3["R"]
 
-    X3 <--> Y3
-    Z3 --> R3
-    X3 --> R3
-    Y3 --> R3
- end
+``` tikz
+\begin{tikzpicture}[
+    >=stealth,
+    node distance=1.5cm,
+    every node/.style={font=\small}
+]
 
- subgraph MAR
-    X2["X"]
-    Y2["Y"]
-    Z2["Ψ"]
-    R2["R"]
+% ------- MCAR -------
+\begin{scope}[shift={(0,0)}]
+    \node (X1) at (0,1.5) {$X$};
+    \node (Y1) at (0,0)   {$Y$};
+    \node (Z1) at (2,1.5) {$\psi$};
+    \node (R1) at (2,0)   {$R$};
+    
+    \draw[->] (X1) -- (Y1);
+    \draw[->] (Z1) -- (R1);
+    
+    \node (mcar) at (1, 2.5) {MCAR};
 
-    X2 <--> Y2
-    Z2 --> R2
-    X2 --> R2
- end
+\end{scope}
 
-subgraph MCAR
-    X1["X"]
-    Y1["Y"]
-    Z1["Ψ"]
-    R1["R"]
+% ------- MAR -------
+\begin{scope}[shift={(5,0)}]
+    \node (X2) at (0,1.5) {$X$};
+    \node (Y2) at (0,0)   {$Y$};
+    \node (Z2) at (2,1.5) {$\psi$};
+    \node (R2) at (2,0)   {$R$};
 
-    X1 <--> Y1
-    Z1 --> R1
+    \draw[->] (X2) -- (Y2);
+    \draw[->] (X2) -- (R2);
+    \draw[->] (Z2) -- (R2);
 
- end
+    \node (mar) at (1, 2.5) {MAR};
 
+\end{scope}
+
+% ------- MNAR -------
+\begin{scope}[shift={(10,0)}]
+    \node (X3) at (0,1.5) {$X$};
+    \node (Y3) at (0,0)   {$Y$};
+    \node (Z3) at (2,1.5) {$\psi$};
+    \node (R3) at (2,0)   {$R$};
+
+    \draw[->] (X3) -- (Y3);
+    \draw[->] (X3) -- (R3);
+    \draw[->] (Y3) -- (R3);
+    \draw[->] (Z3) -- (R3);
+
+    \node (mnar) at (1, 2.5) {MNAR};
+
+\end{scope}
+
+\end{tikzpicture}
 ```
 
 `\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y (adapted from Schafer \& Graham)}`{=latex} 
