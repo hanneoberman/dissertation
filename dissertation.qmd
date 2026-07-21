@@ -160,7 +160,7 @@ load("dat_xy.RData")
 - - $Y$
   - partially observed sample data (sized $n \times p$), also called the (hypothetically) **complete data**
 - - $R$
-  - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R_{ij}=1$) and missing ($R_{ij}=0$) parts of $Y$ 
+  - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R_{ij}=1$) and missing ($R_{ij}=0$) parts of $Y$
 - - $Y_\mathrm{obs}$
   - **observed data** (elements of $Y_{ij}$ where $R_{ij}=1$), also called the **incomplete data**
 - - $Y_\mathrm{mis}$
@@ -173,7 +173,7 @@ load("dat_xy.RData")
 - - $P(R|...)$ 
   - **missing data model**; the model that relates $Y$ to $R$, which is interpreted as the 'probability to be missing'; also called the 'response model'
 - - $X$
-  - fully observed sample data for covariate(s) of $Y$
+  - fully observed sample data for covariate(s) of $Y$, used in missing data models
 - - $\psi$
   - parameter(s) of the missing data model that represent any cause of the missingness unrelated to $X$ and $Y$\linebreak
 
@@ -203,8 +203,8 @@ load("dat_xy.RData")
 
 - - $m$
   - number of imputations, indexed $\ell=1,\dots,m$
-- - PMM
-  - predictive mean matching; imputation method
+- - $P(Y, X, R)$
+  - joint model
 - - $Y_j$
   - incomplete variable; univariate subset of $Y$ (sized $n \times 1$)
 - - $Y_{-j}$
@@ -234,7 +234,8 @@ load("dat_xy.RData")
 - - $\gamma$
   - fraction of information missing due to nonresponse, also called  'fraction of missing information' (FMI) \linebreak
 
-
+- - PMM
+  - predictive mean matching; imputation method
 
 
 :::
@@ -509,23 +510,10 @@ Missing data models thereby reflect the 'probability to be missing' for any give
 Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled.
 
 There are three missing data mechanisms described by missing data models.
-If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random', or 'not data dependent' (terminology by Rubin and Hand resp.).
-If there is an association between the missingness and the observed part of the data, the missingness is 'at random' (conditional on the observed data) or 'seen data dependent'.
-If the cause of the missingness is missing too, the missingness is 'not at random', or 'unseen data dependent'.
-For example, in that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
-People with lower trust in institutions were also less likely to respond to the questionnaire.
-This resulted in higher missingness rates across participants with lower trust in the government.
-If we can model the missingness probability based on known data, such as  previous observations or demographic data, we have 'Missing At Random'.
-That is, conditional on this information, we can get to 'missing at random' or 'seen data dependent'. 
-This is in contrast to the 'unseen data dependent' missingness mechanism or 'missing not at random'. 
-If the missingness depended the unobserved values themselves (i.e., people who distrust the government are less likely to respond to the trust item and we have no way of correcting for this), we speak of 'Missing Not At Random'.
-This kind of missingness cannot be resolved from the observed data alone and requires assumptions or external information.
-In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
-<!-- We can model the missingness probability using known variables and obtain valid inference if this model is adequate -->
-If there would be purely random missingness independent of individual characteristics, there is missing completely at random missingness mechanism, for example, due to a glitch in the service software. 
-In human subjects research, pure MCAR is unlikely; methods that implicitly assume MCAR (like listwise deletion) are therefore likely to cause bias.
-So don't just use list-wise deletion. 
-Treat the missingness to accommodate differences between the observed part of the data and the missing part. 
+If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random' (MCAR), or 'not data dependent' (terminology by Rubin and Hand resp.).
+If there is an association between the missingness and the observed part of the data, the missingness is 'at random' (MAR; conditional on the observed data) or 'seen data dependent'.
+If the cause of the missingness is missing too, the missingness is 'not at random' (MNAR), or 'unseen data dependent'. 
+@fig-mech provides a graphical representation of these three mechanisms, where the missingness ($R$) in incomplete data $Y$ either depends on $Y$ itself (i.e., MNAR), on observed covariate(s) $X$ (i.e., MAR), or none of these (i.e., MCAR).
 
 ::: {#fig-mech}
 ```{mermaid}
@@ -568,17 +556,44 @@ subgraph MCAR
 
 ```
 
-`\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y (Schafer \& Graham)}`{=latex} 
+`\fignote{Y = incomplete data, X = fully observed covariate, R = missingness indicator for Y, $\psi$ = causes of the missingness unrelated to X and Y (adapted from Schafer \& Graham)}`{=latex} 
 
 Missing data mechanisms
 :::
 
+Modeling the non-response can aid the analysis of incomplete data.
+Together with complete-data models (i.e., the model of scientific interest), data models inform data analysts how the missingness might affect the scientific estimates.
+For example, in that study about trusting the government during the COVID-19 pandemic, it was not random who had missing data on the question about trust in the government. 
+People with lower trust in institutions were also less likely to respond to the questionnaire.
+This resulted in higher missingness rates across participants with lower trust in the government.
+Using only the observed data to infer to the population would then leads to biased estimates (over-estimation) of trust in the government.
+Methods that implicitly assume MCAR (like list-wise deletion) are therefore likely to cause bias.
+In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions. 
+
+In human subjects research, pure MCAR missingness is unlikely.
+<!-- In that case, a MCAR missingness mechanism has to be excluded as an option. -->
+Only truly random missingness, independent of any individual characteristics, would amount to missing completely at random missingness mechanism. 
+This could happen, for example, due to a glitch in the service software, affecting all participant equally likely.
+In our case, however, there were clear signs of non-MCAR missingness.
+If we can model the missingness probability based on known data, such as  previous observations or demographic data, we have 'Missing At Random'.
+Then, conditional on this information, observed and missing values have the same probability to be missing.
+Under MAR, we can model the missingness probability using known variables and obtain valid inference if this model is adequate.
+This is in contrast to the 'unseen data dependent' missingness mechanism or 'missing not at random'. 
+If the missingness depended the unobserved values themselves, we speak of 'Missing Not At Random'.
+For example, when people who distrust the government are less likely to respond to the trust item, and we have no way of correcting for this.
+This kind of missingness cannot be resolved from the observed data alone and requires assumptions or external information.
+Differences between the observed part of the data and the missing part can be accommodated by treating the missing data problem. 
+
 ### How to treat the missing data problem?
 
-[TODO: edit!] There are three broad categories: deletion based methods (e.g. list-wise deletion), methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a regression model), and imputation methods.
+[TODO: review!] There are three main routes for treating missing data.
+The first one is deletion based methods, such as list-wise deletion.
+Secondly, there are methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a multiple linear regression model).
+And thirdly, there are imputation methods.
 Deletion-based methods do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
 Modeling methods do accommodate MAR, but are often quite complex. 
-For example, using 'Bayesian' methods that incorporate the missingness into the analysis model: they jointly specify the data model and missingness model per analysis.
+For example, Bayesian methods can incorporate the missingness into the analysis model. 
+they jointly specify the data model and missingness model per analysis.
 You have to specify the model for each analysis separately, and there are no null hypothesis significance tests which is a problem when working with applied researchers. 
 Another option to incorporate the missingness in the analysis model is expectation maximization. 
 But this yields many parameters and might not be available for a complex multi-level model like the Covid 19 data. 
