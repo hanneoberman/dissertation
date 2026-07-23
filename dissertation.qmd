@@ -407,7 +407,7 @@ How? By bridging inferential evaluation and data-/algorithm-level diagnostics fo
 
 <!-- [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?] -->
 
-My academic tag line has long been "statistician, interdisciplinarian, open scientist". 
+My academic tagline has long been "statistician, interdisciplinarian, open scientist". 
 And while there's no doubt I am an interdisciplinarian and an open scientist, I am no longer keen on calling myself a statistician necessarily.
 I am more inclined to say I am a methodologist rather than a statistician. 
 As a methodologist, I am interested in how science is done, and how it can be done better.
@@ -417,9 +417,9 @@ Statistics is just *one* way of doing science.
 Don't get me wrong, statistics is still a favorite of mine. I love stats (I even have a mug that says so). 
 Statistics is the science of uncertainty and extracting information from data [@hand2025].
 <!-- Statistics is both the science of uncertainty and the technology of extracting information from data. (Hand, 2025, p. 2654) -->
-Extracting information from data and turn them into insights can feel magical. 
+Extracting information from data and turning them into insights can feel magical. 
 Statistical inference allows us to distinguish between real-world effects and random noise [@rosenberg2018]. 
-I am most fan of the uncertainty aspect.
+I am most a fan of the uncertainty aspect.
 <!-- Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).   -->
 <!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017).  -->
 <!-- Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.  -->
