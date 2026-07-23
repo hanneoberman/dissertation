@@ -366,16 +366,16 @@ For example, when drop-out in a clinical trial is related to the severity of sid
 
 <!-- Imputation is a convenient and popular missing data method.  -->
 
-Although imputation is widely supported with software and many implementations of the method have convenient defaults, generating *good* imputations is not a trivial task. 
+Although imputation is widely supported by software and many implementations of the method have convenient defaults, generating good imputations is not a trivial task.
 How can we know when to trust the output of imputation algorithms?
 There are three approaches.
-The ideal route is studying the formal statistical properties of the method via analytical derivations.
-Unfortunately, this is often impossible for imputation algorithms, many of which do not have formal proofs. 
-Instead, the de facto standard way is to estimate their empirical performance via simulation studies. 
-These studies, however, are not standardized and therefore hard to compare. 
-Moreover, simulation study results might not always translate to applied use. 
-And thirdly, for these real-world applications there is no systematic format for evaluating the practical performance of imputation algorithms, such as diagnostics for algorithmic convergence. 
-Ergo, evaluating whether imputations should be trusted remains challenging. 
+The ideal route is to study the formal statistical properties of the method via analytical derivations.
+Unfortunately, this is often impossible for imputation algorithms, many of which do not have formal proofs.
+Instead, the de facto standard is to estimate their empirical performance via simulation studies.
+These studies, however, are not standardized and are therefore hard to compare.
+Moreover, simulation study results might not always translate to applied use.
+Thirdly, for these real-world applications there is no systematic framework for evaluating the practical performance of imputation algorithms, such as diagnostics for algorithmic convergence.
+Ergo, evaluating whether imputations should be trusted remains challenging.
 
   <!-- - Theoretical properties: analytically (often impossible) -->
   <!-- - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized) -->
