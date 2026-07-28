@@ -32,6 +32,7 @@ library(ggmice)
 load("dat_xy.RData")
 ```
 
+
 <!-- `\fignote{...}`{=latex}  -->
 
 <!-- figure captions: https://stackoverflow.com/questions/73775001/quarto-pdf-document-figure-caption-size -->
@@ -653,16 +654,21 @@ Differences between the observed part of the data and the missing part can be ac
 
 ### How to treat the missing data problem? (or: ignore, model, fill in -- the missing data methods)
 
-I will describe three popular routes for treating missing data.
-The first one is deletion based methods, such as list-wise deletion.
-These methods are easy to apply, sometimes even applied by default in statistical analysis software.
-Deletion-based methods, however, do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
-Under non-MCAR missingness, deletion-based methods risk bias.
-Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste.
-Deletion-based methods do little harm is the missingness level is low, and might even be the best missing data method under some conditions (see [@buur18], $\S$ 2.7).
-Deletion-based methods do not treat the missing data as much as ignore them.
+This section describes three popular routes for treating missing data.
+I will, however, not pretend to provide an encompassing overview on treating missing data problems. 
+Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @buur18, and @little2019.
+The three missing data treatments I will describe are deletion-based methods, likelihood-based methods, and imputation.
 
-Secondly, there are methods that incorporate the missingness into the model of scientific interest (i.e., the analysis model, such as a multiple linear regression model).
+The first missing data treatments are deletion-based methods, such as list-wise deletion.
+With list-wise deletion, we only analyze rows in the data without missing values (i.e., complete cases).
+Deletion-based methods are easy to apply, and sometimes even applied by default in statistical analysis software.
+If the missingness level is low, deletion-based methods do little harm, and they might even be the best missing data method to apply (under some conditions; see e.g., [@buur18], $\S$ 2.7 and [@carpenter2021] $\S$ 3.1).
+Deletion-based methods, however, do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+Under most kinds of missingness, deletion-based methods will therefore risk biasing the statistical inferences.
+Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste compared to non-deletion-based methods.
+In short, deletion-based methods do not treat the missing data as much as ignore them, and one should be careful of bias when applying them.
+
+Secondly, there are methods that incorporate the missingness into the model of scientific interest.
 Modeling methods do accommodate MAR, but are often quite complex. 
 These missing data methods jointly specify the complete-data model and missing data model per analysis.
 For example, Bayesian methods can incorporate the missingness into the analysis model. 
