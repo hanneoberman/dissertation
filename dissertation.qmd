@@ -445,7 +445,7 @@ Item non-response refers to patterns of missingness where some--but not all--dat
 Item non-response is the focus of this dissertation: the way we handle incomplete observations in partially observed data and how that affects our inferences.
 
 <!-- "Item non-response refers to the situation in which the respondent skipped one or more items in the survey.  -->
-<!-- Unit non-response occurs if the respondent refused to participate, so all outcome data are missing for this respondent." [@buur18] -->
+<!-- Unit non-response occurs if the respondent refused to participate, so all outcome data are missing for this respondent." [@vanbuuren2018] -->
 How we treat non-response is reflected in the uncertainty of our inferences.
 Unit non-response is often treated using weighting, which may lead to weighting error @alsalti2026.
 It is not typically part of the TSE framework, but item non-response treatment can also produce error, such as 'imputation error' [@FCSM2001].
@@ -540,9 +540,9 @@ Even without specifying a missing data method explicitly, there will be  handlin
 <!-- It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population.  -->
 <!-- For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population.  -->
 <!-- To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not.  -->
-The default strategy in most statistical software packages is to ignore all cases that have missing values [@buur18]. 
+The default strategy in most statistical software packages is to ignore all cases that have missing values [@vanbuuren2018]. 
 This is referred to as ‘list-wise deletion’ (LWD). 
-Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; [@buur18]). 
+Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; [@vanbuuren2018]). 
 List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
 List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case.
 <!-- It is better to treat the missing data than to ignore it. -->
@@ -560,7 +560,7 @@ Missing data models thereby reflect the 'probability to be missing' for any give
 Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled to arrive at unbiased and confidence-valid results.
 
 There are three missing data mechanisms described by missing data models.
-If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random' (MCAR), or 'not data dependent' (terminology by Rubin and Hand resp.).
+If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random' (MCAR), or 'not data dependent' [respective terminology by @rubin1976; and @hand2020].
 If there is an association between the missingness and the observed part of the data, the missingness is 'at random' (MAR; conditional on the observed data) or 'seen data dependent'.
 If the cause of the missingness is missing too, the missingness is 'not at random' (MNAR), or 'unseen data dependent'. 
 @fig-mech provides a graphical representation of these three mechanisms, where the missingness ($R$) in incomplete data $Y$ either depends on $Y$ itself (i.e., MNAR), on observed covariate(s) $X$ (i.e., MAR), or none of these (i.e., MCAR).
@@ -655,19 +655,21 @@ Differences between the observed part of the data and the missing part can be ac
 ### How to treat the missing data problem? (or: ignore, model, fill in -- the missing data methods)
 
 This section describes three popular routes for treating missing data.
-I will, however, not pretend to provide an encompassing overview on treating missing data problems. 
-Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @buur18, and @little2019.
+I will not pretend to provide an encompassing overview on treating missing data problems. 
+Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @vanbuuren2018, and @little2019.
 The three missing data treatments I will describe are deletion-based methods, likelihood-based methods, and imputation.
 
+<!-- #### Deletion-based methods -->
 The first missing data treatments are deletion-based methods, such as list-wise deletion.
 With list-wise deletion, we only analyze rows in the data without missing values (i.e., complete cases).
 Deletion-based methods are easy to apply, and sometimes even applied by default in statistical analysis software.
-If the missingness level is low, deletion-based methods do little harm, and they might even be the best missing data method to apply (under some conditions; see e.g., [@buur18], $\S$ 2.7 and [@carpenter2021] $\S$ 3.1).
+If the missingness level is low, deletion-based methods do little harm, and under some conditions they might even be the best missing data method to apply [see e.g., @vanbuuren2018 $\S$ 2.7; @carpenter2021, $\S$ 3.1].
 Deletion-based methods, however, do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
 Under most kinds of missingness, deletion-based methods will therefore risk biasing the statistical inferences.
 Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste compared to non-deletion-based methods.
 In short, deletion-based methods do not treat the missing data as much as ignore them, and one should be careful of bias when applying them.
 
+<!-- #### Likelihood-based methods -->
 Secondly, there are methods that incorporate the missingness into the model of scientific interest.
 Modeling methods do accommodate MAR, but are often quite complex. 
 These missing data methods jointly specify the complete-data model and missing data model per analysis.
@@ -677,6 +679,7 @@ Another option to incorporate the missingness in the analysis model is expectati
 But this yields many parameters and might not be available for a complex multilevel model like the COVID-19 data. 
 Both of these techniques are tied to a specific analysis model, which might not be suitable for contemporary practitioners who run several models in a data science workflow. 
 
+<!-- #### Imputation methods -->
 Thirdly, there are imputation methods.
 Imputation methods do not have these drawbacks of being computationally advanced and analysis-model specific.
 <!-- Imputation separates the missing data problem from the analysis model and is the focus of this dissertation. -->
@@ -695,7 +698,7 @@ But are they properly uncertain (i.e., confidence-valid) too?
 <!-- Imputation is widely supported in software: one line of code can resolve the missing data problem at once. -->
 That's where multiple imputation (MI) comes in!
 
-### Why multiply impute? (or: several 'wrongs' can make a 'right')
+### Why multiply impute? (or: several 'wrongs' *can* make a 'right')
 
 <!-- Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic. -->
 <!-- Multivariate models such as stochastic regression imputation do correct for MAR missingness, but underestimate variance if used as single imputation. -->
@@ -705,7 +708,7 @@ Conceptualized by @rubin1976, MI posits that repeated stochastic draws per per m
 This posterior distribution reflects the uncertainty due to non‑response.
 By drawing imputations from the posterior distribution of the missing data, we obtain completed versions of the data that *might have* been.
 
-MI is the practice of generating several complete*d* datasets by replacing each missing value with a synthetic substitute multiple times.
+MI is the practice of generating several complet*ed* datasets by replacing each missing value with a synthetic substitute multiple times.
 <!-- For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution). -->
 The completed datasets can be analyzed as if the data were complete to begin with.
 On each completed dataset, we obtain estimates of the analysis of scientific interest.
@@ -804,7 +807,7 @@ Good thing we do not need this joint model explicitly.
 
 <!-- Why MI in the flavor of mice? -->
 Missing observations can be filled in using one or more imputation models instead.
-While "Rubin (Ch. 5) distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
+While Rubin [-@rubin1987, pp. 160-166] "distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task." [@vanbuuren2007, p. 221; in @molenberghs2014], FSC does not require these explicit tasks. 
 In the FCS framework [@vanbuuren2006], we only need an imputation model for each incomplete variable.
 Imputation models consist of the functional form of the model (e.g., stochastic regression) and imputation model predictors (i.e., other variables in the data).
 FCS is substantive model agnostic, and does not assume any specific joint distribution.
@@ -1359,7 +1362,7 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 - Model evaluation: how do we assess imputation model misfit?
   - fit of the model to the observed data
   - non-convergence in the algorithm 
-  - mismatch between observed and imputed data distributions (e.g., visual inspection) [@buur18]
+  - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018]
   - ...?
 
 
