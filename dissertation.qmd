@@ -651,8 +651,14 @@ This is in contrast to the 'unseen data dependent' missingness mechanism or 'mis
 If the missingness depended the unobserved values themselves, we speak of 'Missing Not At Random'.
 For example, when people who distrust the government are less likely to respond to the trust item, and we have no way of correcting for this.
 This kind of missingness cannot be resolved from the observed data alone and requires assumptions or external information.
-In practice, it is impossible to know from the observed part of the data alone, so we have to make assumptions.
-Differences between the observed part of the data and the missing part can be accommodated by treating the missing data problem. 
+In practice, it is impossible to know from the observed part of the data alone whether we are dealing with MNAR, so you always have to make an assumption about the mechanism underlying the missingness in your data.
+
+If the missingness is MNAR, the validity of the inferences is at risk.
+MNAR missingness is often called 'non-ignorable', a term which roughly means that given the observed data, you cannot treat the missing-data mechanism as irrelevant for the subsequent inferences.
+This is in contrast to 'ignorable' missing-data mechanisms, which meet two requirements: 1) conditional on the observed data, the probability that an entry is missing does not depend on the unobserved value itself (i.e., MCAR or MAR missingness), and 2) the parameters in the missing data model are distinct from the parameters of the substantive model [@litt20]. 
+If treated correctly, ignorable missingness will yield valid inferences.
+
+<!-- Differences between the observed part of the data and the missing part can be accommodated by treating the missing data problem.  -->
 
 ### How to treat the missing data problem? (or: ignore, model, fill in -- the missing data methods)
 
@@ -1101,7 +1107,7 @@ So computational evaluation should never replace statisticaleval.
 
 ### What is the scope of this dissertation?  [TODO: edit]
 
-In this dissertation, we will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. 
+In this dissertation, I will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. 
 You might expect me to go into...
 
 - In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. 
@@ -1131,7 +1137,7 @@ There two phases: statistical properties of the method in simulation (e.g., bias
 3. Software: choosing/evaluating imputation models in practice
 
 
-## Introducing chapter 1: evaluation  [TODO: edit]
+## Introducing chapter 2: evaluation  [TODO: edit]
 
 - **RQ: what to look out for when designing simulation studies for the evaluation of imputation methodology?**/How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?
 
@@ -1144,7 +1150,7 @@ There two phases: statistical properties of the method in simulation (e.g., bias
 REF: Morris ADEMP: Using simulation studies to evaluate statistical methods, pre-registration template, FIMD, Introduction to statistical simulations in health research?, Pitfalls and Potentials in Simulation Studies?
 
 
-## Introducing chapter 2: convergence  [TODO: edit]
+## Introducing chapter 3: convergence  [TODO: edit]
 
 - **RQ: FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?**/How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed? 
 
@@ -1159,7 +1165,7 @@ REF: Morris ADEMP: Using simulation studies to evaluate statistical methods, pre
 
 REFs: Graphical and numerical diagnostic tools to assess suitability of multiple imputations and imputation models, Diagnostic checking of multiple imputation models, Convergence Properties of a Sequential Regression Multiple Imputation Algorithm, FIMD, Diagnostics for multivariate imputations
 
-## Introducing chapter 3: `ggmice`  [TODO: edit]
+## Introducing chapter 4: `ggmice`  [TODO: edit]
 
 <!-- TODO: add minimal example? -->
 This chapter introduces the software `ggmice`: an R package for building and evaluating imputation models. The `ggmice` package offers tools for the visualization of incomplete data, imputation models, and imputed data. 
