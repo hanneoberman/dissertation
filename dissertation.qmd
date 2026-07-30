@@ -210,15 +210,15 @@ load("dat_xy.RData")
 - - $m$
   - number of imputations, indexed $\ell=1,\dots,m$
 - - $P(Y, X, R)$
-  - joint model of the incomplete data, fully observed covariate(s), and the missignness
-- - $P(Y_\mathrm{mis}|Y_\mathrm{obs},R)$
-  - the posterior distribution of the missing data conditional on the observed data and the missingness
+  - joint distribution of the incomplete data, fully observed covariate(s), and the missingness
+- - $P(Y_\mathrm{mis}| ...)$
+  - joint model, where $P(Y_\mathrm{mis}|Y_\mathrm{obs},R)$ denotes the posterior distribution of the missing data conditional on the observed data and the missingness
 - - $Y_j$
-  - incomplete variable; univariate subset of $Y$ (sized $n \times 1$)
+  - univariate subset of $Y$ (sized $n \times 1$); an incomplete variable
 - - $Y_{-j}$
   - all data in $Y$ except for column $j$ (sized $n \times (p-1)$)
 - - $P(Y_{\text{mis}, j} | ...)$
-  - **imputation model** for column $j$, where  $P(Y_j^\mathrm{mis}|Y_j^\mathrm{obs}, Y_{-j}, R)$ would indicate all other variables are imputation model predictors \linebreak
+  - **imputation model** for column $j$, where $P(Y_{\mathrm{mis}, j}|Y_{\mathrm{obs}, j}, Y_{-j}, R)$ would indicate all other variables are imputation model predictors \linebreak
   
 - - $\dot{Y}_{\ell}$
   - **imputed data** in imputation number $\ell$ (of $m$ total)
@@ -251,6 +251,8 @@ load("dat_xy.RData")
 :::
 
 <!-- , consisting of observed data $Y_\mathrm{obs}$ and missing data $Y_\mathrm{mis}$ -->
+
+
 
 <!-- CCA en mean imp noemen als verplichte figuren ter volledigehid, maar niet alle voor en nadelen. dus compact houden. info per pagina is belangrijker dan aantal pagina's. geen uitgebreide verhalen van dingen die je ergens anders kunt vinden. JM wel noemen want mice is niet de enige. er bestaan ook andere methodes, waar de specificatie van het model anders geregeld is. in voor compleetheid: meerdere oplossing voor multivariate probleem. -->
 
@@ -779,11 +781,10 @@ Under the right conditions, MI yields valid, unbiased estimates [@schafer1997].
 MI enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
 The aim is to generate imputations to fill in the missing part of the data. 
 How do we model the missing part of the data based on the observed part of the data? 
-<!-- TODO: add ref Little & Rubin -->
 
 ### How to generate imputations? (or: univariate, joint, chained -- the imputation flavors)
 
-[TODO: edit!] 
+<!-- [TODO: edit!]  -->
 We model the distribution of this missing part based on what is observed, using the observed part of the data to fix the missing part of the data.
 Which types of model or models do we use? 
 
@@ -906,7 +907,7 @@ We will borrow some terms from related fields.
 I will connect it to concepts from systems and software engineering, and the information retrieval sub-field of computer science.
 
 
-### Computational evaluation, verification and validation
+### Computational evaluation, verification and validation [TODO: edit]
 
 In computer science, software is a system.
 "A system is a purposeful collection of interrelated components of different kinds (e.g., "hardware, software, and human elements" p. 552] that work together to deliver a set of services to the system owner and its users." [@sommerville2015, p. 556]
@@ -1026,7 +1027,7 @@ This dissertation offers insight and tools to do so.
 <!-- - [what is a simulation study? add a brief methodological background section on simulation studies in statistics?] -->
 
 
-### What is computational evaluation?
+### What is computational evaluation?  [TODO: edit]
 
 Computational evaluation is originally from information retrieval research [see e.g. @wiki]
 The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008]
@@ -1050,7 +1051,7 @@ Dimensions of computational evaluation: e.g. inferential validity, algorithmic b
 
 
 
-### Why should we care about computational evaluation of imputation methodology?
+### Why should we care about computational evaluation of imputation methodology?  [TODO: edit]
 
 What do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
 Statistical evaluation is not possible in practice, only in simulation studies.
@@ -1098,7 +1099,7 @@ So computational evaluation should never replace statisticaleval.
 <!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
 
 
-### What is the scope of this dissertation?
+### What is the scope of this dissertation?  [TODO: edit]
 
 In this dissertation, we will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. 
 You might expect me to go into...
@@ -1130,7 +1131,7 @@ There two phases: statistical properties of the method in simulation (e.g., bias
 3. Software: choosing/evaluating imputation models in practice
 
 
-## Introducing chapter 1: evaluation
+## Introducing chapter 1: evaluation  [TODO: edit]
 
 - **RQ: what to look out for when designing simulation studies for the evaluation of imputation methodology?**/How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?
 
@@ -1143,7 +1144,7 @@ There two phases: statistical properties of the method in simulation (e.g., bias
 REF: Morris ADEMP: Using simulation studies to evaluate statistical methods, pre-registration template, FIMD, Introduction to statistical simulations in health research?, Pitfalls and Potentials in Simulation Studies?
 
 
-## Introducing chapter 2: convergence
+## Introducing chapter 2: convergence  [TODO: edit]
 
 - **RQ: FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?**/How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed? 
 
@@ -1158,10 +1159,9 @@ REF: Morris ADEMP: Using simulation studies to evaluate statistical methods, pre
 
 REFs: Graphical and numerical diagnostic tools to assess suitability of multiple imputations and imputation models, Diagnostic checking of multiple imputation models, Convergence Properties of a Sequential Regression Multiple Imputation Algorithm, FIMD, Diagnostics for multivariate imputations
 
-## Introducing chapter 3: `ggmice`
+## Introducing chapter 3: `ggmice`  [TODO: edit]
 
-[TODO: add poster and 'age old adage' picture vs 1000w.]
-
+<!-- TODO: add minimal example? -->
 This chapter introduces the software `ggmice`: an R package for building and evaluating imputation models. The `ggmice` package offers tools for the visualization of incomplete data, imputation models, and imputed data. 
 
 ### Indicators for adoption: how is the software already used?
@@ -1199,12 +1199,7 @@ The `ggmice` package aims to solve the following problems:
 The `ggmice` package fills a hiatus in the software landscape, with other packages generally supporting either `mice` or `ggplot2`, but not both. 
 Table REF provides an overview of R packages that offer visualization tools for incomplete and imputed data. In short: with `mice` you cannot plot incomplete data distributions, all other packages lack support for `mice`-imputed data, and visualization of `mice` imputation models did not exist at all prior to `ggmice`.
 
-```{r}
-#| echo: false
-# library(kableExtra)
-packages <- read.csv("pkg_table.csv")
-knitr::kable(packages, col.names = c("", names(packages)[-1])) 
-```
+
 
 <!-- https://cranlogs.r-pkg.org/badges/ggmice -->
 <!-- https://naniar.njtierney.com/reference/gg_miss_upset.html -->
@@ -1213,13 +1208,27 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 <!-- https://github.com/statistikat/VIM -->
 <!-- https://github.com/IQSS/amelia -->
 
-::: {.callout}
-## TODO
+::: {tbl-software}
 
-- write table footnote to explain all aspects of the table. i.e., these are only diffs. the table does not include things that all packages can --> maybe as appendix? 
-- explain the purpose of the table: I'm both player and referee. I've got skin in the game, but I made the rubric. Someone else might evaluate/value different aspects.
-- also add number of downloads: `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k
-- make 'Imputation models' a separate section?
+```{r}
+#| echo: false
+#| label: tbl-software
+#| tbl-cap: "Differential functionality of `ggmice` versus other R packages"
+# library(kableExtra)
+packages <- read.csv("pkg_table.csv")
+knitr::kable(packages, col.names = c("", names(packages)[-1])) 
+```
+
+<!-- - write table footnote to explain all aspects of the table. i.e., these are only diffs. the table does not include things that all packages can; maybe as appendix?  -->
+<!-- - explain the purpose of the table: I'm both player and referee. I've got skin in the game, but I made the rubric. Someone else might evaluate/value different aspects. -->
+<!-- - also add number of downloads: `ggmice` has 800 monthly compared to `VIM` 13k and `naniar` 22k -->
+<!-- <!-- - make 'Imputation models' a separate section? --> 
+<!-- https://r-observatory.thecoatlessprofessor.com/downloads/compare/VIM...Amelia...ggmice -->
+
+<!-- only includes functionality that `ggmice` offers Only differences in functionality in R packages for visualizing incomplete and imputed data  of explain the purpose of the table: I'm both player and referee. I've got skin in the game, but I made the rubric. Someone else might evaluate/value different aspects. also, these are only diffs. the table does not include things that all packages can. -->
+
+`\fignote{This is an incomplete overview of the R package's functionalities. The purpose of this table is to display \textit{differences in functionality} based on the features offered by \texttt{ggmice}. I intend to show what I see as \texttt{ggmice}'s added value compared to existing methodology.}`{=latex} 
+
 :::
 
 
