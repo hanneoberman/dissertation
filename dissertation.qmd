@@ -1227,7 +1227,7 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 
 <!-- only includes functionality that `ggmice` offers Only differences in functionality in R packages for visualizing incomplete and imputed data  of explain the purpose of the table: I'm both player and referee. I've got skin in the game, but I made the rubric. Someone else might evaluate/value different aspects. also, these are only diffs. the table does not include things that all packages can. -->
 
-`\fignote{This is an incomplete overview of the R package's functionalities. The purpose of this table is to display \textit{differences in functionality} based on the features offered by \texttt{ggmice}. I intend to show what I see as \texttt{ggmice}'s added value compared to existing methodology.}`{=latex} 
+`\fignote{This is an incomplete overview of the R package's functionalities. The purpose of this table is to display \textit{differences} in functionality based on the features offered by \texttt{ggmice}. I intend to show \texttt{ggmice}'s added value compared to existing methodology. Symbols denote good/well supported ($+$), medium/moderate support ($\pm$), and low/not supported ($-$). }`{=latex} 
 
 :::
 
