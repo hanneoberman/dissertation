@@ -212,7 +212,7 @@ load("dat_xy.RData")
 - - $P(Y, X, R)$
   - joint distribution of the incomplete data, fully observed covariate(s), and the missingness
 - - $P(Y_\mathrm{mis}| ...)$
-  - joint model, where $P(Y_\mathrm{mis}|Y_\mathrm{obs},R)$ denotes the posterior distribution of the missing data conditional on the observed data and the missingness
+  - joint (imputation) model, where $P(Y_\mathrm{mis}|Y_\mathrm{obs},R)$ denotes the posterior distribution of the missing data conditional on the observed data and the missingness
 - - $Y_j$
   - univariate subset of $Y$ (sized $n \times 1$); an incomplete variable
 - - $Y_{-j}$
@@ -406,7 +406,7 @@ How? By bridging inferential evaluation and data-/algorithm-level diagnostics fo
 <!-- $$Y = \{Y_{obs}, \dot{Y}_{\text{mis}}\}$$ -->
 
 
-### Why this dissertation? (or: statistical inference is just a tool)
+### Why this dissertation? (or: certainty with uncertainty)
 
 <!-- [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?] -->
 
@@ -417,19 +417,23 @@ As a methodologist, I am interested in how science is done, and how it can be do
 Especially in the social and biomedical sciences, research should not be purely quantitative. 
 Statistics is just *one* way of doing science. 
 
-Don't get me wrong, statistics is still a favorite of mine. I love stats (I even have a mug that says so). 
-Statistics is the science of uncertainty and extracting information from data [@hand2025].
+Don't get me wrong, statistics is still a favorite of mine. 
+I love stats (I even have a mug that says so). 
+Statistical inference allows us to distinguish between real-world effects and random noise [@rosenberg2018].
+<!-- Statistical inference is a tool for expressing certain (i.e., formal laws, probability theory)  -->
+Epistemologically speaking, statistical inference may be classified either as deductive or inductive inference; there is no consensus in the literature about which pattern of scientific reasoning suits statistical inference [@deruiter2017].
+@gelman2013 argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.
+In other words, statistics is the science of uncertainty and extracting information from data [@hand2025].
 <!-- Statistics is both the science of uncertainty and the technology of extracting information from data. (Hand, 2025, p. 2654) -->
-Extracting information from data and turning them into insights can feel magical. 
-Statistical inference allows us to distinguish between real-world effects and random noise [@rosenberg2018]. 
-I am most a fan of the uncertainty aspect.
+The latter can feel magical at times: the process of turning data into insights. 
+But I am most a fan of the uncertainty aspect.
 <!-- Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).   -->
-<!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017).  -->
+<!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017). -->
 <!-- Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.  -->
 <!-- "Statistics is both the science of uncertainty and the technology of extracting information from data." - featured in the International Encyclopedia of Statistical Science (Hand, 2010).  -->
 
 I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. 
-In this dissertation, I hope to achieve this for missing data methodology.
+In this dissertation, I hope to achieve that for missing data methodology.
 
 ### But first, some background and notation
 
@@ -440,23 +444,26 @@ Standard errors then get translated into decision tools for inference such as $p
 So, statistics is a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty. 
 
 Uncertainty in statistical inferences can stem from many sources.
-In the Total Survey Error framework [@deming1944], other sources of uncertainty are described such as non-response error.
+In the 'Total Survey Error' framework [@deming1944], other sources of uncertainty are described such as non-response error.
 Non-response error occurs when participants do not (fully) respond to data collection efforts.
 We speak of unit non-response for intended study participants who do not provide any data at all (for example because they could not be reached, or refused to participate). 
 Item non-response refers to patterns of missingness where some--but not all--data are missing for a participant (for example because they skipped a survey question).
 Item non-response is the focus of this dissertation: the way we handle incomplete observations in partially observed data and how that affects our inferences.
 
+I will not pretend to provide an encompassing overview on treating missing data problems. 
+Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @vanbuuren2018, and @little2019.
 <!-- "Item non-response refers to the situation in which the respondent skipped one or more items in the survey.  -->
 <!-- Unit non-response occurs if the respondent refused to participate, so all outcome data are missing for this respondent." [@vanbuuren2018] -->
+
 How we treat non-response is reflected in the uncertainty of our inferences.
-Unit non-response is often treated using weighting, which may lead to weighting error @alsalti2026.
+Unit non-response is often treated using weighting, which may introduce weighting error @alsalti2026.
 It is not typically part of the TSE framework, but item non-response treatment can also produce error, such as 'imputation error' [@FCSM2001].
 <!-- "FCSM (2001) also discussed imputation error, noting that when imputation is used to replace missing or incorrect variables, the missing or erroneous data are replaced with values generated by an assumed model for the nonrespondents’ data".  -->
 
-Non-response bias can be minimized by preventing missingness altogether: the best way to treat missing data is by not having any (truism attributed to Gertrude Mary Cox).
+Non-response bias can be minimized by preventing missingness altogether: the best way to treat missing data is by not having any (a truism attributed to Gertrude Mary Cox).
 <!-- "The best thing to do with missing data is to not have any" -->
-Some precautionary measures...
-For example by  motivating participants to ...
+<!-- TODO: Some precautionary measures... -->
+<!-- TODO: For example by  motivating participants to ... -->
 <!-- - offer monetary and/or educational incentives (e.g., credits, feedback about  performance/personality) - Consider the trade‐off between study length decreasing response rates and increasing reliability - Send multiple study invitations/reminders - If some information about nonresponders is available, compare them to those of responders -->
 Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. 
 Missing values force data analysts to treat the missingness in some way.
@@ -544,8 +551,8 @@ Even without specifying a missing data method explicitly, there will be  handlin
 <!-- To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not.  -->
 The default strategy in most statistical software packages is to ignore all cases that have missing values [@vanbuuren2018]. 
 This is referred to as ‘list-wise deletion’ (LWD). 
-Ignoring missingness, however, lowers statistical power and may yield invalid inferences (e.g., biased estimates, spurious significant results; [@vanbuuren2018]). 
-List-wise deletion is ill-advised under most conditions (see van Buuren 2018 for exceptions).
+Ignoring missingness, however, lowers statistical power and may yield invalid inferences [e.g., biased estimates, spurious significant results, see e.g., @vanbuuren2018]. 
+List-wise deletion is ill-advised under most conditions [for exceptions see e.g., @vanbuuren2018 $\S$ 2.7; @carpenter2021, $\S$ 3.1].
 List-wise deletion results in bias because it assumes that the observed part of the data is equivalent to the missing part of the data, and this is not usually the case.
 <!-- It is better to treat the missing data than to ignore it. -->
  
