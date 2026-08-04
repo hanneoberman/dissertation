@@ -1104,21 +1104,61 @@ So computational evaluation should never replace statistical evaluation.
 
 ### Building and evaluating imputation models
 
-- Model building: how do we know which functional form to choose?
-  - rely on defaults, tested in simulation studies 
-  - assess the distribution of the incomplete variable (e.g., visual inspection)
-  - ...? (maybe ad transformations?)
-- Model building: how do we know which imputation model predictors to select?
-  - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021]
-  - association of missingness indicator with other variables in the data 
-  - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
-  - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
-  - ...?
-- Model evaluation: how do we assess imputation model misfit?
-  - fit of the model to the observed data
-  - non-convergence in the algorithm 
-  - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018]
-  - ...?
+Imputation with `mice` is a sociotechnical process.
+The software will happily produce imputations with its defaults, but *good* imputation requires human input.
+There are some decisions that you, as imputer, implicitly or explicitly make.
+
+For each incomplete variable, mice asks you to specify an imputation method. 
+This is a choice of functional form of the imputation model (e.g., logistic regression for dichotomous variables).
+How do we know which functional form to choose?
+The simplest option is to accept `mice`'s defaults, which are motivated by simulation studies and pragmatism.
+For example, the defualt method for continuous variables is the semi-parametric method `pmm`: predictove mean matching. 
+With `pmm`, observed data entries are used as donors when imputing missing entries, conveniently yieling imputed values that lie within the range of the observed data.
+Diverting from these defaults might be useful in case of big, wide, or sparse data.
+That is, some methods can be computationally inefficient with big data (large $n$, large $p$), mathematically undefined with wide data ($n < p$), or yield suboptimal imputations because of a lack of donors in sparse data ranges.
+Moreover, if the column type in the incomplete data is not correlty specified, `mice` will assign incorrect imputation methods.
+Therefore, inspecting the distribution of each incomplete variable is adviced (REF?).
+You can use bar charts, histograms, and density plots of the observed part of the variable to assess the distribution of the incomplete variables and determine imputation methods.
+Visual inspection can also be used to check whether there is skew or spikes (e.g., structural zeros) that require transformations. 
+In short, the imputation method determines the distribution of the imputed values, which should match the distribution of the observed values to at least some extent.
+
+<!-- - Model building: how do we know which functional form to choose? -->
+<!--   - rely on defaults, tested in simulation studies  -->
+<!--   - assess the distribution of the incomplete variable (e.g., visual inspection) -->
+<!--   - ...? (maybe ad transformations?) -->
+
+The second major decision concerns the predictor matrix: which variables should be used to impute which?
+Some common sources of input are the associations assumed by the analysis model, associations in the observed data, associations with missingness indicators, and external input and design information.
+If you already know your primary analysis model (e.g., multivariate regression), it is common to include all analysis model predictors and outcomes in the imputation models. 
+Otherwise, that would implicitly constrain these parameters to zero in the imputations, systematically suppressing relations (i.e., biasing the regression coefficeints in the analysis model towards zero).
+In many modern workflows, the imputed data will be used for multiple, possibly unknown, analyses. 
+You may therefore include a broader set of predictors than strictly needed for one model, or adopting 'auxiliary variables' (i.e., extra imputation model predictors that are not part of the analysis model or variables of interest).
+You may include predictors that are strongly associated with the incomplete variable, based on corralations ["include an auxiliary variable if its correlation with the main variable is ≥0.5", @nguyen2021, p. 4]
+Not just associations with each incomplete variable may be used to select imputation model predictors.
+We can also use the association of the missingness indicator with other variables in the data.
+Predictors that explain missingness can help you approximate MAR or correct for design-related patterns.
+Other design-related patterns require expert knowledge e.g., about branching or which covariates should be included to mitigate MNAR.
+Choosing imputation model predictors encodes your beliefs about what information is relevant for reconstructing missing values and for capturing missingness mechanisms.
+
+<!-- - Model building: how do we know which imputation model predictors to select? -->
+<!--   - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021] -->
+<!--   - association of missingness indicator with other variables in the data  -->
+<!--   - external input (e.g., branching patterns, or expert knowledge to correct for MNAR) -->
+<!--   - Take the analysis model (if available) as starting point for imputation workflow, for congeneality -->
+<!--   - ...? -->
+
+After specifying methods and predictors, you still need to ask whether the imputation model behaves adequately.
+We need to evaluate the imputation model ppost hoc.
+Some evaluation tools include algorithm-level diagnostics (e.g., traceplots of key parameters over iterations to assess algorithmic convergence), visual inspection of the distribution of the imputed values (e.g., to identify mismatch between observed and imputed data distributions), and sensitivity analyses (e.g., via over-imputation, which temporarily treats some observed values as missing to compare imputations to the true values).
+
+These evaluations are neither fully automated nor purely objective. 
+They involve building and reading plots, interpreting diagnostics, and deciding what degree of misfit is tolerable for your research aims.
+
+<!-- - TODO: maybe add this back? Model evaluation: how do we assess imputation model misfit? -->
+<!--   - fit of the model to the observed data -->
+<!--   - non-convergence in the algorithm  -->
+<!--   - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018] -->
+<!--   - ...? -->
 
 
 ::: {#fig-steps}
@@ -1165,6 +1205,14 @@ Multiple imputation flowchart
 
 :::
 
+Apart from the imputation models, other choices also affect the quyality of the imputation workflow and resulting statistical inferences.
+For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may interact with the visual and computational disgnostics above.
+
+Taken together, these decisions show that a `mice` workflow is not a push-button solution. 
+It is a modeling exercise in which the user is involved in model building and evaluation.
+Human input makes imputation workflows subjective to individual choices and preferences.
+
+<!-- The defaults provide a starting point, but the adequacy of the imputations—and therefore the validity of your inferences—ultimately depends on how thoughtfully you make and review these human inputs. -->
 
 ### What is the scope of this dissertation?  [TODO: edit]
 
@@ -1322,12 +1370,22 @@ In short, there is active use of and involvement in `ggmice`, as indicated by re
 The package is implemented in the open source language R, distributed via CRAN and GitHub, and archived on Zenodo.
 Its evolution is driven by user feedback (e.g., GitHub issues, StackOverflow questions, conference discussions, teaching) and collaboration (e.g., code contributions, statistical consulting with external partners).
 
-`ggmice` is compatible with the popular R packages `mice` (for imputation) and `ggplot2` (for flexible data visualizations based on the 'grammar of graphics' framework). 
+Other design principles are grounded in `ggmice`'s compatibility with the popular R packages `ggplot2` and `mice`. 
+`ggplot2` offers flexible data visualizations based on the 'grammar of graphics' framework.
+`mice` offers flexible imputation workflows for inference with incomplete data.
+Together, these packages inform the design and functionalities of `ggmice`.
 
-`ggmice` produces `ggplot` objects, leveraging the 'grammar of graphics' [@wilkinson2012] to create layered, easily adjustable plots. 
+`ggmice` produces `ggplot` objects, leveraging the 'grammar of graphics' to create layered, easily adjustable plots. 
 <!-- Grammar of Graphics = layered plots [@wilkinson2012] `ggmice` produces `ggplot` objects: layered, easily adjustable -->
+The figure that appears is the output of a series of design decisions.
+The grammar of graphics treats plots as structured ways of reasoning from data [@wilkinson2012].
+Layering decomposes graphics into a small set of elements.
+For example, variables are translated into visual properties (axes, color, etc.) via 'aesthetic mapping', and geometric objects determine the shape of the graph itself.
+A graphic then is a combination of several elements, and layering allows for building complex figures.
+<!-- Conceptually, this is a 'model' of the visualization.  -->
+The user can add or change layers without breaking the entire figure, making the graphics transparent and manipulable.
 
-`mice` imputation models are substantive model agnostic: flexible, var-by-var definition of imputation model. `ggmice` supports this. 
+`mice` imputation models are substantive model agnostic: variable-by-variable definition of imputation models. `ggmice` supports this. 
 Because `mice` is substantive-model agnostic, `ggmice` offers tools to inspect whether the imputation model fits the observed data, instead of imposing particular analysis models.
 Assumptions: imputation model should fit the observed part, imputation model should be congenial 
 `ggmice` provides tools to see observed and imputation side-by-side, adhering to advice to evaluate the distribution of observed and imputed data [@nguyen2017]
