@@ -1263,7 +1263,7 @@ Methodologists need comparable, reproducible evaluations of imputation methods a
 Without a shared evaluation framework, claims about 'valid, unbiased estimates' for MI might not translate to practice.
 How can we standardize the verification of imputation methodology?
 
-The capter offers advice for designing simulaiton studies (i.e., computational evaluation)<!-- - published as @oberman2024, cited 27x according to Google Scholar (of which 11x CrossRef) -->
+The chapter offers advice for designing simulation studies (i.e., computational evaluation)<!-- - published as @oberman2024, cited 27x according to Google Scholar (of which 11x CrossRef) -->
 based on literature review @liu2023.
 
 
@@ -1278,7 +1278,7 @@ This chapter investigates non-convergence in the MICE algorithm.
 FCS imputation, as implemented in `mice`, is an iterative procedure. 
 Incomplete variables are imputed one-by-one, conditional on other variables.
 If these other variables are incomplete too, iteration is required.
-After the first cycle through the colulms, we can get better imputations based on the now-updated imputation model predictors.
+After the first cycle through the columns, we can get better imputations based on the now-updated imputation model predictors.
 In `mice`, this cycle is several times until convergence is reached (by default five iterations).
 Because of its iterative nature, convergence *should* be a requirement for valid inference, or is it?
 
