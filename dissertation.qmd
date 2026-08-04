@@ -1178,6 +1178,8 @@ You might expect me to go into...
 
 **RQ: what tools are required to assess the quality of data-generating algorithms? in the development, evaluation, and application.**
 
+<!-- or: how do you actually know that your imputation method is any good? -->
+
 What is the status quo?
 Verification via statistical evaluation (but not standardized), and some validation via computational and graphical evaluation (but not systematic).
 Is the status quo sufficient? 
@@ -1197,38 +1199,32 @@ But not feasible with FCS.
 So, implementation needed, which does require V&V.
 <!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
 
+Methodologists need standardized computational evaluations to justify new procedures, while applied researchers need accessible tools to assess whether a chosen method behaves adequately on their particular data.
 
 - Verification of statistical properties via formal analysis (e.g. proofs) and/or simulation
 - Validation of operational utility via graphical and computational evaluation
 
 #### Verification
 
-Silver: simulation studies. 
-Statistical evaluation is the default to evaluate the inferential validity. 
-This is verification.
+Simulation studies are verification.
 Assessing whether the system yields correct (known) output when a specific (known) input is supplied.
+Statistical evaluation is the default to evaluate the inferential validity. 
 Examples are unit tests for software and performance assessment of methods via simulation. 
 Verification via simulation is done, but not standardized. 
 Verification via testing is mostly done as unit tests, but not as integration tests.
 
 #### Validation
-Operational utility. 
-This is validation.
+In simulation studies we can construct the “truth”, but in practice we have to rely on assumptions. Those assumptions are crucial precisely because they cannot be (fully) proven.
 In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
 The thing we need is not available by definition.
-Inferential validity cannot be established.
-Some assumptions are impossible to definitively determine (e.g. MNAR), some we can evaluate by looking at the data.
-The setting where we do have the comparative truth (the true but missing values) is simulation studies.
-Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. 
-That's why simulation studies for imputation methodology should be comparable with one another.
-Then, imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one. 
-Example: NRI search for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
-
-In simulation studies we can construct the “truth”, but in practice we have to rely on assumptions. Those assumptions are crucial precisely because they cannot be (fully) proven.
 In practice, the best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. 
+Some assumptions are impossible to definitively determine (e.g. MNAR), some we can evaluate by looking at the data.
+Inferential validity cannot be established.
+
 Computational (quantitative) evaluation – metrics, tests, simulations.
 Graphical (qualitative) evaluation – diagnostic visualization/visual inspection.
 This dissertation offers insight and tools to do so.
+Validation tools to assess operational utility.
 
 <!-- Computational (quantitative) evaluation – metrics, tests, simulations -->
 <!-- Graphical (qualitative) evaluation – diagnostic visualization/visual inspection -->
@@ -1245,31 +1241,60 @@ This dissertation offers insight and tools to do so.
 
 ## Introducing chapter 2: evaluation  [TODO: edit]
 
-- **RQ: what to look out for when designing simulation studies for the evaluation of imputation methodology?**/How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?
+This chapter argues that imputation methods should be subjected to a standardized evaluation framework for siumulation studies.
+How to design simulation studies that are comparable? 
+Which simulation conditions to consider, which performance metrics to report? 
+And how to document this in such a way that others can reproduce and reuse the evaluation?
 
-- published as @oberman2024, cited 27x according to Google Scholar (of which 11x CrossRef)
-- based on literature review @liu2023
+The setting where we do have the comparative truth (the true but missing values) is simulation studies.
+Imputers have to rely on simulation study results in order to choose the best imputation method for their incomplete variables. 
+That's why simulation studies for imputation methodology should be comparable with one another.
+Then, imputers can make a 'grounded' assessment which imputation methods may be applicable, and choose the most appropriate one. 
+Example: NRI search for lower bound, so impute as 'positive behavior', but per definition wrong statistical inf, because we intentionally bias in one direction
+
+This chapter asks how we should judge, in a systematic way, whether imputation strategies work.
+**RQ: what to look out for when designing simulation studies for the evaluation of imputation methodology?**/How can computational evaluation criteria be systematically incorporated into simulation studies for imputation methodology?
 
 - How can we trust simulation studies for imputation methods?
 - How can we make them compatible & fair?
 
-REF: Morris ADEMP: Using simulation studies to evaluate statistical methods, pre-registration template, FIMD, Introduction to statistical simulations in health research?, Pitfalls and Potentials in Simulation Studies?
+Focus on methodologists (who design imputation methods and study their properties) as opposed to imputers (applied researchers who apply imputation models to specific datasets).
+Methodologists need comparable, reproducible evaluations of imputation methods across scenarios.
+Without a shared evaluation framework, claims about 'valid, unbiased estimates' for MI might not translate to practice.
+How can we standardize the verification of imputation methodology?
 
+The capter offers advice for designing simulaiton studies (i.e., computational evaluation)<!-- - published as @oberman2024, cited 27x according to Google Scholar (of which 11x CrossRef) -->
+based on literature review @liu2023.
+
+
+
+<!-- TODO: add REFs? Morris ADEMP: Using simulation studies to evaluate statistical methods, pre-registration template, FIMD, Introduction to statistical simulations in health research?, Pitfalls and Potentials in Simulation Studies? -->
+
+<!-- formal and empirical properties -->
 
 ## Introducing chapter 3: convergence  [TODO: edit]
 
-- **RQ: FSC is iterative, so convergence *should* be a requirement for valid inference, or is it?**/How does non-convergence in iterative imputation affect inferential validity, and how can non-convergence be diagnosed? 
+This chapter investigates non-convergence in the MICE algorithm.
+FCS imputation, as implemented in `mice`, is an iterative procedure. 
+Incomplete variables are imputed one-by-one, conditional on other variables.
+If these other variables are incomplete too, iteration is required.
+After the first cycle through the colulms, we can get better imputations based on the now-updated imputation model predictors.
+In `mice`, this cycle is several times until convergence is reached (by default five iterations).
+Because of its iterative nature, convergence *should* be a requirement for valid inference, or is it?
 
-- simulation study, published as pre-print (11x cited according to Google Scholar), presented at ICML
+This chapter investigates the questions:
+**How does non-convergence in iterative imputation affect inferential validity? And how can non-convergence be diagnosed?**
+The question is answered via a simulation study. 
+<!-- , published as pre-print (11x cited according to Google Scholar), presented at ICML -->
 
-- even without convergence, we can get valid inference at sample/population level, but not at individual cell level
-- imputation stays a custom job: convergence of imputation is conditional on imputation model
-- today, imputation are not generated for 1 analysis prob, but all analyses that may be fitted on the data --> all imputation models should be compatible and congenieal --> more 'omvattende' imputation models required
-- liefst wil je analysemodel parameters tracken, daarom is computational evaluation zo belangrijk
+<!-- - TODO: add that even without convergence, we can get valid inference at sample/population level, but not at individual cell level -->
+<!-- - TODO: add that imputation stays a custom job: convergence of imputation is conditional on imputation model -->
+<!-- - TODO: add that today, imputation are not generated for 1 analysis prob, but all analyses that may be fitted on the data -> all imputation models should be compatible and congenieal -> more 'omvattende' imputation models required -->
+<!-- - liefst wil je analysemodel parameters tracken, daarom is computational evaluation zo belangrijk -->
 
-- Can we quantify the convergence of the MICE algorithm?
+<!-- - Can we quantify the convergence of the MICE algorithm? -->
 
-REFs: Graphical and numerical diagnostic tools to assess suitability of multiple imputations and imputation models, Diagnostic checking of multiple imputation models, Convergence Properties of a Sequential Regression Multiple Imputation Algorithm, FIMD, Diagnostics for multivariate imputations
+<!-- TODO: add REFs? Graphical and numerical diagnostic tools to assess suitability of multiple imputations and imputation models, Diagnostic checking of multiple imputation models, Convergence Properties of a Sequential Regression Multiple Imputation Algorithm, FIMD, Diagnostics for multivariate imputations -->
 
 ## Introducing chapter 4: `ggmice`  [TODO: edit]
 
@@ -1371,7 +1396,7 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 `ggmice` does not pretend that visualization yields objective truth.
 A good graphical fit between observed and imputed data (e.g. overlapping scatterplots) is not a guarantee of statistical validity or correct missingness assumptions.
 Visual diagnostics can only suggest plausibility or highlight obvious misfits (imputation models should fit the observed part of the data).
-Tey cannot determinately identify the missing-data mechanism.
+They cannot determinately identify the missing-data mechanism.
 The interpretation remains subjective (e.g. convergence, MAR assumption, etc.).
 Visualization is not a replacement for, but support to evaluation.
 Also check metrics such as FMI.
@@ -1383,7 +1408,7 @@ Also check metrics such as FMI.
 
 <!-- ### Software development -->
 
-<!-- - Open Source Software development/FAIR --> R, GitHub, CRAN, Zenodo, ... -->
+<!-- - Open Source Software development/FAIR -> R, GitHub, CRAN, Zenodo, ... -->
 <!-- - CRAN downloads -->
 <!-- - GitHub stars and issues -->
 <!-- - StackOverflow mentions/questions -->
@@ -1566,6 +1591,7 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 - Computational evaluation is not a substitute for thinking. It may give a false sense of certainty, e.g. against MNAR mechanism (untestable assumption).
 - Instead, use computational evaluation as complement to (not a replacement for) substantive knowledge and sensitivity analyses. Use expert insight
+- Since publishing, there has not been a pre-reg format
 
 
 - This entire dissertation relies on the R language and centers the `mice` package [TODO rephrase as not a flaw: I focus on a dominant ecosystem, and concepts generalize beyond].
