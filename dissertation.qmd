@@ -884,6 +884,12 @@ Some assumption checks are visual inspection, some are quantitative, some need e
 
 ### How to evaluate imputation models? 
 
+How do methodologists know whether an imputation method works? 
+Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations). 
+How do imputers know whether their imputation models worked? 
+Our current answer is well, they don't know for sure. 
+And that's what this dissertation is all about. 
+
  <!-- a few desirable properties of a statistical esti-mator under the frequentist framework: both the point and variance estimateare unbiased or consistent, and the 95% confidence interval has a nominalcoverage under repeated sampling. In certain cases, such properties might bedemonstrated by mathematical derivations. However in many other scenarios,especially if estimators are complicated, a more feasible approach to evaluat-ing their performances is through Monte Carlo simulation studies, based onwhich we can numerically generate sampling distributions of the estimator ofinterest. -->
 <!-- REF: He, 2021, p. 40 -->
 <!-- see also:  (Little and Rubin2020,Chapter 5). -->
@@ -925,8 +931,8 @@ I will connect it to concepts from systems and software engineering, and the inf
 
 ### Computational evaluation, verification and validation [TODO: edit]
 
-From a computer science perspective, imputation workflows are sociotechnical systems.
-In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users, consisting not only of software and hardware, but also operators [@sommerville2015, p. 556].
+From a computer science perspective, imputation workflows are 'sociotechnical systems'.
+In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users, consisting of software, hardware, and human operators [@sommerville2015, p. 556].
 Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556].
 <!-- Software systems can be categorized into 'technical computer-based systems' and 'sociotechnical systems' [@sommerville2015, p. 552]. -->
 Sociotechnical systems have three characteristics, namely: 
@@ -952,7 +958,6 @@ And there should be ‘interoperability’ with other systems, such as ggplot fo
 For such systems, analytic guarantees (e.g., asymptotic unbiasedness of MI) are not enough. 
 We need computational and empirical checks on the whole workflow. 
 That is where V&V comes in.
-
 
 Verification and validation (V&V) is a process for the evaluation of systems, used when the 'high road' of formal proofs is blocked.
 It is framework for checking whether we have both built the system correctly as well as built the correct system.
@@ -987,31 +992,29 @@ It is framework for checking whether we have both built the system correctly as 
 In systems engineering, the system life cycle framework is used to build, develop and evaluate systems.
 There are standards for the evaluation of a system: verification & validation.
 V&V is needed when the 'high road' of analytical derivations and proofs are impossible or unfeasible.
-Instead, computer scientists use computational evaluation to assess systems.
+<!-- Instead, computer scientists use computational evaluation to assess systems. -->
 
 Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'. 
-So with verification, we can check the quality of a system by plugging in an input with a known output. Do we get the correct output in return? 
-This is what we do with simulation studies and with unit tests in software. 
-We want to check whether the system or the method in this case conforms to the requirements that we set (e.g. accuracy). 
+So with verification, we can check the quality of a system by plugging in an input with a known output. 
+Do we get the correct output in return? 
+For imputation methodology, this is what we do with simulation studies and with unit tests in software. 
+We want to check whether the system (or the method in this case) conforms to the requirements that we set (e.g. accuracy). 
 Verification is about conformity to specifications, usually before or independent of real-world use.
 
-Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. Is a system able to accomplish its intended use? We can, for example, use integration tests. 
+Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. 
+Is a system able to accomplish its intended use? 
 <!-- TODO: add ref IEEE -->
 Validation = use of use cases and usability testing to evaluate whether users have all they need to use the system. 
 In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
-Validation is often socio-technical: it combines technical inspection with **human judgment** and domain knowledge.
-Validation test = "test to determine whether an implemented system fulfills [sic.] its specified requirements" [ISO/IEC 2382:2015, Information technology — Vocabulary]
+Validation is often sociotechnical: it combines technical inspection with **human judgment** and domain knowledge.
+Validation test = "test to determine whether an implemented system fulfils [sic.] its specified requirements" [ISO/IEC 2382:2015, Information technology — Vocabulary]
+For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
+This dissertation describes computational and graphical evaluation tools.
+In the future, we might use integration tests and user evaluation studies too? 
 
-How do methodologists know whether an imputation method works? 
-Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations). 
-How do imputers know whether their imputation models worked? 
-Our current answer is well, they don't know for sure. 
-And that's what this dissertation is all about. 
-We need computational evaluation and diagnostic visualization.
-
+What is computational evaluation and diagnostic visualization?
 Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies.
 Computational evaluation = use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment.
-
 Diagnostic visualization is the use of graphs to communicate system behavior to stakeholders. 
 It's 'diagnostic' because the purpose is to identify patterns and problems instead of descriptive/summaries.
 Diagnostic visualization/visual inspection helps stakeholders understand the system’s behavior and judge whether it’s  acceptable for their needs.
@@ -1025,9 +1028,6 @@ Diagnostic visualization/visual inspection helps stakeholders understand the sys
 
 <!-- verification and validation (V&V) effort -->
 <!-- 1. work associated with performing the V&V processes, activities, and tasks [IEEE 1012-2012 IEEE Standard for System and Software Verification and Validation, 3.1.37] -->
-
-
-
 
 
 ### What is computational evaluation?  [TODO: edit]
@@ -1053,12 +1053,13 @@ Dimensions of computational evaluation: e.g. inferential validity, algorithmic b
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
 
 
-
 ### Why should we care about computational evaluation of imputation methodology?  [TODO: edit]
 
-What do we care about? bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate.
+What do we care about when evaluating imputation workflows? 
+Statistical properties such as bias/coverage/variance, empirical relevance/plausibility of the imputations, and software-engineering nitpicks like speed/convergence/fault rate.
 Statistical evaluation is not possible in practice, only in simulation studies.
-Why is statistical evaluation may not possible IRL? Bias and confidence interval coverage are impossible to determine without a comparative truth (although PPC and bootstrapping allows us to compare with respect to observed values).
+Why is statistical evaluation may not possible IRL? 
+Bias and confidence interval coverage are impossible to determine without a comparative truth (although PPC and bootstrapping allows us to compare with respect to observed values).
 In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
 
 User utility does not only require statistical validity, but also usability/appropriateness/plausibility of the imputations.
@@ -1089,7 +1090,7 @@ But also vice versa: when might the plausibility of imputed values mislead a dat
 When 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stoch reg), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. 
 Another example: psych study with baseline, some of which are missing; baseline, intervention, follow-up --> mice would inflate baseline and follow-up if both are incomplete; statistical evaluation will not show this (unbiased, cov ok, etc.); over-imputation or postpred check would show diff distr for obs and imp; circularity should be removed: follow-up should not predict baseline
 <!-- [TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp? Not now!] -->
-So computational evaluation should never replace statisticaleval.
+So computational evaluation should never replace statistical evaluation.
 <!-- - statistical evaluation vs computational evaluation: does one come before the other? not necessarily. -->
 
 <!-- [TODO: rephrase as ability to explain differences between observed and imputed data (e.g., lower means in boys data), not as reverse engineering but as statistical evaluation of the data -> then computational evaluation may be needed to explain differences?] Computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure. E.g., implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained? -->
@@ -1101,6 +1102,69 @@ So computational evaluation should never replace statisticaleval.
 <!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
 <!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
 
+### Building and evaluating imputation models
+
+- Model building: how do we know which functional form to choose?
+  - rely on defaults, tested in simulation studies 
+  - assess the distribution of the incomplete variable (e.g., visual inspection)
+  - ...? (maybe ad transformations?)
+- Model building: how do we know which imputation model predictors to select?
+  - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021]
+  - association of missingness indicator with other variables in the data 
+  - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
+  - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
+  - ...?
+- Model evaluation: how do we assess imputation model misfit?
+  - fit of the model to the observed data
+  - non-convergence in the algorithm 
+  - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018]
+  - ...?
+
+
+::: {#fig-steps}
+
+```{mermaid}
+%%| fig-height: 7.5
+
+flowchart TB
+    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
+    subgraph build[" "]
+      miss
+      mod
+    end
+    miss --> mod[\"`Define imputation model(s)`"/]
+    mod --> imp[[Run imputation algorithm]]
+    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
+    imps --> conv
+    subgraph eval[" "]
+      direction TB
+      conv[\"`Inspect convergence`"/] 
+      check[\"`Inspect imputed values`"/]
+      conv <--> check
+    end
+    conv -- "✘ non-convergence" --> imp
+    check -- "✘ misfit" --> mod
+    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
+    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
+    mira --> pool(["Pool estimates"])
+    pool --> mipo["Pooled estimate"]
+    inc@{ shape: doc}
+    imps@{ shape: docs}
+    analyses@{ shape: procs}
+    mira@{ shape: tri}
+```
+
+
+<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
+<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
+
+`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
+
+
+Multiple imputation flowchart 
+
+:::
+
 
 ### What is the scope of this dissertation?  [TODO: edit]
 
@@ -1110,7 +1174,6 @@ You might expect me to go into...
 - In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. 
 - In the category imputation algorithms: just FCS in the flavor of MICE (not JOMO or SMC-FCS). The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models. 
 - In the category substantive models: just GLM for statistical inference. The applications are aimed at statistical inference (not prediction or causal inference).
-
 
 
 **RQ: what tools are required to assess the quality of data-generating algorithms? in the development, evaluation, and application.**
@@ -1127,28 +1190,28 @@ I contribute to the new status quo ("extending" = generalizable scientific contr
 <!-- - life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
 There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation).
 
-<!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
-
-
-- Step 1: verification of statistical properties via formal analysis (e.g. proofs) and/or simulation
-- Step 2: validation of operational utility via graphical and computational evaluation
-
-#### Step 1
-Gold: analytical properties. 
+Gold standard: analytical properties. 
 <!-- V&V not applicable, because not a system(?).  -->
 Deductive truths.
 But not feasible with FCS.
 So, implementation needed, which does require V&V.
+<!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
+
+
+- Verification of statistical properties via formal analysis (e.g. proofs) and/or simulation
+- Validation of operational utility via graphical and computational evaluation
+
+#### Verification
 
 Silver: simulation studies. 
 Statistical evaluation is the default to evaluate the inferential validity. 
 This is verification.
 Assessing whether the system yields correct (known) output when a specific (known) input is supplied.
-Examples are unit tests for software(?) and performance assessment of methods via simulation. 
+Examples are unit tests for software and performance assessment of methods via simulation. 
 Verification via simulation is done, but not standardized. 
 Verification via testing is mostly done as unit tests, but not as integration tests.
 
-#### Step 2
+#### Validation
 Operational utility. 
 This is validation.
 In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
@@ -1212,43 +1275,66 @@ REFs: Graphical and numerical diagnostic tools to assess suitability of multiple
 
 <!-- TODO: add minimal example? -->
 This chapter introduces the software `ggmice`: an R package for building and evaluating imputation models. The `ggmice` package offers tools for the visualization of incomplete data, imputation models, and imputed data. 
+`ggmice` supports `mice` workflows by making imputation modeling choices visible and, therefore, open to scrutiny.
+Compatibility with `ggplot2`'s grammar of graphics makes `ggmice` graphs extendable with the familiar tools of the `tidyverse`, and adaptable for publication-ready visualizations.
 
 ### Indicators for adoption: how is the software already used?
 
-- software published on Zenodo [@oberman2022], with open code and bug reporting via GitHub
-- peer-review not formal via journal, but via Issues and Pull Requests on GitHub (10x external Issue, 13x external PR)
-- impact: citations (5x according to Google Scholar), CRAN downloads (852x/month; 21k total) and conda downloads (100+/month; https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview)
+Although `ggmice` has not undergone the traditional journal-based peer review, it has been vetted in practice.
+The package has been released on CRAN in 2022 [@oberman2025]. 
+CRAN downloads are reaching approximately 1.000x per month at the time of writing.
+The accompanying Zenodo publication [@oberman2022] has been cited in seven scientific works.
+Open source code and issue tracking are available on GitHub ([github.com/amices/ggmice](https://github.com/amices/ggmice)).
+There have been multiple external 'Issues' and 'Pull Requests' on GitHub, indicating that other researchers and developers have actively reviewed and improved the codebase.
+<!-- - software published on Zenodo [@oberman2022], with open code and bug reporting via GitHub -->
+<!-- - peer-review not formal via journal, but via Issues and Pull Requests on GitHub (10x external Issue, 13x external PR) -->
+<!-- - impact: citations (5x according to Google Scholar), CRAN downloads (852x/month; 21k total) and conda downloads (100+/month; https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview) -->
+In short, there is active use of and involvement in `ggmice`, as indicated by regular downloads from CRAN, citations to the Zenodo record in the scientific literature, and community feedback via platforms such as GitHub and StackOverflow.
 
 ### Design principles
 
-- `ggmice` is compatible with the popular R packages `mice` (for imputation) and `ggplot2` (for flexible data visualizations based on the 'grammar of graphics' framework). 
-- `mice` imputation models are substantive model agnostic: flexible, var-by-var definition of imputation model. `ggmice` supports this.
-- Grammar of Graphics = layered plots [@wilkinson2012] --> `ggmice` produces `ggplot` objects: layered, easily adjustable
+`ggmice` is developed according to 'open source' and FAIR principles. 
+The package is implemented in the open source language R, distributed via CRAN and GitHub, and archived on Zenodo.
+Its evolution is driven by user feedback (e.g., GitHub issues, StackOverflow questions, conference discussions, teaching) and collaboration (e.g., code contributions, statistical consulting with external partners).
 
-- Assumptions: imputation model should fit the observed part, imputation model should be congenial --> providing tools to see observed and imputation side-by-side/evaluation of the distribution of observed and imputed data [@nguyen2017]
+`ggmice` is compatible with the popular R packages `mice` (for imputation) and `ggplot2` (for flexible data visualizations based on the 'grammar of graphics' framework). 
 
-### Limitations
+`ggmice` produces `ggplot` objects, leveraging the 'grammar of graphics' [@wilkinson2012] to create layered, easily adjustable plots. 
+<!-- Grammar of Graphics = layered plots [@wilkinson2012] `ggmice` produces `ggplot` objects: layered, easily adjustable -->
 
-- make explicit what these plots/analyses can and cannot tell us: imputation models should fit the observed part of the data, but no way to determinately state miss mech.
-- visualization =/= objective truth --> good imputation model fit/plausible values is not a guarantee for statistical validity
-- visualization is not a replacement of evaluation but support, also check metrics such as FMI
-- interpretation remains subjective (e.g. convergence, MAR assumption, etc.)
+`mice` imputation models are substantive model agnostic: flexible, var-by-var definition of imputation model. `ggmice` supports this. 
+Because `mice` is substantive-model agnostic, `ggmice` offers tools to inspect whether the imputation model fits the observed data, instead of imposing particular analysis models.
+Assumptions: imputation model should fit the observed part, imputation model should be congenial 
+`ggmice` provides tools to see observed and imputation side-by-side, adhering to advice to evaluate the distribution of observed and imputed data [@nguyen2017]
 
 ### What does ggmice aim to solve?
 
+`ggmice` offers a unified toolbox for the development and evaluation of imputation models.
 The `ggmice` package aims to solve the following problems:
 
- - no direct graphical comparisons between incomplete and imputed data; side-by-side presentation of the data before and after imputation; Visualizations with `ggmice` can be made to inspect marginal and joint distributions of incomplete variables side-to-side to compare incomplete and imputed data
- - no previously existing methods for visualizing `mice` imputation models; complex imputation models are easier to review through visualization (as opposed to console prints/excel exports of predictor matrix)
- - existing plotting tools for `mids` objects not easily editable/publication-ready; Visualizations with `ggmice` can be extended and adapted with tidyverse functions to create publication-ready graphs of imputed data (reflecting the uncertainty due to missingness).
- - unified toolbox for the development and evaluation of imputation models
+- No direct graphical comparisons between incomplete and imputed data.
+ <!-- side-by-side presentation of the data before and after imputation.  -->
+ Visualizations with `ggmice` can be made to inspect marginal and joint distributions of incomplete variables side-to-side to compare incomplete and imputed data. 
+ Without `ggmice`, it is cumbersome to see the data before and after imputation in comparable plots. 
+ `ggmice` offers functions that visualize incomplete data distributions and their completed counterparts.
+
+- No previously existing methods for visualizing `mice` imputation models.
+ The structure of `mice` imputation models (i.e., predictor matrix and methods vector) are often printed to the R console as text. Or, [experientially?], exported to spreadsheets. 
+ Complex imputation models are easier to review through visualization.
+ `ggmice` provides imputation model plots that make complex imputation specifications easier to review and discuss.
+ 
+- Limited chart types and design options for imputed data.
+  Existing plotting tools for `mids` objects not easily editable or modifiable with different chart types.
+  Visualizations with `ggmice` can be extended and adapted with `tidyverse` functions to create publication-ready graphs of imputed data (reflecting the uncertainty due to missingness).
 
 ### Existing solutions
 
 The `ggmice` package fills a hiatus in the software landscape, with other packages generally supporting either `mice` or `ggplot2`, but not both. 
-Table REF provides an overview of R packages that offer visualization tools for incomplete and imputed data. In short: with `mice` you cannot plot incomplete data distributions, all other packages lack support for `mice`-imputed data, and visualization of `mice` imputation models did not exist at all prior to `ggmice`.
+Table REF provides an overview of R packages that offer visualization tools for incomplete and imputed data. 
+In short: with `mice` you cannot plot incomplete data distributions, all other packages lack support for `mice`-imputed data, and visualization of `mice` imputation models did not exist at all prior to `ggmice`.
 
-
+In particular, visualization of `mice` imputation models did not exist prior to `ggmice`.
+And side-by-side visualizations of incomplete and imputed data was not supported in a unified graphical framework (nl., `naniar`'s `ggplot` graphs with missing data, versus `mice`'s `lattice` plots with imputed data).
 
 <!-- https://cranlogs.r-pkg.org/badges/ggmice -->
 <!-- https://naniar.njtierney.com/reference/gg_miss_upset.html -->
@@ -1280,26 +1366,43 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 
 :::
 
+### Limitations
 
-### Software development
+`ggmice` does not pretend that visualization yields objective truth.
+A good graphical fit between observed and imputed data (e.g. overlapping scatterplots) is not a guarantee of statistical validity or correct missingness assumptions.
+Visual diagnostics can only suggest plausibility or highlight obvious misfits (imputation models should fit the observed part of the data).
+Tey cannot determinately identify the missing-data mechanism.
+The interpretation remains subjective (e.g. convergence, MAR assumption, etc.).
+Visualization is not a replacement for, but support to evaluation.
+Also check metrics such as FMI.
 
-- Open Source Software development/FAIR --> R, GitHub, CRAN, Zenodo, ...
-- CRAN downloads
-- GitHub stars and issues
-- StackOverflow mentions/questions
-- feedback at conferences
-- citations of the package (Zenodo reference)
+<!-- - make explicit what these plots/analyses can and cannot tell us: imputation models should fit the observed part of the data, but no way to determinately state miss mech. -->
+<!-- - visualization =/= objective truth -> good imputation model fit/plausible values is not a guarantee for statistical validity -->
+<!-- - visualization is not a replacement of evaluation but support, also check metrics such as FMI -->
+<!-- - interpretation remains subjective (e.g. convergence, MAR assumption, etc.) -->
+
+<!-- ### Software development -->
+
+<!-- - Open Source Software development/FAIR --> R, GitHub, CRAN, Zenodo, ... -->
+<!-- - CRAN downloads -->
+<!-- - GitHub stars and issues -->
+<!-- - StackOverflow mentions/questions -->
+<!-- - feedback at conferences -->
+<!-- - citations of the package (Zenodo reference) -->
 
 ### Future research & development
 
-- visualizing `mira` objects
-- add posterior predictive check plots & over-imputation
-- quantifying uncertainty at pattern/cell level
-- tools for sensitivity analyses: inducing MNAR in observed part of the data and evaluating effects on the imputations/inference
-- What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)?
-- pre vs post imputation facilitator functies om te checken of er nieuwe verbanden in zitten (kruistabel)
+Planned extensions further align with the philosophy of making imputation workflows and their consequences visible.
+Some directions for future development include:
 
+- Visualizing `mira` objects (analysis results across multiple imputations).
+- Adding posterior predictive checks and over-imputation plots.
+- Quantifying uncertainty at the pattern or cell level.
+- Tools for sensitivity analyses (e.g. inducing MNAR structure in the observed data and inspecting effects on imputations and inferences).
+- Investigating which data-level diagnostics are actually informative about imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated).
+<!-- TODO: add pre vs post imputation facilitator functies om te checken of er nieuwe verbanden in zitten (kruistabel)? -->
 
+In short, `ggmice` is an attempt to make imputation model assumptions and consequences as transparent as possible.
 <!-- *Wat is het probleem* <br>  -->
 
 <!-- - Visualization of incomplete data, imputation models, and imputed data.  -->
@@ -1405,68 +1508,6 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 <!-- - What data-level diagnostics are informative for assessing imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated)? -->
 <!-- - Do we get better imputations in practice? -->
 
-### Building and evaluating imputation models
-
-- Model building: how do we know which functional form to choose?
-  - rely on defaults, tested in simulation studies 
-  - assess the distribution of the incomplete variable (e.g., visual inspection)
-  - ...? (maybe ad transformations?)
-- Model building: how do we know which imputation model predictors to select?
-  - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021]
-  - association of missingness indicator with other variables in the data 
-  - external input (e.g., branching patterns, or expert knowledge to correct for MNAR)
-  - Take the analysis model (if available) as starting point for imputation workflow, for congeneality
-  - ...?
-- Model evaluation: how do we assess imputation model misfit?
-  - fit of the model to the observed data
-  - non-convergence in the algorithm 
-  - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018]
-  - ...?
-
-
-::: {#fig-steps}
-
-```{mermaid}
-%%| fig-height: 7.5
-
-flowchart TB
-    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
-    subgraph build[" "]
-      miss
-      mod
-    end
-    miss --> mod[\"`Define imputation model(s)`"/]
-    mod --> imp[[Run imputation algorithm]]
-    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
-    imps --> conv
-    subgraph eval[" "]
-      direction TB
-      conv[\"`Inspect convergence`"/] 
-      check[\"`Inspect imputed values`"/]
-      conv <--> check
-    end
-    conv -- "✘ non-convergence" --> imp
-    check -- "✘ misfit" --> mod
-    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
-    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
-    mira --> pool(["Pool estimates"])
-    pool --> mipo["Pooled estimate"]
-    inc@{ shape: doc}
-    imps@{ shape: docs}
-    analyses@{ shape: procs}
-    mira@{ shape: tri}
-```
-
-
-<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
-<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
-
-`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
-
-
-Multiple imputation flowchart 
-
-:::
 
 
 \newpage
