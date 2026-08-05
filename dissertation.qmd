@@ -9,6 +9,7 @@ format:
         \usepackage[labelfont={bf}]{caption}
         \usepackage{ragged2e}
         \usepackage{tikz}
+        \usepackage{pdfpages}
         \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
     mermaid:
         theme: neutral
@@ -117,6 +118,7 @@ load("dat_xy.RData")
 <!-- TODO: add CREDIT and publication packages -->
 
 \newpage
+
 
 # Acknowledgements {.unnumbered}
 
@@ -1649,7 +1651,9 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 # Chapter 2: evaluation
 
-[TODO: link/insert + credit]
+[TODO: add credit statement, merge formatting]
+
+\includepdf[pages=-, fitpaper=true]{chapters/Oberman and Vink - 2024 - Toward a standardized evaluation of imputation methodology.pdf}
 
 \newpage
 
@@ -1657,11 +1661,15 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 [TODO: link/insert + credit]
 
+\includepdf[pagecommand={}]{test.pdf}
+
 \newpage
 
 # Chapter 4: ggmice
 
 [TODO: link/insert + credit]
+
+\includepdf[pagecommand={}]{test.pdf}
 
 \newpage
 
