@@ -26,7 +26,6 @@ csl: apa.csl
 ---
 
 ```{r}
-#| label: setup
 #| message: false
 #| warning: false
 #| include: false
@@ -1103,7 +1102,7 @@ Since "Systems have properties that only become apparent when their components a
 For imputation methods this means that they should work in practice, not just in simulations. 
 For such systems, analytic guarantees (e.g., asymptotic unbiasedness of MI) are not enough. 
 We need computational and empirical checks on the whole workflow. 
-And there should be interoperability with other systems an imputer might use in their imputation workflow, such as `ggplot2` for data visualization, and statistical analysis packages such as `stats`.
+And there should be interoperability with other systems an imputer might use in their imputation workflow, such as `ggplot2` [@wickham2016] for data visualization, and statistical analysis packages such as `stats` [@rcoreteam2025].
 That is where V&V comes in.
 
 Verification and validation (V&V) is a process for the evaluation of systems, used when the 'high road' of formal proofs is blocked.
@@ -1661,15 +1660,16 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 [TODO: link/insert + credit]
 
-\includepdf[pagecommand={}]{test.pdf}
+\includepdf[pages=-]{test.pdf}
 
 \newpage
 
 # Chapter 4: ggmice
 
-[TODO: link/insert + credit]
+[TODO: add credit statement, merge formatting]
 
-\includepdf[pagecommand={}]{test.pdf}
+\includepdf[pages=-, fitpaper=true]{chapters/ggmice.pdf}
+
 
 \newpage
 
