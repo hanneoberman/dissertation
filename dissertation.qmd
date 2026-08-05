@@ -1660,7 +1660,7 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 [TODO: link/insert + credit]
 
-\includepdf[pages=-]{test.pdf}
+\includepdf[pages=-, fitpaper=true]{chapters/convergence.pdf}
 
 \newpage
 
