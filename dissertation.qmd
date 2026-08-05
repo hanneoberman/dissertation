@@ -977,6 +977,50 @@ The software will happily produce imputations with its defaults, but *good* impu
 There are some decisions that you, as imputer, implicitly or explicitly make.
 @fig-steps shows where human input in requested in the imputation workflow.
 
+::: {#fig-steps}
+
+```{mermaid}
+%%| fig-height: 7.5
+
+flowchart TB
+    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
+    subgraph build[" "]
+      miss
+      mod
+    end
+    miss --> mod[\"`Define imputation model(s)`"/]
+    mod --> imp[[Run imputation algorithm]]
+    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
+    imps --> conv
+    subgraph eval[" "]
+      direction TB
+      conv[\"`Inspect convergence`"/] 
+      check[\"`Inspect imputed values`"/]
+      conv <--> check
+    end
+    conv -- "✘ non-convergence" --> imp
+    check -- "✘ misfit" --> mod
+    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
+    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
+    mira --> pool(["Pool estimates"])
+    pool --> mipo["Pooled estimate"]
+    inc@{ shape: doc}
+    imps@{ shape: docs}
+    analyses@{ shape: procs}
+    mira@{ shape: tri}
+```
+
+
+<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
+<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
+
+`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
+
+
+Multiple imputation flowchart 
+
+:::
+
 A data analyst faced with incomplete data should not start imputing right away.
 They should first ask themselves: what kind of missingness am I dealing with? 
 Inspect the patterns of misisngness and consider which missingness mechanism(s) might be at play.
@@ -1042,50 +1086,6 @@ They involve building and reading plots, interpreting diagnostics, and deciding 
 <!--   - ...? -->
 
 
-::: {#fig-steps}
-
-```{mermaid}
-%%| fig-height: 7.5
-
-flowchart TB
-    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
-    subgraph build[" "]
-      miss
-      mod
-    end
-    miss --> mod[\"`Define imputation model(s)`"/]
-    mod --> imp[[Run imputation algorithm]]
-    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
-    imps --> conv
-    subgraph eval[" "]
-      direction TB
-      conv[\"`Inspect convergence`"/] 
-      check[\"`Inspect imputed values`"/]
-      conv <--> check
-    end
-    conv -- "✘ non-convergence" --> imp
-    check -- "✘ misfit" --> mod
-    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
-    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
-    mira --> pool(["Pool estimates"])
-    pool --> mipo["Pooled estimate"]
-    inc@{ shape: doc}
-    imps@{ shape: docs}
-    analyses@{ shape: procs}
-    mira@{ shape: tri}
-```
-
-
-<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
-<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
-
-`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
-
-
-Multiple imputation flowchart 
-
-:::
-
 Apart from the imputation models, other choices also affect the quality of the imputation workflow and resulting statistical inferences.
 For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may interact with the visual and computational diagnostics above.
 
@@ -1148,8 +1148,7 @@ Verification is about conformity to specifications, usually before or independen
 
 Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. 
 Is a system able to accomplish its intended use? 
-
-Validation = use of use cases and usability testing to evaluate whether users have all they need to use the system. 
+Validation is use of use cases and usability testing to evaluate whether users have all they need to use the system. 
 In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
 Validation is often sociotechnical: it combines technical inspection with *human judgment* and domain knowledge.
 A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501].
@@ -1229,16 +1228,16 @@ What are other limitations of purely inferential metrics (bias, coverage)?
 Statistical evaluation relies on known analysis models, while FCS is substantive model agnostic. 
 So, supplement it with computational evaluation and visual inspection. 
 These are also possible without analysis model, which makes it more pressing today, because imputations might be used with several analyses.
-Not knowing the analysis model up front risks non-congeniality
+Not knowing the analysis model up front risks non-congeniality.
 
 Another problem of unknown applications with potential non-congeniality is non-convergence.
 Without graphical or computational diagnostic for non-convergence, users might analyze imputed values of non-converged chain.
-For example, fcs iterations not stable, but estimand okay (because in simulation study we have true value), but what about conv at cell level?
+For example, FCS iterations not stable, but estimand okay (because in simulation study we have true value), but what about convergence at cell level?
 Statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample.
 
 But also vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? 
-When 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stoch reg), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. 
-Another example: psych study with baseline, some of which are missing; baseline, intervention, follow-up --> mice would inflate baseline and follow-up if both are incomplete; statistical evaluation will not show this (unbiased, cov ok, etc.); over-imputation or postpred check would show diff distr for obs and imp; circularity should be removed: follow-up should not predict baseline
+When 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stochastic regression), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. 
+Another example: in a psychological research study with baseline, some of which are missing; baseline, intervention, follow-up -> `mice` would inflate baseline and follow-up if both are incomplete; statistical evaluation will not show this (unbiased, coverage is okay, etc.); over-imputation or posterior predictive checks would show differences in distribution for observed and imputed data; circularity should be removed: follow-up should not predict baseline.
 <!-- [TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp? Not now!] -->
 So computational evaluation should never replace statistical evaluation.
 <!-- - statistical evaluation vs computational evaluation: does one come before the other? not necessarily. -->
