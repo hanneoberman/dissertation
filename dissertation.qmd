@@ -21,8 +21,8 @@ filters:
   - diagram
 execute:
   echo: false
-bibliography: dissertation.bib
-csl: apa.csl
+bibliography: resources/dissertation.bib
+csl: resources/apa.csl
 ---
 
 ```{r}
@@ -31,7 +31,7 @@ csl: apa.csl
 #| include: false
 library(ggplot2)
 library(ggmice)
-load("dat_xy.RData")
+load("data/dat_xy.RData")
 ```
 
 
@@ -1486,7 +1486,7 @@ And side-by-side visualizations of incomplete and imputed data was not supported
 #| label: tbl-software
 #| tbl-cap: "Differential functionality of `ggmice` versus other R packages"
 # library(kableExtra)
-packages <- read.csv("pkg_table.csv")
+packages <- read.csv("tables/pkg_table.csv")
 knitr::kable(packages, col.names = c("", names(packages)[-1])) 
 ```
 
