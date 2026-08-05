@@ -407,6 +407,7 @@ How? By bridging inferential evaluation and data-/algorithm-level diagnostics fo
 
 <!-- $$Y = \{Y_{obs}, \dot{Y}_{\text{mis}}\}$$ -->
 
+## Background
 
 ### Why this dissertation? (or: certainty with uncertainty)
 
@@ -437,7 +438,8 @@ But I am most a fan of the uncertainty aspect.
 I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. 
 In this dissertation, I hope to achieve that for missing data methodology.
 
-### But first, some background and notation
+
+### But first, some terminology and notation
 
 Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population: a sample. 
 If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
@@ -801,6 +803,8 @@ MI enables researchers with missing data problems to correct for differences due
 The aim is to generate imputations to fill in the missing part of the data. 
 How do we model the missing part of the data based on the observed part of the data? 
 
+## Imputation in practice
+
 ### How to generate imputations? (or: univariate, joint, chained -- the imputation flavors)
 
 <!-- [TODO: edit!]  -->
@@ -938,6 +942,7 @@ In this dissertation, I focus on the second and third routes.
 We will borrow some terms from related fields.
 I will connect it to concepts from systems and software engineering, and the information retrieval sub-field of computer science.
 
+## Evaluation tools
 
 ### Computational evaluation, verification and validation [TODO: edit]
 
@@ -1016,7 +1021,7 @@ Is a system able to accomplish its intended use?
 <!-- TODO: add ref IEEE -->
 Validation = use of use cases and usability testing to evaluate whether users have all they need to use the system. 
 In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
-Validation is often sociotechnical: it combines technical inspection with **human judgment** and domain knowledge.
+Validation is often sociotechnical: it combines technical inspection with *human judgment* and domain knowledge.
 Validation test = "test to determine whether an implemented system fulfils [sic.] its specified requirements" [ISO/IEC 2382:2015, Information technology — Vocabulary]
 For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
 This dissertation describes computational and graphical evaluation tools.
@@ -1215,14 +1220,16 @@ Multiple imputation flowchart
 
 :::
 
-Apart from the imputation models, other choices also affect the quyality of the imputation workflow and resulting statistical inferences.
-For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may interact with the visual and computational disgnostics above.
+Apart from the imputation models, other choices also affect the quality of the imputation workflow and resulting statistical inferences.
+For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may interact with the visual and computational diagnostics above.
 
 Taken together, these decisions show that a `mice` workflow is not a push-button solution. 
 It is a modeling exercise in which the user is involved in model building and evaluation.
 Human input makes imputation workflows subjective to individual choices and preferences.
 
 <!-- The defaults provide a starting point, but the adequacy of the imputations—and therefore the validity of your inferences—ultimately depends on how thoughtfully you make and review these human inputs. -->
+
+## Disseration outline
 
 ### What is the scope of this dissertation?  [TODO: edit]
 
@@ -1290,14 +1297,14 @@ Validation tools to assess operational utility.
 <!-- - [in simulation study kun je waarheid maken, maar in de praktijk moet je aannames doen. die aannames zijn belangrijk, juist omdat ze niet/ten dele te bewijzen zijn] -->
 <!-- - [what is a simulation study? add a brief methodological background section on simulation studies in statistics?] -->
 
-### Chapters
+Chapters:
 
 1. Evaluation paper: evaluating (new) imputation methods via simulation studies/how we know FCS works 
 2. Convergence paper: evaluating imputation algorithm quantitatively
 3. Software: choosing/evaluating imputation models in practice
 
 
-## Introducing chapter 2: evaluation
+### Introducing chapter 2: evaluation
 
 This chapter argues that imputation methods should be subjected to a standardized evaluation framework for siumulation studies.
 How to design simulation studies that are comparable? 
@@ -1336,7 +1343,7 @@ based on literature review @liu2023.
 
 <!-- formal and empirical properties -->
 
-## Introducing chapter 3: convergence  [TODO: add]
+### Introducing chapter 3: convergence  [TODO: add]
 
 This chapter investigates non-convergence in the MICE algorithm.
 FCS imputation, as implemented in `mice`, is an iterative procedure. 
@@ -1360,14 +1367,14 @@ The question is answered via a simulation study.
 
 <!-- TODO: add REFs? Graphical and numerical diagnostic tools to assess suitability of multiple imputations and imputation models, Diagnostic checking of multiple imputation models, Convergence Properties of a Sequential Regression Multiple Imputation Algorithm, FIMD, Diagnostics for multivariate imputations -->
 
-## Introducing chapter 4: `ggmice`
+### Introducing chapter 4: `ggmice`
 
 <!-- TODO: add minimal example? -->
 This chapter introduces the software `ggmice`: an R package for building and evaluating imputation models. The `ggmice` package offers tools for the visualization of incomplete data, imputation models, and imputed data. 
 `ggmice` supports `mice` workflows by making imputation modeling choices visible and, therefore, open to scrutiny.
 Compatibility with `ggplot2`'s grammar of graphics makes `ggmice` graphs extendable with the familiar tools of the `tidyverse`, and adaptable for publication-ready visualizations.
 
-### Indicators for adoption: how is the software already used?
+#### Indicators for adoption: how is the software already used?
 
 Although `ggmice` has not undergone the traditional journal-based peer review, it has been vetted in practice.
 The package has been released on CRAN in 2022 [@oberman2025]. 
@@ -1380,7 +1387,7 @@ There have been multiple external 'Issues' and 'Pull Requests' on GitHub, indica
 <!-- - impact: citations (5x according to Google Scholar), CRAN downloads (852x/month; 21k total) and conda downloads (100+/month; https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview) -->
 In short, there is active use of and involvement in `ggmice`, as indicated by regular downloads from CRAN, citations to the Zenodo record in the scientific literature, and community feedback via platforms such as GitHub and StackOverflow.
 
-### Design principles
+#### Design principles
 
 `ggmice` is developed according to 'open source' and FAIR principles. 
 The package is implemented in the open source language R, distributed via CRAN and GitHub, and archived on Zenodo.
@@ -1406,7 +1413,7 @@ Because `mice` is substantive-model agnostic, `ggmice` offers tools to inspect w
 Assumptions: imputation model should fit the observed part, imputation model should be congenial 
 `ggmice` provides tools to see observed and imputation side-by-side, adhering to advice to evaluate the distribution of observed and imputed data [@nguyen2017]
 
-### What does ggmice aim to solve?
+#### What does ggmice aim to solve?
 
 `ggmice` offers a unified toolbox for the development and evaluation of imputation models.
 The `ggmice` package aims to solve the following problems:
@@ -1426,7 +1433,7 @@ The `ggmice` package aims to solve the following problems:
   Existing plotting tools for `mids` objects not easily editable or modifiable with different chart types.
   Visualizations with `ggmice` can be extended and adapted with `tidyverse` functions to create publication-ready graphs of imputed data (reflecting the uncertainty due to missingness).
 
-### Existing solutions
+#### Existing solutions
 
 The `ggmice` package fills a hiatus in the software landscape, with other packages generally supporting either `mice` or `ggplot2`, but not both. 
 Table REF provides an overview of R packages that offer visualization tools for incomplete and imputed data. 
@@ -1465,7 +1472,7 @@ knitr::kable(packages, col.names = c("", names(packages)[-1]))
 
 :::
 
-### Limitations
+#### Limitations
 
 `ggmice` does not pretend that visualization yields objective truth.
 A good graphical fit between observed and imputed data (e.g. overlapping scatterplots) is not a guarantee of statistical validity or correct missingness assumptions.
@@ -1489,7 +1496,7 @@ Also check metrics such as FMI.
 <!-- - feedback at conferences -->
 <!-- - citations of the package (Zenodo reference) -->
 
-### Future research & development
+#### Future research & development
 
 Planned extensions further align with the philosophy of making imputation workflows and their consequences visible.
 Some directions for future development include:
