@@ -427,6 +427,7 @@ I love stats (I even have a mug that says so).
 Statistical inference allows us to distinguish between real-world effects and random noise [@rosenberg2018].
 <!-- Statistical inference is a tool for expressing certain (i.e., formal laws, probability theory)  -->
 It gives scientists a tool to get certainty about uncertainty.
+
 Rooted in mathematical probability theory, which deals in absolute truths, statistical inference is a framework for inferring with uncertainty from noisy real-world data.
 Epistemologically speaking, statistical inference may therefore be classified either as deductive or inductive inference; there is no consensus in the literature about which pattern of scientific reasoning suits statistical inference [@deruiter2017].
 @gelman2013 argue that statistical inference is deductive in the context of hypothesis testing (i.e., when general laws from mathematical probability theory are used) and inductive in the context of parameter estimation (i.e., when sample statistics are extrapolated to the population).
@@ -441,19 +442,27 @@ But I am most a fan of the uncertainty aspect.
 
 I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. 
 In this dissertation, I hope to achieve that for missing data methodology.
+We will start out with a theoretical background, and slowly zoom in: 
+from statistical inference under ideal circumstances to inference with incomplete data, then from missing data methods in general to imputation methods specifically, and finally to multiple imputation with `mice`.
+The introduction section ends with a framework for evaluating imputation methodology, the scope of this dissertation, and a description of each of the chapters in this dissertation.
 
-
-### But first, some terminology and notation
+<!-- ### But first, some terminology and notation -->
+### Why are missing data problematic? (or: don't ignore the missingness)
 
 Generally speaking, statistical inference works really well. 
 Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population: a sample. 
 If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
-Let's use an empirical example. 
+In technical terms, estimation procedure would then be an unbiased and confidence valid estimator for the quantity of scientific interest, $Q$, at the population level.
+The analysis model used for estimation can be referred to the 'model of scientific interest' (or 'complete data model', when the sample is incomplete).
+If our estimate of $Q$ matches the true population parameter, we have an unbiased estimate.
+If the variance surrounding the estimate correctly reflects the uncertainty in the estimation procedure, it is confidence valid.
+To illustrate these concepts, I will use an empirical example.
+
 When sociologists wanted to study trust in the government during the COVID-19 pandemic, it was not feasible to survey all Dutch citizens. 
 Instead, they used a representative sample. 
 Some thousands of people were asked to fill in a questionnaire about their trust in the government over the course of the pandemic. 
 By repeating the questionnaire over time, the researchers wanted to gain insight into the development of (dis)trust among different subgroups in Dutch society.
-The researchers would use an analysis model on the sample (the 'model of scientific interest' or 'complete data model'), to estimate a quantity of scientific interest $Q$ at the population level.
+<!-- The researchers would use an analysis model on the sample (the ), to estimate a quantity of scientific interest $Q$ at the population level. -->
 <!-- This model of scientific interest The analysis model the researchers wanted -->
 The estimates from the sample would then be used to inform policy, by inferring back to the population with some expression of uncertainty.
 <!-- The estimates from this sample would have been used to infer back to the population and inform policy, if it had not been for missing data... -->
@@ -520,7 +529,7 @@ Whenever missing data cannot be prevented, the only way forward is to treat the 
 %%| fig-cap: "MI workflow"
 %%| fig-cap: "MI workflow" -->
 
-### Why are missing data problematic? (or: missingness is impossible to ignore)
+<!-- ### Why are missing data problematic? (or: missingness is impossible to ignore) -->
 
 <!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset.  -->
 <!-- We will investigate which strategies you may employ when faced with such a missing data problem. -->
@@ -1062,19 +1071,21 @@ flowchart TB
 <!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
 <!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
 
-`\fignote{Statistical evaluation is mainly focused on the relation between the  incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps).}`{=latex} 
+`\fignote{Processes that require human intervention are depicted with trapezoids in the flowchart. Notably, these steps occur in pairs: before imputation, the user can inspect the missingness and define imputation models; after imputation, the user can evaluate the output of the imputation algorithm.}`{=latex} 
 
 
-Multiple imputation flowchart 
+Flowchart of multiple imputation with `mice`
 
 :::
 
+<!-- Not depicted in the flowchart are steps that require external information (e.g., involving subject-matter stakeholders). Statistical evaluation is mainly focused on the relation between the incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps). -->
+
 A data analyst faced with incomplete data should not start imputing right away.
 They should first ask themselves: what kind of missingness am I dealing with? 
-Inspect the patterns of misisngness and consider which missingness mechanism(s) might be at play.
-A missign data pattern plot tells you where missingness occurs (which variables, which cases) and which variables tend to be missing together.
+Inspect the patterns of missingness and consider which missingness mechanism(s) might be at play.
+A missing data pattern plot tells you where missingness occurs (which variables, which cases) and which variables tend to be missing together.
 For conclusions about the misisng data mechanism, we need external information.
-Imputation with `mice` assumes ignorable misisngness.
+Imputation with `mice` assumes ignorable missingness.
 MCAR and MAR are modeling assumptions, not empirically verifiable facts.
 In practice, it it impossible to determinately differentiate between MCAR and MNAR.
 But specific MAR mechanisms may become apparent through computational and graphical evaluation (e.g., by calculating or plotting associations between observed data and missingness indicators).
@@ -1698,6 +1709,8 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 # Chapter 2: evaluation
 
+Published as @oberman2024.
+
 [TODO: add credit statement, merge formatting]
 
 \includepdf[pages=-, fitpaper=true]{chapters/Oberman and Vink - 2024 - Toward a standardized evaluation of imputation methodology.pdf}
@@ -1706,13 +1719,17 @@ In short, `ggmice` is an attempt to make imputation model assumptions and conseq
 
 # Chapter 3: convergence
 
-[TODO: link/insert + credit]
+Pre-printed as @ober21. 
+
+[TODO: update version, add credit statement, merge formatting]
 
 \includepdf[pages=-, fitpaper=true]{chapters/convergence.pdf}
 
 \newpage
 
 # Chapter 4: ggmice
+
+Published as @oberman2022.
 
 [TODO: add credit statement, merge formatting]
 
