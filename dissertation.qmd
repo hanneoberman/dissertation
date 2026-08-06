@@ -1008,6 +1008,7 @@ I will connect it to concepts from systems and software engineering, and the inf
 <!-- [TODO: edit] -->
 
 From a computer science perspective, imputation workflows are 'sociotechnical systems'.
+<!-- TODO: add refs Trist and Emery? -->
 In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users, consisting of software, hardware, *and* human operators [@sommerville2015, p. 556].
 Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556].
 <!-- Software systems can be categorized into 'technical computer-based systems' and 'sociotechnical systems' [@sommerville2015, p. 552]. -->
