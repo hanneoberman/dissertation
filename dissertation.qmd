@@ -1238,11 +1238,12 @@ Diagnostic visualization/visual inspection helps stakeholders understand the sys
 
 <!-- [TODO: edit] -->
 
-Computational evaluation is originally from information retrieval research [see e.g. @wiki]
-The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008]
+Computational evaluation is originally from information retrieval research [see e.g. @wiki].
+The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008].
 The term 'computational evaluation' is not specifically defined for the field of statistics, but it could be useful. 
 One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] 
-Translated to statistics, a model may be statistically valid, but not fit for purpose. For example, computations that take too long to converge for use in a production pipeline/real-time use in patient care.
+Translated to statistics, a model may be statistically valid, but not fit for purpose. 
+For example, computations that take too long to converge for use in a production pipeline/real-time use in patient care.
 Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
 We can use this when a statistical process has different purposes and thus different usability/requirements. 
 For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
@@ -1320,7 +1321,7 @@ So computational evaluation should never replace statistical evaluation.
 
 <!-- [TODO: edit] -->
 
-In this dissertation, I will focus on missing data problems with item non-response and MCAR/MAR missingness mechanisms. 
+In this dissertation, I will focus on missing data problems with item non-response and ignorable missingness mechanisms. 
 You might expect me to go into...
 
 - In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. 
