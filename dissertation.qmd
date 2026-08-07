@@ -984,6 +984,7 @@ This is not systematic at all currently.
 That is a problem. 
 Users of the method then do not know whether they have correctly applied the method. 
 
+<!-- TODO: edit the MESS from here!! -->
 In this dissertation, I focus on the second and third routes. 
 FCS has no deductive or analytical proof, so we have to rely on evidence from simulation studies.
 It has been shown that FCS works under many conditions.
@@ -1048,7 +1049,7 @@ Successful use of `mice` depends on the usability of the software in practice.
 Imputation with `mice` is a sociotechnical process.
 The software will happily produce imputations with its defaults, but *good* imputation requires human input.
 There are some decisions that you, as imputer, implicitly or explicitly make.
-@fig-steps shows where human input in requested in the imputation workflow.
+@fig-steps shows where human input in requested in the imputation workflow. This flowchart shows four steps in the imputation workflow where human judgement is useful: inspecting the missingness, defining imputation models, inspecting algorithmic convergence, and inspecting imputed values. Not depicted in the flowchart are steps that require external stakeholders (e.g., involving subject-matter experts).
 
 ::: {#fig-steps}
 
@@ -1109,7 +1110,7 @@ If MNAR is suspect, use dedicated tools and/or design sensitivity analyses to as
 If MAR mechanisms show up, include the relevant relations into the imputation models.
 
 For each incomplete variable, `mice` asks you to specify an imputation method. 
-This is a choice of functional form of the imputation model (e.g., logistic regression for dichotomous variables).
+This is a choice of the functional form of the imputation model (e.g., logistic regression for dichotomous variables).
 How do we know which functional form to choose?
 The simplest option is to accept `mice`'s defaults, which are motivated by simulation studies and pragmatism.
 For example, the default method for continuous variables is the semi-parametric method `pmm`: predictive mean matching. 
@@ -1117,7 +1118,7 @@ With `pmm`, observed data entries are used as donors when imputing missing entri
 Diverting from these defaults might be useful in case of big, wide, or sparse data.
 That is, some methods can be computationally inefficient with big data (large $n$, large $p$), mathematically undefined with wide data ($n < p$), or yield suboptimal imputations because of a lack of donors in sparse data ranges.
 Moreover, if the column type in the incomplete data is not correctly specified, `mice` will assign incorrect imputation methods.
-Therefore, inspecting the distribution of each incomplete variable is advised (REF?).
+Therefore, inspecting the distribution of each incomplete variable is advised.
 You can use bar charts, histograms, and density plots of the observed part of the variable to assess the distribution of the incomplete variables and determine imputation methods.
 Visual inspection can also be used to check whether there is skew or spikes (e.g., structural zeros) that require transformations. 
 In short, the imputation method determines the distribution of the imputed values, which should match the distribution of the observed values to at least some extent.
@@ -1138,7 +1139,7 @@ You may include predictors that are strongly associated with the incomplete vari
 Not just associations with each incomplete variable may be used to select imputation model predictors.
 We can also use the association of the missingness indicator with other variables in the data.
 Predictors that explain missingness can help you approximate MAR or correct for design-related patterns.
-Other design-related patterns require expert knowledge e.g., about branching or which covariates should be included to mitigate MNAR.
+Other design-related patterns require expert knowledge e.g., about branching or which external information should be included to mitigate MNAR.
 Choosing imputation model predictors encodes your beliefs about what information is relevant for reconstructing missing values and for capturing missingness mechanisms.
 
 <!-- - Model building: how do we know which imputation model predictors to select? -->
@@ -1224,17 +1225,17 @@ Verification is about conformity to specifications, usually before or independen
 
 Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. 
 Is a system able to accomplish its intended use? 
-Validation is use of use cases and usability testing to evaluate whether users have all they need to use the system. 
+Validation consists of use cases and usability testing to evaluate whether users have all they need to use the system. 
 In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
 Validation is often sociotechnical: it combines technical inspection with *human judgment* and domain knowledge.
 A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501].
 For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
 This dissertation describes computational and graphical evaluation tools.
-In the future, we might use integration tests and user evaluation studies too? 
+<!-- TODO: add that In the future, we might use integration tests and user evaluation studies too?  -->
 
 What is computational evaluation and diagnostic visualization?
 Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies.
-Computational evaluation = use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment.
+Computational evaluation is use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment.
 Diagnostic visualization is the use of graphs to communicate system behavior to stakeholders. 
 It's 'diagnostic' because the purpose is to identify patterns and problems instead of descriptive/summaries.
 Diagnostic visualization/visual inspection helps stakeholders understand the system’s behavior and judge whether it’s  acceptable for their needs.
