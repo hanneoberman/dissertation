@@ -445,6 +445,7 @@ In this dissertation, I hope to achieve that for missing data methodology.
 We will start out with a theoretical background, and slowly zoom in: 
 from statistical inference under ideal circumstances to inference with incomplete data, then from missing data methods in general to imputation methods specifically, and finally to multiple imputation with `mice`.
 The introduction section ends with a framework for evaluating imputation methodology, the scope of this dissertation, and a description of each of the chapters in this dissertation.
+But first, let's start with some terminology and notation.
 
 <!-- ### But first, some terminology and notation -->
 ### Why are missing data problematic? (or: don't ignore the missingness)
@@ -452,10 +453,19 @@ The introduction section ends with a framework for evaluating imputation methodo
 Generally speaking, statistical inference works really well. 
 Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population: a sample. 
 If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
-In technical terms, estimation procedure would then be an unbiased and confidence valid estimator for the quantity of scientific interest, $Q$, at the population level.
-The analysis model used for estimation can be referred to the 'model of scientific interest' (or 'complete data model', when the sample is incomplete).
+In technical terms, this estimation procedure would then be an unbiased and confidence valid estimator for the quantity of scientific interest, $Q$, at the population level.
+The analysis model used for estimation can be referred to as the 'model of scientific interest' (or 'complete data model', when the sample is incomplete).
 If our estimate of $Q$ matches the true population parameter, we have an unbiased estimate.
-If the variance surrounding the estimate correctly reflects the uncertainty in the estimation procedure, it is confidence valid.
+If the variance surrounding the estimate correctly reflects the uncertainty in the estimation procedure, it could be considered confidence valid.
+Statisticians call uncertainty around estimates 'error'.
+There is, for example 'sampling error' due to observing only a subset of the population.
+This uncertainty is often expressed in terms of the standard error (SE) of an estimate.
+Standard errors can get translated into decision tools for inference such as $p$-values and confidence intervals (CIs), which help researchers distinguish between signal and noise. 
+CIs, for example, should cover the the true population parameter at the frequency of the nominal confidence level (e.g., 95%).
+A statistical procedure with a coverage probability that matches the nominal confidence level is called 'confidence valid' [@neyman1934].
+The concept of confidence validity provides an operational link between the mathematics of probability and empirical practice.
+Confidence valid statistical methods give us certainty about the uncertainty in our inferences from a sample to the population. 
+So, statistics is a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty. 
 To illustrate these concepts, I will use an empirical example.
 
 When sociologists wanted to study trust in the government during the COVID-19 pandemic, it was not feasible to survey all Dutch citizens. 
@@ -464,49 +474,44 @@ Some thousands of people were asked to fill in a questionnaire about their trust
 By repeating the questionnaire over time, the researchers wanted to gain insight into the development of (dis)trust among different subgroups in Dutch society.
 <!-- The researchers would use an analysis model on the sample (the ), to estimate a quantity of scientific interest $Q$ at the population level. -->
 <!-- This model of scientific interest The analysis model the researchers wanted -->
-The estimates from the sample would then be used to inform policy, by inferring back to the population with some expression of uncertainty.
+The estimates from the sample would then be used to inform policy, by inferring back to the population with some expression of uncertainty. 
 <!-- The estimates from this sample would have been used to infer back to the population and inform policy, if it had not been for missing data... -->
+This uncertainty, however, does not only stem from the sampling process.
 
-Statisticians call uncertainty around estimates 'error'.
-There is, for example 'sampling error' due to observing only a subset of the population.
-This uncertainty is often expressed in terms of the standard error (SE) of an estimate.
-Standard errors can get translated into decision tools for inference such as $p$-values and confidence intervals (CIs), which help researchers distinguish between signal and noise. 
-CIs, for example, should cover the the true population parameter at the frequency of the nominal confidence level (e.g., 95%).
-A statistical procedure with a coverage probability that matches the nominal confidence level is called 'confidence valid' [@neyman1934].
-Confidence validity provides an operational link between the mathematics of probability and empirical practice.
-Confidence-valid statistical methods give us certainty about the uncertainty in our inferences from a sample to the population. 
-So, statistics is a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty. 
-
-Uncertainty in statistical inferences does not only stem from sampling.
-It can stem from many sources, such as non-response.
-The 'Total Survey Error' framework [@deming1944], uncertainty due to non-response is called 'non-response error'.
+Uncertainty in statistical inferences can stem from many sources, such as non-response.
+The 'Total Survey Error' framework [TSE, @deming1944], uncertainty due to non-response is called 'non-response error'.
 Non-response error occurs when participants do not (fully) respond to data collection efforts [@groves2002].
-We speak of unit non-response for intended study participants who do not provide any data at all (for example because they could not be reached, or refused to participate). 
-Item non-response refers to patterns of missingness where some--but not all--data are missing for a participant (for example because they skipped a survey question).
+We speak of 'unit non-response' for intended study participants who do not provide any data at all (for example because they could not be reached, or refused to participate). 
+'Item non-response' refers to patterns of missingness where some--but not all--data are missing for a participant (for example because they skipped a survey question).
 <!-- What types of missing data problems are we considering?  -->
 <!-- We are interested in data with incomplete cases and/or variables, or 'item non-response'.  -->
 <!-- Incomplete samples where some---but not all---entries are missing per row or per column.  -->
 <!-- Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. -->
-Item non-response is the focus of this dissertation: the way we handle incomplete observations in partially observed data and how that affects our inferences.
-
-The way we treat non-response may even introduce error.
+Of course, non-response can lead to additional uncertainty in our inferences, because we are missing some information.
+But even the way we treat non-response may introduce error.
 <!-- How we treat non-response is reflected in the uncertainty of our inferences. -->
 For unit non-response, the non-response treatment is typically weighting, which may introduce 'weighting error' @alsalti2026.
-Although it is not typically part of the TSE framework, item non-response treatment can also produce error, such as 'imputation error' [@FCSM2001].
+Item non-response treatment can also produce error, such as 'imputation error' [@FCSM2001].
+Although imputation error is not typically part of the TSE framework, it is the focus of this dissertation.
 <!-- "FCSM (2001) also discussed imputation error, noting that when imputation is used to replace missing or incorrect variables, the missing or erroneous data are replaced with values generated by an assumed model for the nonrespondents’ data".  -->
-The aim of this dissertation is to provide methodology for minimizing imputation error.
+The aim of this dissertation is to study the way we handle incomplete observations in partially observed data and how that affects our inferences, and to provide methodology for minimizing non-response error and imputation error.
 
-Non-response error and imputation error can be circumvented by preventing missingness altogether.
-Of course, the best way to treat missing data is by not having any---a truism attributed to Gertrude Mary Cox.
-But sooner or later, often sooner, anyone who analyses data will run into a missing data problem [@allison2002].
+Of course, non-response error and imputation error can be circumvented by preventing missingness altogether.
+A truism attributed to Gertrude Mary Cox posits that the best way to treat missing data is by not having any.
+But anyone who analyses data will run into a missing data problem at some point [@allison2002].
 <!-- "The best thing to do with missing data is to not have any" -->
 <!-- TODO: Some precautionary measures... -->
 <!-- TODO: For example by  motivating participants to ... -->
 <!-- - offer monetary and/or educational incentives (e.g., credits, feedback about  performance/personality) - Consider the trade‐off between study length decreasing response rates and increasing reliability - Send multiple study invitations/reminders - If some information about nonresponders is available, compare them to those of responders -->
-Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. 
 <!-- If there are missing data, there will be uncertainty due to non-response. -->
 <!-- "Item non-response refers to the situation in which the respondent skipped one or more items in the survey.  -->
 <!-- Unit non-response occurs if the respondent refused to participate, so all outcome data are missing for this respondent." [@vanbuuren2018] -->
+Missing data are a nuisance because it is impossible to do statistical inferences with incomplete data. 
+When there is just one missing value in a dataset, statistical inference cannot be performed. 
+With incomplete data, even simple statistics such as the mean of variables are mathematically undefined.
+<!-- It is not possible to use an incomplete sample to infer about a larger population without .  -->
+To obtain results from your incomplete dataset, you will always employ a missing data strategy---whether deliberately or not. 
+<!-- Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).  -->
 
 <!-- "It is helpful to distinguish among frequently used terms including"complete cases", "observed data", "complete data", and "completed data".For a rectangular dataset with missing values, observed data contain allthe observed data elements, including those from units for which not all thevariables are observed. And observed data more generally also include the re-sponse indicators for each data element (observed or missing). Complete casesare part of the observed data, only including units for which every variableis observed. Complete data usually imply data elements before missing valuesoccur and are mostly hypothetical in the context of missing data analysis. Insimulation studies complete data are known. Completed data usually refer tothe datasets with missing values imputed." -->
 <!-- He 2021, p. 46 -->
@@ -536,12 +541,7 @@ Whenever missing data cannot be prevented, the only way forward is to treat the 
 
 <!-- According to Gelman & Shalizi "statistical models are tools that let us draw inductive inferences on a deductive background" (2013, p. 27).  -->
 
-Missing data are a nuisance because it is impossible to do statistical inferences with incomplete data. 
-When there is just one missing value in a dataset, statistical inference cannot be performed. 
-With incomplete data, even simple statistics such as the mean of variables are mathematically undefined.
-<!-- It is not possible to use an incomplete sample to infer about a larger population without .  -->
-To obtain results from your incomplete dataset, you will always employ a missing data strategy---whether deliberately or not. 
-<!-- Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).  -->
+
 
 
 ::: {#fig-mis}
@@ -571,6 +571,7 @@ Inference with incomplete data
 :::
 
 <!-- %%| fig-cap: test -->
+Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. 
 @fig-mis shows that some kind of missing data method has to be employed to get a population estimate from an incomplete sample. 
 <!-- It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population.  -->
 <!-- For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population.  -->
@@ -602,7 +603,7 @@ Missing data models capture the causal relation between the data ($Y$) and the a
 Missing data models thereby reflect the 'probability to be missing' for any given observation. 
 Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled to arrive at unbiased and confidence-valid results.
 
-There are three missing data mechanisms described by missing data models.
+There are three types of missing data mechanisms described by missing data models.
 If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random' (MCAR), or 'not data dependent' [respective terminology by @rubin1976; and @hand2020].
 If there is an association between the missingness and the observed part of the data, the missingness is 'at random' conditional on the observed data (MAR) or 'seen data dependent'.
 If the cause of the missingness is missing too, the missingness is 'not at random' (MNAR), or 'unseen data dependent'. 
@@ -679,28 +680,30 @@ Together with complete-data models (i.e., the model of scientific interest), mis
 But from the observed data alone, it is impossible to definitively determine the missingness mechanism.
 We can only make assumptions about the missingness mechanisms that are most likely to hold in our incomplete data.
 We need external information (e.g., about the study design) to substantiate the assumption about the missingness mechanism.
-For example, if there was a glitch in the service software, affecting all participant equally likely, a reasonable assumption would be MCAR.
+For example, if there was a glitch in the survey software, affecting all participant equally likely, a reasonable assumption would be MCAR.
 In human subjects research, however, pure MCAR missingness is unlikely.
 <!-- In that case, a MCAR missingness mechanism has to be excluded as an option. -->
 Only truly random missingness, independent of any individual characteristics, would amount to missing completely at random missingness mechanism. 
 <!-- This could happen, for example, due to a glitch in the service software, affecting all participant equally likely. -->
 
 In the empirical example about trust in the government during the COVID-19 pandemic, MCAR was not a reasonable assumption.
-It was not random who had missing data on the question about trust in the government. 
+It was not random who had missing data on the outcome variable (the question in the survey about trust in the government). 
+Non-response was associated with demographic traits of respondents with lower trust.
 People with lower trust in institutions were also less likely to respond to follow-up data collection waves of the questionnaire.
 This resulted in higher missingness rates across participants with lower trust in the government.
 If we would use list-wise deletion as missing data method, we would over-estimate trust in the government at the population level.
 <!-- Methods that implicitly assume MCAR (like list-wise deletion) are therefore likely to cause bias. -->
-Using only the observed data to infer to the population leads to biased estimates if the missingness is not MCAR.
 
-There were signs of non-MCAR missingness in the COVID survey data because participants with complete data differed from participants with item non-response.
+
+There were signs of non-MCAR missingness in the COVID survey data because participants with complete data differed from participants with non-response.
 <!-- , missing data methods that implicitly assume MCAR would cause bias. -->
-If we can model the missingness probability based on known data, such as previous observations or demographic data, we have 'Missing At Random'.
-Under MAR, we can model the missingness probability using known variables and obtain valid inference if this model is adequate.
-Then, conditional on this information, observed and missing values have the same probability to be missing.
+Using only the observed data to infer to the population leads to biased estimates if the missingness is not MCAR.
+But if we can model the missingness probability based on known data, we have MAR missingness, which can yield valid inferences if this model if adequate.
+<!-- Under MAR, we can model the missingness probability using known variables and obtain valid inference if this model is adequate. -->
+Then, conditional on this information (such as previous observations or demographic data), observed and missing values have the same probability to be missing.
 That is why we also speak of 'ignorable' missingness.
 Ignorable missing-data mechanisms meet two requirements: 1) conditional on the observed data, the probability that an entry is missing does not depend on the unobserved value itself (i.e., MCAR or MAR missingness), and 2) the parameters in the missing data model are distinct from the parameters of the substantive model [@litt20]. 
-"The assumption of ignorability is essentially the belief on the part of the user that the available data are sufficient to correct for the effects of the missing data. The assumption cannot be tested on the data itself, but it can be checked against suitable external validation data" [@vanbuuren2018, \S 2.2.6].
+"The assumption of ignorability is essentially the belief on the part of the user that the available data are sufficient to correct for the effects of the missing data" [@vanbuuren2018, \S 2.2.6].
 If treated correctly, ignorable missingness will yield valid inferences.
 
 This is in contrast to the MNAR missingness mechanism, where the missingness depends the unobserved values themselves.
@@ -709,8 +712,9 @@ If the missingness is MNAR, the validity of the inferences is at risk.
 For example, when people who distrust the government are less likely to respond to the trust item, and we have no way of correcting for this.
 This kind of missingness cannot be resolved from the observed data alone and requires external information to amend.
 In practice, it is impossible to know from the observed part of the data alone whether we are dealing with MNAR, so you always have to make an assumption about the mechanism underlying the missingness in your data.
-
+<!-- "The assumption cannot be tested on the data itself, but it can be checked against suitable external validation data"  [@vanbuuren2018, \S 2.2.6]. -->
 <!-- Differences between the observed part of the data and the missing part can be accommodated by treating the missing data problem.  -->
+The missing data mechanisms and our assumptions about them in practice determine how the missingness should be treated to achieve unbiased and confidence valid statistical inferences.
 
 ### How to treat the missing data problem? (or: ignore, model, fill in -- the missing data methods)
 
