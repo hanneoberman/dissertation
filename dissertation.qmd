@@ -389,6 +389,10 @@ Ergo, evaluating whether imputations should be trusted remains challenging.
 In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
 I thereby focus on the imputation procedure 'MICE' [@vanbuuren1999] as implemented in the R package `mice` [@vanbuuren2011].
 
+Why? Because current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient. 
+
+How? By bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods.
+
 <!-- - Missing data may be widespread, but so are missing data treatment methods. -->
 <!-- - Imputation = filling in missing values to fix the missing data problem. -->
 <!-- - The nuisance of missing data is often relieved using imputation methods.  -->
@@ -401,9 +405,12 @@ I thereby focus on the imputation procedure 'MICE' [@vanbuuren1999] as implement
 
 <!-- Missing data problems are timeless. Technological advances have made imputation fairly easy to apply, but how to apply it *well*? -->
 
-Why? Because current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient. 
-
-How? By bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods.
+In a nutshell: 
+How do methodologists know whether an imputation approach works? 
+Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations). 
+How do imputers know whether their imputation models worked in practice? 
+Our current answer is well, they don't know for sure. 
+And that's what this dissertation is all about. 
 
 <!-- [TODO: add take-home message in 1-2 sentences without jargon?] -->
 
@@ -723,14 +730,14 @@ The missing data mechanisms and our assumptions about them in practice determine
 This section describes three popular routes for treating missing data.
 I will not pretend to provide an encompassing overview on treating missing data problems. 
 Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @vanbuuren2018, and @little2019.
-The three missing data treatments I will describe are deletion-based methods, likelihood-based methods, and imputation.
+The three missing data treatments I will briefly describe are deletion-based methods, likelihood-based methods, and imputation, before further expanding on imputation methodology.
 
 <!-- #### Deletion-based methods -->
 The first missing data treatments are deletion-based methods, such as list-wise deletion.
 With list-wise deletion, we only analyze rows in the data without missing values (i.e., complete cases).
 Deletion-based methods are easy to apply, and sometimes even applied by default in statistical analysis software.
 If the missingness level is low, deletion-based methods do little harm, and under some conditions they might even be the best missing data method to apply [see e.g., @vanbuuren2018 $\S$ 2.7; @carpenter2021, $\S$ 3.1].
-Deletion-based methods, however, do not generally accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+Deletion-based methods, however, do not accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
 Under most kinds of missingness, deletion-based methods will therefore risk biasing the statistical inferences.
 Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste compared to non-deletion-based methods.
 In short, deletion-based methods do not treat the missing data as much as ignore them, and one should be careful of bias when applying them.
@@ -769,12 +776,14 @@ With imputation, we fill in the missing part of the data based on the observed p
 We model the distribution of this missing part based on what is observed, using the observed part of the data to fix the missing part of the data.
 Which types of model or models do we use? 
 
-The simplest model is no model at all.
-With hot deck imputation, we use a random other person's observation to impute or fill in the values for people with a missing data point. 
-The problem is that this disrupts the multivariate distribution of the data, so we get biased estimates. 
+The simplest imputation model is no model at all.
+We can, for example, impute the missing values by filling in a random other person's observed data, called ' hot deck imputation'. 
+This method is quick and easy.
+The problem of this method is that it does not accommodate MAR mechanisms, and, moreover, disrupts the multivariate distribution of the data, biasing any multivariate statistics downwards. 
 Another simple technique is to impute a univariate statistic such as the mean. 
-Unfortunately, imputing the mean will bias your scientific estimates even worse than list-wise deletion would, because mean imputation severely biases any multivariate statistics downward, and there is no correction for the missing at random missingness mechanisms.
-In general, all univariate imputation methods fail to retain multivariate associations in the data, and therefore cannot account for MAR mechanisms.
+Unfortunately, imputing the mean will bias almost all scientific estimates.
+<!-- , because mean imputation severely biases any multivariate statistics downward, and there is no correction for the missing at random missingness mechanisms. -->
+In general, all univariate imputation methods fail to retain multivariate associations in the data, and cannot account for MAR mechanisms.
 So, instead of imputing variables univariately, imputation should retain the multivariate structure of the data.
 <!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
 
@@ -878,16 +887,17 @@ By drawing imputations from the posterior distribution of the missing data, we o
 From the probability distribution for each missing value, we draw multiple values as imputations.
 If we would use infinitely many values as imputations, we would obtain the entire probability distribution. 
 In practice, however, we use a limited number of imputations. 
-With that, we approximate the probability distributions of missing values. 
+With that, we *approximate* the probability distributions of missing values. 
 The more imputations are used, the better we can represent the uncertainty in the data due to missingness.
 This is expressed in the 'simulation error'.
 The variance of the pooled estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
 The variability between imputations reflects uncertainty due to the missingness.
+Moreover, multiple imputation in the 'flavor' of `mice` means that each missing value is not only filled in several times, but also with slightly different imputation model parameters to represent model uncertainty. 
+Correcting for missingness then happens at in two ways: 1) modeling the relation between missing cases and covariates (accommodating MAR mechanisms); 2) adding the appropriate variance to the models to represent the uncertainty due to missingness (reflecting non-response error and maintaining sampling error in the imputation models). 
+Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
 
-MI enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
-Correcting for missingness happens at two levels: 1) modeling the relation between missing cases and covariates; 2) adding the appropriate variance to the models to represent the uncertainty due to missingness. 
-Multiple imputation means that each missing value is filled in several times, with slightly different model parameters to represent model uncertainty. 
-The result of MI is that the uncertainty in the data due to missingness is preserved in the inference. 
+`mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
+<!-- The result is that the uncertainty in the data due to missingness is preserved in the inference.  -->
 <!-- In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic to the data that was obtained. The resulting probability is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013).  -->
 <!-- The interpretation of confidence intervals (CIs), for instance, is the result of a deductive pattern of reasoning.  -->
 <!-- It is a mathematical fact that at least 95% of all possible sample CIs from a certain population will contain the true population parameter.  -->
@@ -895,17 +905,12 @@ The result of MI is that the uncertainty in the data due to missingness is prese
 <!-- And if we don’t know whether the specific CI observed in our sample contains the true population parameter value or not, we cannot deduce the probability that the true population parameter lies within the bounds of the CI that we observed.  -->
 <!-- To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction.  -->
 <!-- Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning. -->
-Under the right conditions, MI yields valid, unbiased estimates.
-But how do we know under which conditions imputation is both unbiased as well as confidence-valid?
+<!-- Under the right conditions, this yields valid, unbiased estimates. -->
+But how do we know under which conditions such an imputation workflow is both unbiased as well as confidence-valid?
 That's why we need evaluation.
 This dissertation investigates evaluation methods for imputation methodology.
 
-In a nutshell: 
-How do methodologists know whether an imputation approach works? 
-Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations). 
-How do imputers know whether their imputation models worked in practice? 
-Our current answer is well, they don't know for sure. 
-And that's what this dissertation is all about. 
+
 <!-- TODO: introduce FCS with mice as topic. -->
 
 ## Evaluating imputation methodology
@@ -934,7 +939,14 @@ And that's what this dissertation is all about.
 
 ### How do we know imputation works? (or: analytical, experimental, and experiential evaluation)
 
-Life cycle of imputation methodology: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data.
+Let's consider a typical life cycle for imputation methodology.
+First, an imputation method is theorized, and---if possible---it's analytical properties are derived.
+Then, the method is implemented in code as a 'proof of concept'.
+With the method implemented in a script or software, we can run a simulation study.
+Simulation studies provide experimental evidence of the method's properties under a certain set of conditions. 
+Ideally, the method will then be put to scrutiny by scientific community peers, who might run different experiments to replicate the method's efficacy.
+And finally, the method is applied in practice.
+The end user of the imputation method can then evaluate the appropriateness of method in real-world data.
 
  <!-- a few desirable properties of a statistical esti-mator under the frequentist framework: both the point and variance estimateare unbiased or consistent, and the 95% confidence interval has a nominalcoverage under repeated sampling. In certain cases, such properties might bedemonstrated by mathematical derivations. However in many other scenarios,especially if estimators are complicated, a more feasible approach to evaluat-ing their performances is through Monte Carlo simulation studies, based onwhich we can numerically generate sampling distributions of the estimator ofinterest. -->
 <!-- REF: He, 2021, p. 40 -->
@@ -942,33 +954,32 @@ Life cycle of imputation methodology: method is theorized, method is implemented
 
 <!-- ### Evaluating imputations -->
 
-There are three main routes to evaluate imputation methodology. 
+In this life cycle of imputation methodology, there are three types of evaluation. 
 One can evaluate:
 
-- the formal statistical properties of the method via analytical derivations;
-- the empirical performance (estimates of the method's attributes) via simulation studies; and
-- the operational utility (practical usefulness) in real data.
+- analytically---the formal statistical properties of the method via analytical derivations;
+- experimentally---the empirical performance (estimates of the method's attributes) via simulation studies; and
+- experientially---the operational utility (practical usefulness) in real data.
 
 The first and preferred option is to obtain the formal statistical properties of the imputation method using analytic derivations. 
-Often this is impossible or unfeasible with fully conditional specification, when no known joint model exists. 
-Without this, we cannot definitively conclude that an imputation method is an unbiased estimator. 
+However, this is often impossible or unfeasible, such as when no known joint model exists for an FCS method.
+Without analytical proof, we cannot definitively conclude that an imputation method is an unbiased and confidence valid estimator of a population quantity. 
 Instead, we estimate the empirical performance of these methods using simulation studies. 
 This is the default evaluation in the missing data methodology field. 
 
 Simulation studies are the standard, but not standardized. 
 If we have a specific analysis model of interest, we can calculate performance metrics such as bias and confidence interval coverage to conclude whether a method is unbiased and confidence valid for a certain estimand.
-This requires a specific analysis model, which might not be the case.
-And it is impossible to cover all the potential use cases. 
-Another problem is that this is not standardized, so it's difficult to compare different simulation studies.
-We could also calculate the imputation accuracy by comparing the imputations against the complete data, but this is ill-advised. 
+Note that this requires a specific analysis model, which might not always be available, and it is impossible to cover all the potential use cases. 
+Another problem is that simulation studies for imputation methodology are not standardized, so it's difficult to compare different methods across studies.
+<!-- We could also calculate the imputation accuracy by comparing the imputations against the complete data, but this is ill-advised.  -->
 
 The third option is the operational utility. 
 This is case-by-case evaluation in applied use with real data. 
-In practice, confidence validity is not guaranteed. 
+<!-- In practice, confidence validity is not guaranteed.  -->
 Multiple imputation aims to propagate uncertainty due to missingness, but only under specific conditions such as correct assumptions about the missingness mechanism, 'congeniality' between imputation and analysis models, and adequate algorithmic behavior. 
 When these conditions fail (e.g. under MNAR missingness, incomplete imputation models, or non-convergence in the algorithm), the estimates may not be unbiased and/or confidence-valid.
-Therefore, we check the imputation model itself, for example to see whether the algorithm has converged. 
-We also inspect the output and we might run sensitivity analyses. 
+Therefore, we should check the imputation model itself, for example to see whether the algorithm has converged. 
+We can also inspect the output and we might run sensitivity analyses. 
 This is not systematic at all currently. 
 That is a problem. 
 Users of the method then do not know whether they have correctly applied the method. 
