@@ -952,6 +952,12 @@ A validation test is a "test to determine whether an implemented system fulfils 
 For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
 
 This dissertation describes computational and graphical evaluation tools.
+
+
+### What are graphical and computational evaluation? (= operationalization of V&V)
+
+<!-- [TODO: edit] -->
+
 What is computational evaluation and diagnostic visualization?
 
 - Computational (quantitative) evaluation – metrics, tests, simulations.
@@ -962,10 +968,6 @@ Computational evaluation is use of metrics, tests, and simulations to evaluate p
 Diagnostic visualization is the use of graphs to communicate system behavior to stakeholders. 
 It's 'diagnostic' because the purpose is to identify patterns and problems instead of descriptive/summaries.
 Diagnostic visualization/visual inspection helps stakeholders understand the system’s behavior and judge whether it’s acceptable for their needs.
-
-### What is computational evaluation? (= operationalization of V&V)
-
-<!-- [TODO: edit] -->
 
 Computational evaluation is originally from information retrieval research [see e.g. @wiki].
 The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008].
@@ -993,6 +995,11 @@ These aspects are often already taken into account by imputers, but I try to sys
 
 <!-- - [in simulation study kun je waarheid maken, maar in de praktijk moet je aannames doen. die aannames zijn belangrijk, juist omdat ze niet/ten dele te bewijzen zijn] -->
 <!-- - [what is a simulation study? add a brief methodological background section on simulation studies in statistics?] -->
+
+What do we care about when evaluating imputation workflows? 
+Statistical properties such as bias/coverage/variance, empirical relevance/plausibility of the imputations, and software-engineering nitpicks like speed/convergence/fault rate.
+User utility does not only require statistical validity, but also usability/appropriateness/plausibility of the imputations.
+Even if we know the process yields correct inferences, we can evaluate the 'fit' of the solution. 
 
 ### What is involved in a `mice` workflow? (or: MI in the flavor of `mice`, or: human in the loop) 
 
@@ -1135,12 +1142,20 @@ After a successful `mice` run, you need to ask whether the imputation process be
 Some post hoc evaluation tools include algorithm-level diagnostics (e.g., traceplots of key parameters over iterations to assess algorithmic convergence), visual inspection of the distribution of the imputed values (e.g., to identify mismatch between observed and imputed data distributions), and sensitivity analyses (e.g., via over-imputation, which temporarily treats some observed values as missing to compare imputations to the true values).
 These evaluations are neither fully automated nor purely objective. 
 They involve building and reading plots, interpreting diagnostics, and deciding what degree of misfit is tolerable for your research aims.
-
 <!-- - TODO: maybe add this back? Model evaluation: how do we assess imputation model misfit? -->
 <!--   - fit of the model to the observed data -->
 <!--   - non-convergence in the algorithm  -->
 <!--   - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018] -->
 <!--   - ...? -->
+Without graphical or computational diagnostic for non-convergence, users might analyze imputed values of non-converged chain.
+Another question to consider is: do the imputed values lie within the range of the observed values?
+For statistical validity this is not needed. 
+Imputation theory does not require the imputed values to be plausible. 
+Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample. 
+<!-- [TODO: consider adding that since then, data analysis has changed] -->
+Bluntly stated: imputation theorists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
+But end-users (e.g. clinicians) often do care for plausibility.
+For example, imputing negative values for age will yield 'unrealistic' imputed values. 
 
 Taken together, these decisions show that a `mice` workflow is not a push-button solution. 
 It is a modeling exercise in which the user is involved in model building and evaluation.
