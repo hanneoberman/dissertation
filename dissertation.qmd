@@ -892,11 +892,8 @@ The more imputations are used, the better we can represent the uncertainty in th
 This is expressed in the 'simulation error'.
 The variance of the pooled estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
 The variability between imputations reflects uncertainty due to the missingness.
-Moreover, multiple imputation in the 'flavor' of `mice` means that each missing value is not only filled in several times, but also with slightly different imputation model parameters to represent model uncertainty. 
-Correcting for missingness then happens at in two ways: 1) modeling the relation between missing cases and covariates (accommodating MAR mechanisms); 2) adding the appropriate variance to the models to represent the uncertainty due to missingness (reflecting non-response error and maintaining sampling error in the imputation models). 
-Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
 
-`mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
+
 <!-- The result is that the uncertainty in the data due to missingness is preserved in the inference.  -->
 <!-- In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic to the data that was obtained. The resulting probability is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013).  -->
 <!-- The interpretation of confidence intervals (CIs), for instance, is the result of a deductive pattern of reasoning.  -->
@@ -906,14 +903,245 @@ Under the right conditions, this yields statistical inferences that are both unb
 <!-- To that end, we would need to extrapolate outside of the observations that we have, i.e., use induction.  -->
 <!-- Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning. -->
 <!-- Under the right conditions, this yields valid, unbiased estimates. -->
-But how do we know under which conditions such an imputation workflow is both unbiased as well as confidence-valid?
-That's why we need evaluation.
-This dissertation investigates evaluation methods for imputation methodology.
 
+<!-- [TODO: bridge to MI in practice] -->
 
 <!-- TODO: introduce FCS with mice as topic. -->
 
+Multiple imputation in the 'flavor' of `mice` means that each missing value is not only filled in several times, but also with slightly different imputation model parameters to represent model uncertainty. 
+Correcting for missingness then happens at in two ways: 1) modeling the relation between missing cases and covariates (accommodating MAR mechanisms); 2) adding the appropriate variance to the models to represent the uncertainty due to missingness (reflecting non-response error and maintaining sampling error in the imputation models). 
+Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
+
+## Imputation in practice
+
+### A `mice` workflow
+
+`mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
+
+The software will happily produce imputations with its defaults, but *good* imputation requires human input.
+There are some decisions that you, as imputer, implicitly or explicitly make.
+@fig-steps shows where human input in requested in the imputation workflow. This flowchart shows four steps in the imputation workflow where human judgement is useful: inspecting the missingness, defining imputation models, inspecting algorithmic convergence, and inspecting imputed values. Not depicted in the flowchart are steps that require external stakeholders (e.g., involving subject-matter experts).
+
+::: {#fig-steps}
+
+```{mermaid}
+%%| fig-height: 7.5
+
+flowchart TB
+    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
+    subgraph build[" "]
+      miss
+      mod
+    end
+    miss --> mod[\"`Define imputation model(s)`"/]
+    mod --> imp[[Run imputation algorithm]]
+    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
+    imps --> conv
+    subgraph eval[" "]
+      direction TB
+      conv[\"`Inspect convergence`"/] 
+      check[\"`Inspect imputed values`"/]
+      conv <--> check
+    end
+    conv -- "✘ non-convergence" --> imp
+    check -- "✘ misfit" --> mod
+    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
+    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
+    mira --> pool(["Pool estimates"])
+    pool --> mipo["Pooled estimate"]
+    inc@{ shape: doc}
+    imps@{ shape: docs}
+    analyses@{ shape: procs}
+    mira@{ shape: tri}
+```
+
+
+<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
+<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
+
+`\fignote{Processes that require human intervention are depicted with trapezoids in the flowchart. Notably, these steps occur in pairs: before imputation, the user can inspect the missingness and define imputation models; after imputation, the user can evaluate the output of the imputation algorithm.}`{=latex} 
+
+
+Flowchart of multiple imputation with `mice`
+
+:::
+
+<!-- Not depicted in the flowchart are steps that require external information (e.g., involving subject-matter stakeholders). Statistical evaluation is mainly focused on the relation between the incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps). -->
+
+<!-- #### Missing data -->
+A data analyst faced with incomplete data should not start imputing right away.
+They should first ask themselves: what kind of missingness am I dealing with? 
+Inspect the patterns of missingness and consider which missingness mechanism(s) might be at play.
+A missing data pattern plot tells you where missingness occurs (which variables, which cases) and which variables tend to be missing together.
+For conclusions about the missing data mechanism, we need external information.
+Imputation with `mice` assumes ignorable missingness.
+MCAR and MAR are modeling assumptions, not empirically verifiable facts.
+In practice, it it impossible to determinately differentiate between MCAR and MNAR.
+But specific MAR mechanisms may become apparent through computational and graphical evaluation (e.g., by calculating or plotting associations between observed data and missingness indicators).
+If MNAR is suspect, use dedicated tools and/or design sensitivity analyses to assess how robust your conclusions are.
+If MAR mechanisms show up, include the relevant relations into the imputation models.
+
+<!-- #### Methods -->
+Imputation models consist of imputation methods and imputation model predeictors.
+For each incomplete variable, `mice` asks you to specify an imputation method. 
+This is a choice of the functional form of the imputation model (e.g., logistic regression for dichotomous variables).
+How do we know which functional form to choose?
+The simplest option is to accept `mice`'s defaults, which are motivated by simulation studies and pragmatism.
+For example, the default method for continuous variables is the semi-parametric method `pmm`: predictive mean matching. 
+With `pmm`, observed data entries are used as donors when imputing missing entries, conveniently yielding imputed values that lie within the range of the observed data.
+Diverting from these defaults might be useful in case of big, wide, or sparse data.
+That is, some methods can be computationally inefficient with big data (large $n$, large $p$), mathematically undefined with wide data ($n < p$), or yield suboptimal imputations because of a lack of donors in sparse data ranges.
+Moreover, if the column type in the incomplete data is not correctly specified, `mice` will assign incorrect imputation methods.
+Therefore, inspecting the distribution of each incomplete variable is advised.
+You can use bar charts, histograms, and density plots of the observed part of the variable to assess the distribution of the incomplete variables and determine imputation methods.
+Visual inspection can also be used to check whether there is skew or spikes (e.g., structural zeros) that require transformations. 
+In short, the imputation method determines the distribution of the imputed values, which should match the distribution of the observed values to at least some extent.
+
+<!-- - Model building: how do we know which functional form to choose? -->
+<!--   - rely on defaults, tested in simulation studies  -->
+<!--   - assess the distribution of the incomplete variable (e.g., visual inspection) -->
+<!--   - ...? (maybe ad transformations?) -->
+
+<!-- #### Predictors -->
+The next major decision concerns the predictor matrix: which variables should be used to impute which?
+Some common sources of input are the associations assumed by the analysis model, associations in the observed data, associations with missingness indicators, and external input and design information.
+If you already know your primary analysis model (e.g., multivariate regression), it is good practice to include all analysis model predictors and outcomes in the imputation models. 
+Using the associations implied by the analysis model may safegaurd against uncongeniality @meng1994.
+Roughly speaking, the concept of congeniality refers to how well the imputation model and complete data model 'fit together', and could stem from the same data-generating process.
+When an analysis model variable is omitted as a predictor from the imputation model, we are implicitly assuming that its association with the imputed variable is zero [@rubin1996].
+If we constrain these parameters to zero in the imputations, we are systematically suppressing relations in the imputed data (i.e., biasing the regression coefficients in the analysis model towards zero).
+We should therefore always use the complete data model---if available---when buildign imputation models.
+If there is already one specific data analysis model for the effect of scientific interest that you have in mind, please using consider substantive model compatible fully conditional specification [SMC-FCS, @bartlett2015]. 
+SMC-FCS is optimized for known analysis model models: we assume a complete data model and derive the imputations from there.
+Imputation with `mice`, however, is complete data 'agnostic'.
+We do not need to know the model of scientific interest upfront.
+
+Apart from the complete data model, there are other sources of information for choosing imputation model predictors.
+You may include a broader set of predictors than strictly needed for the complete data model by adopting 'auxiliary variables' (i.e., extra imputation model predictors that are not part of the analysis model or variables of interest).
+Deciding which associations to include can be a data-driven process.
+A data-driven approach would fit many modern data science pipelines, where the imputed data may be used for several exploratory and/or unsupervised analyses. 
+But also when the analysis model is known, it is advised to inspect associations in the incomplete data when choosing imputation model predictors.
+
+You may include predictors that are strongly associated with the incomplete variable, based on correlations ["include an auxiliary variable if its correlation with the main variable is ≥0.5", @nguyen2021, p. 4].
+Not just associations with each incomplete variable may be used to select imputation model predictors.
+We can also use the association of the missingness indicator with other variables in the data.
+Predictors that explain missingness can help you approximate MAR or correct for design-related patterns.
+Other design-related patterns require expert knowledge e.g., about branching or which external information should be included to mitigate MNAR.
+Choosing imputation model predictors encodes your beliefs about what information is relevant for reconstructing missing values and for capturing missingness mechanisms.
+
+<!-- - Model building: how do we know which imputation model predictors to select? -->
+<!--   - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021] -->
+<!--   - association of missingness indicator with other variables in the data  -->
+<!--   - external input (e.g., branching patterns, or expert knowledge to correct for MNAR) -->
+<!--   - Take the analysis model (if available) as starting point for imputation workflow, for congeneality -->
+<!--   - ...? -->
+
+<!-- #### Other parameters -->
+After specifying the imputation model methods and predictors, there are still some optional parameters to consider changing in the imputation process.
+For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may affect the quality of the imputations and resulting statistical inferences.
+For guidance on these parameters, see e.g. @vanbuuren2018 and the `mice` documentation.
+We can now run the imputation algorithm and evaluate the output.
+
+<!-- #### Imputations -->
+After a succesful `mice` run, you need to ask whether the imputation process behaved adequately.
+Some post hoc evaluation tools include algorithm-level diagnostics (e.g., traceplots of key parameters over iterations to assess algorithmic convergence), visual inspection of the distribution of the imputed values (e.g., to identify mismatch between observed and imputed data distributions), and sensitivity analyses (e.g., via over-imputation, which temporarily treats some observed values as missing to compare imputations to the true values).
+These evaluations are neither fully automated nor purely objective. 
+They involve building and reading plots, interpreting diagnostics, and deciding what degree of misfit is tolerable for your research aims.
+
+<!-- - TODO: maybe add this back? Model evaluation: how do we assess imputation model misfit? -->
+<!--   - fit of the model to the observed data -->
+<!--   - non-convergence in the algorithm  -->
+<!--   - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018] -->
+<!--   - ...? -->
+
+Taken together, these decisions show that a `mice` workflow is not a push-button solution. 
+It is a modeling exercise in which the user is involved in model building and evaluation.
+Human input makes imputation workflows subjective to individual choices and preferences.
+
+<!-- The defaults provide a starting point, but the adequacy of the imputations—and therefore the validity of your inferences—ultimately depends on how thoughtfully you make and review these human inputs. -->
+
+### Imputation as a sociotechical system (or: human in the loop)
+
+<!-- ### Computational evaluation, verification and validation  -->
+
+<!-- [TODO: edit] -->
+
+From a computer science perspective, imputation workflows are 'sociotechnical systems'.
+<!-- TODO: add refs Trist and Emery? -->
+In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users, consisting of software, hardware, *and* human operators [@sommerville2015, p. 556].
+Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556].
+<!-- Software systems can be categorized into 'technical computer-based systems' and 'sociotechnical systems' [@sommerville2015, p. 552]. -->
+Sociotechnical systems have three characteristics, namely: 
+
+- emergent properties of the system as a whole, which only becomes apparent when integrating the separate components (e.g., dependability);
+- non-deterministic outputs, resulting from human operators who may differ in the choices they make; and
+- subjective success criteria, with objectives that depend on the context of evaluation [@sommerville2015, p. 558].
+
+When we apply this terminology to imputation workflows, we can conclude that
+<!-- A statistical software package can be thought of as a system. -->
+<!-- In computer science, a system is a collection of interrelated components (software, hardware, and people) that together deliver services to users [@sommerville2015, p. 556]. -->
+`mice` is a technical system: a piece of software with algorithms to generate imputations.
+Applications of `mice`, however, are sociotechnical.
+In practice, imputation workflows include `mice`, the imputation script, the analysis script, visualizations, and the researcher interpreting the output and deciding what to accept.
+Imputing is a sociotechnical system, which includes more components than just `mice`.
+Successful use of `mice` depends on the usability of the software in practice.
+<!-- which depends on other components. -->
+
+<!-- ### Building and evaluating imputation models  -->
+
+
+<!-- In computer science, software is a system. -->
+<!-- "A system is a purposeful collection of interrelated components of different kinds (e.g., "hardware, software, and human elements" p. 552] that work together to deliver a set of services to the system owner and its users." [@sommerville2015, p. 556] -->
+<!-- Systems engineering is dedicated to the study and development of systems "to support human activities" [@sommerville2015, p. 552]. -->
+<!-- "Systems that include software fall into two categories: 1. Technical computer-based systems [and] 2 Sociotechnical systems". [@sommerville2015, p. 552] -->
+<!-- "For example, this book was created through a sociotechnical publishing system that includes various processes (creation, editing, layout, etc.) and technical systems (Microsoft Word and Excel, Adobe Illustrator, Indesign, etc.)." [@sommerville2015, p. 552] -->
+<!-- "Sociotechnical systems: include one or more technical systems but, crucially, also people, who understand the purpose of the system, within the system itself. Sociotechnical systems have defined operational processes, and people (the operators) are inherent parts of the system." [@sommerville2015, p. 552].  -->
+<!-- So imputing is a sociotechnical system, not technical system, while mice is technical.  -->
+<!-- "sociotech systems "do not just include software and hardware but also people, processes, and organizational policies" p. 556] -->
+<!-- That means that mice is a technical system, whereas the imputation workflow is sociotechnical and depends on other components. -->
+<!-- "The successful functioning of each system component depends on the functioning of other components" [@sommerville2015, p. 556].  -->
+<!-- "Systems have properties that only become apparent when their components are integrated and operate together." -->
+<!-- For imputation this means that there should be ‘interoperability’ with other systems, such as ggplot for viz, and stats packages for analyses.  -->
+<!-- "a sociotechnical system as a set of layers, where each layer contributes, in some way, to the functioning of the system. At the core is a software-intensive technical system and its operational processes" (p.557) -->
+
+
+<!-- Why is validation needed?  -->
+<!-- "Sociotechnical systems are complex systems, which means that it is practically impossible to have a complete understanding, in advance, of their behavior. This complexity leads to three important characteristics of sociotechnical systems: 1. They have emergent properties that are properties of the system as a whole, rather than associated with individual parts of the system. Emergent properties depend on both the system components and the relationships between them. Some of these relationships only come into existence when the system is integrated from its components, so the emergent properties can only be evaluated at that time. Security and dependability are examples of important emergent system properties. 2. They are nondeterministic, so that when presented with a specific input, they may not always produce the same output. The system’s behavior depends on the human operators, and people do not always react in the same way. Furthermore, use of the system may create new relationships between the system components and hence change its emergent behavior. 3. The system’s success criteria are subjective rather than objective. The extent to which the system supports organizational objectives does not just depend on the system itself. It also depends on the stability of these objectives, the relationships" [@sommerville2015, p. 558] -->
+
+
+
+<!-- "Systems engineering (White et al. 1993; Stevens et al. 1998; Thayer 2002) is the activity of designing entire systems, taking into account the characteristics of hardware, software, and human elements of these systems. Systems engineering includes everything to do with procuring, specifying, developing, deploying, operating, and maintaining both technical and sociotechnical systems. Systems engineers have to consider the capabilities of hardware and software as well as the system’s interactions with users and its environment. They must think about the system’s services, the constraints under which the system must be built and operated, and the ways in which the system is used." [@sommerville2015, p. 552] -->
+
+<!-- "system is more than simply the sum of its parts. … A useful working definition of these types of system is as follows: A system is a purposeful collection of interrelated components of different kinds that work together to deliver a set of services to the system owner and its users." [@sommerville2015, p. 556] -->
+
+<!-- "Human, social, and organizational issues affect the requirements and design of software systems". -->
+
+<!-- Validation is often socio-technical: it combines technical inspection with human judgment and domain knowledge. -->
+
+In systems engineering, the system life cycle framework is used to build, develop and evaluate systems.
+There are standards for the evaluation of a system: verification & validation [@ieee2025].
+V&V is needed when the 'high road' of analytical derivations and proofs are impossible or unfeasible.
+<!-- Instead, computer scientists use computational evaluation to assess systems. -->
+<!-- Verification and validation (V&V) is a process for the evaluation of systems, used when the 'high road' of formal proofs is blocked. -->
+<!-- It is framework for checking whether we have both built the system correctly as well as built the correct system. -->
+
+Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'. 
+So with verification, we can check the quality of a system by plugging in an input with a known output. 
+Do we get the correct output in return? 
+For imputation methodology, this is what we do with simulation studies and with unit tests in software. 
+We want to check whether the system (or the method in this case) conforms to the requirements that we set (e.g. accuracy). 
+Verification is about conformity to specifications, usually before or independent of real-world use.
+
+Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. 
+Is a system able to accomplish its intended use? 
+Validation consists of use cases and usability testing to evaluate whether users have all they need to use the system. 
+In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
+Validation is often sociotechnical: it combines technical inspection with *human judgment* and domain knowledge.
+A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501].
+For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
+
 ## Evaluating imputation methodology
+
 
 
 <!-- ### How to define imputation models? -->
@@ -997,8 +1225,6 @@ And how do we know whether we have chosen an appropriate imputation model?
 
 The quality of the imputation model can only be assessed based on the complete data model.
 "A missing‑value treatment cannot be properly evaluated apart from the model estimation or testing procedure in which it is embedded" [@schafer2002, p. 149].
-If there is a specific data analysis model for the effect of scientific interest that you already have in mind, consider substantive model compatible fully conditional specification. 
-SMC-FCS [@bartlett2015] is optimized for known analysis model models: we assume a complete data model and derive the imputations from there.
 But what if that model is not (yet) available? 
 <!-- But what if the analysis model is unknown?  -->
 Well, fully conditional specification is substantive model agnostic. 
@@ -1017,160 +1243,7 @@ Then take the most complex possible model and check that, because if you would t
 We will borrow some terms from related fields.
 I will connect it to concepts from systems and software engineering, and the information retrieval sub-field of computer science.
 
-### Imputation as a sociotechical system (or: human in the loop)
 
-<!-- ### Computational evaluation, verification and validation  -->
-
-<!-- [TODO: edit] -->
-
-From a computer science perspective, imputation workflows are 'sociotechnical systems'.
-<!-- TODO: add refs Trist and Emery? -->
-In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users, consisting of software, hardware, *and* human operators [@sommerville2015, p. 556].
-Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556].
-<!-- Software systems can be categorized into 'technical computer-based systems' and 'sociotechnical systems' [@sommerville2015, p. 552]. -->
-Sociotechnical systems have three characteristics, namely: 
-
-- emergent properties of the system as a whole, which only becomes apparent when integrating the separate components (e.g., dependability);
-- non-deterministic outputs, resulting from human operators who may differ in the choices they make; and
-- subjective success criteria, with objectives that depend on the context of evaluation [@sommerville2015, p. 558].
-
-When we apply this terminology to imputation workflows, we can conclude that
-<!-- A statistical software package can be thought of as a system. -->
-<!-- In computer science, a system is a collection of interrelated components (software, hardware, and people) that together deliver services to users [@sommerville2015, p. 556]. -->
-`mice` is a technical system: a piece of software with algorithms to generate imputations.
-Applications of `mice`, however, are sociotechnical.
-In practice, imputation workflows include `mice`, the imputation script, the analysis script, visualizations, and the researcher interpreting the output and deciding what to accept.
-Imputing is a sociotechnical system, which includes more components than just `mice`.
-Successful use of `mice` depends on the usability of the software in practice.
-<!-- which depends on other components. -->
-
-<!-- ### Building and evaluating imputation models  -->
-
-Imputation with `mice` is a sociotechnical process.
-The software will happily produce imputations with its defaults, but *good* imputation requires human input.
-There are some decisions that you, as imputer, implicitly or explicitly make.
-@fig-steps shows where human input in requested in the imputation workflow. This flowchart shows four steps in the imputation workflow where human judgement is useful: inspecting the missingness, defining imputation models, inspecting algorithmic convergence, and inspecting imputed values. Not depicted in the flowchart are steps that require external stakeholders (e.g., involving subject-matter experts).
-
-::: {#fig-steps}
-
-```{mermaid}
-%%| fig-height: 7.5
-
-flowchart TB
-    inc[/"Incomplete data"/] --> miss[\"Inspect missingness"/] 
-    subgraph build[" "]
-      miss
-      mod
-    end
-    miss --> mod[\"`Define imputation model(s)`"/]
-    mod --> imp[[Run imputation algorithm]]
-    imp --> imps["Imputations<br> $$\quad(1 \dots m)$$"]
-    imps --> conv
-    subgraph eval[" "]
-      direction TB
-      conv[\"`Inspect convergence`"/] 
-      check[\"`Inspect imputed values`"/]
-      conv <--> check
-    end
-    conv -- "✘ non-convergence" --> imp
-    check -- "✘ misfit" --> mod
-    check -- "✓ algorithmic convergence<br>✓ imputation model fit" --> analyses
-    analyses[\"`Run analyses`"/] --> mira["Extract<br>estimates"]
-    mira --> pool(["Pool estimates"])
-    pool --> mipo["Pooled estimate"]
-    inc@{ shape: doc}
-    imps@{ shape: docs}
-    analyses@{ shape: procs}
-    mira@{ shape: tri}
-```
-
-
-<!-- - Giswerk/gebrek aan controle leidt to suboptimale estimates -->
-<!-- merge edges: https://stackoverflow.com/questions/51367234/fusing-arrows-sideways-in-mermaid-diagrams -->
-
-`\fignote{Processes that require human intervention are depicted with trapezoids in the flowchart. Notably, these steps occur in pairs: before imputation, the user can inspect the missingness and define imputation models; after imputation, the user can evaluate the output of the imputation algorithm.}`{=latex} 
-
-
-Flowchart of multiple imputation with `mice`
-
-:::
-
-<!-- Not depicted in the flowchart are steps that require external information (e.g., involving subject-matter stakeholders). Statistical evaluation is mainly focused on the relation between the incomplete data and pooled estimates. Computational evaluation is in every trapezoid: processes that require human intervention. In the first box, the question is: 'how can we model the missingness?', in the second box, the question is: 'do the imputation models fit the data?'. Missing in the graph: drawing inference with pooled estimate, and use external info after inspecting the missingness to involve all stakeholders (CRISP-DM steps). -->
-
-A data analyst faced with incomplete data should not start imputing right away.
-They should first ask themselves: what kind of missingness am I dealing with? 
-Inspect the patterns of missingness and consider which missingness mechanism(s) might be at play.
-A missing data pattern plot tells you where missingness occurs (which variables, which cases) and which variables tend to be missing together.
-For conclusions about the misisng data mechanism, we need external information.
-Imputation with `mice` assumes ignorable missingness.
-MCAR and MAR are modeling assumptions, not empirically verifiable facts.
-In practice, it it impossible to determinately differentiate between MCAR and MNAR.
-But specific MAR mechanisms may become apparent through computational and graphical evaluation (e.g., by calculating or plotting associations between observed data and missingness indicators).
-If MNAR is suspect, use dedicated tools and/or design sensitivity analyses to assess how robust your conclusions are.
-If MAR mechanisms show up, include the relevant relations into the imputation models.
-
-For each incomplete variable, `mice` asks you to specify an imputation method. 
-This is a choice of the functional form of the imputation model (e.g., logistic regression for dichotomous variables).
-How do we know which functional form to choose?
-The simplest option is to accept `mice`'s defaults, which are motivated by simulation studies and pragmatism.
-For example, the default method for continuous variables is the semi-parametric method `pmm`: predictive mean matching. 
-With `pmm`, observed data entries are used as donors when imputing missing entries, conveniently yielding imputed values that lie within the range of the observed data.
-Diverting from these defaults might be useful in case of big, wide, or sparse data.
-That is, some methods can be computationally inefficient with big data (large $n$, large $p$), mathematically undefined with wide data ($n < p$), or yield suboptimal imputations because of a lack of donors in sparse data ranges.
-Moreover, if the column type in the incomplete data is not correctly specified, `mice` will assign incorrect imputation methods.
-Therefore, inspecting the distribution of each incomplete variable is advised.
-You can use bar charts, histograms, and density plots of the observed part of the variable to assess the distribution of the incomplete variables and determine imputation methods.
-Visual inspection can also be used to check whether there is skew or spikes (e.g., structural zeros) that require transformations. 
-In short, the imputation method determines the distribution of the imputed values, which should match the distribution of the observed values to at least some extent.
-
-<!-- - Model building: how do we know which functional form to choose? -->
-<!--   - rely on defaults, tested in simulation studies  -->
-<!--   - assess the distribution of the incomplete variable (e.g., visual inspection) -->
-<!--   - ...? (maybe ad transformations?) -->
-
-The next major decision concerns the predictor matrix: which variables should be used to impute which?
-Some common sources of input are the associations assumed by the analysis model, associations in the observed data, associations with missingness indicators, and external input and design information.
-If you already know your primary analysis model (e.g., multivariate regression), it is common to include all analysis model predictors and outcomes in the imputation models. 
-When a variable is omitted as a predictor from the imputation model, we are implicitly assuming that its association with the imputed variable is zero [@rubin1996].
-If we constrain these parameters to zero in the imputations, we are systematically suppressing relations in the imputed data (i.e., biasing the regression coefficients in the analysis model towards zero).
-In many modern workflows, the imputed data will be used for multiple, possibly unknown, analyses. 
-You may therefore include a broader set of predictors than strictly needed for one model, or adopting 'auxiliary variables' (i.e., extra imputation model predictors that are not part of the analysis model or variables of interest).
-You may include predictors that are strongly associated with the incomplete variable, based on corralations ["include an auxiliary variable if its correlation with the main variable is ≥0.5", @nguyen2021, p. 4]
-Not just associations with each incomplete variable may be used to select imputation model predictors.
-We can also use the association of the missingness indicator with other variables in the data.
-Predictors that explain missingness can help you approximate MAR or correct for design-related patterns.
-Other design-related patterns require expert knowledge e.g., about branching or which external information should be included to mitigate MNAR.
-Choosing imputation model predictors encodes your beliefs about what information is relevant for reconstructing missing values and for capturing missingness mechanisms.
-
-<!-- - Model building: how do we know which imputation model predictors to select? -->
-<!--   - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021] -->
-<!--   - association of missingness indicator with other variables in the data  -->
-<!--   - external input (e.g., branching patterns, or expert knowledge to correct for MNAR) -->
-<!--   - Take the analysis model (if available) as starting point for imputation workflow, for congeneality -->
-<!--   - ...? -->
-
-After specifying methods and predictors, you still need to ask whether the imputation model behaves adequately.
-We need to evaluate the imputation model post hoc.
-Some evaluation tools include algorithm-level diagnostics (e.g., traceplots of key parameters over iterations to assess algorithmic convergence), visual inspection of the distribution of the imputed values (e.g., to identify mismatch between observed and imputed data distributions), and sensitivity analyses (e.g., via over-imputation, which temporarily treats some observed values as missing to compare imputations to the true values).
-
-These evaluations are neither fully automated nor purely objective. 
-They involve building and reading plots, interpreting diagnostics, and deciding what degree of misfit is tolerable for your research aims.
-
-<!-- - TODO: maybe add this back? Model evaluation: how do we assess imputation model misfit? -->
-<!--   - fit of the model to the observed data -->
-<!--   - non-convergence in the algorithm  -->
-<!--   - mismatch between observed and imputed data distributions (e.g., visual inspection) [@vanbuuren2018] -->
-<!--   - ...? -->
-
-
-Apart from the imputation models, other choices also affect the quality of the imputation workflow and resulting statistical inferences.
-For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may interact with the visual and computational diagnostics above.
-
-Taken together, these decisions show that a `mice` workflow is not a push-button solution. 
-It is a modeling exercise in which the user is involved in model building and evaluation.
-Human input makes imputation workflows subjective to individual choices and preferences.
-
-<!-- The defaults provide a starting point, but the adequacy of the imputations—and therefore the validity of your inferences—ultimately depends on how thoughtfully you make and review these human inputs. -->
 
 ### Verification & validation of systems
 
@@ -1181,55 +1254,6 @@ We need computational and empirical checks on the whole workflow.
 And there should be interoperability with other systems an imputer might use in their imputation workflow, such as `ggplot2` [@wickham2016] for data visualization, and statistical analysis packages such as `stats` [@rcoreteam2025].
 That is where V&V comes in.
 
-Verification and validation (V&V) is a process for the evaluation of systems, used when the 'high road' of formal proofs is blocked.
-It is framework for checking whether we have both built the system correctly as well as built the correct system.
-<!-- In computer science, software is a system. -->
-<!-- "A system is a purposeful collection of interrelated components of different kinds (e.g., "hardware, software, and human elements" p. 552] that work together to deliver a set of services to the system owner and its users." [@sommerville2015, p. 556] -->
-<!-- Systems engineering is dedicated to the study and development of systems "to support human activities" [@sommerville2015, p. 552]. -->
-<!-- "Systems that include software fall into two categories: 1. Technical computer-based systems [and] 2 Sociotechnical systems". [@sommerville2015, p. 552] -->
-<!-- "For example, this book was created through a sociotechnical publishing system that includes various processes (creation, editing, layout, etc.) and technical systems (Microsoft Word and Excel, Adobe Illustrator, Indesign, etc.)." [@sommerville2015, p. 552] -->
-<!-- "Sociotechnical systems: include one or more technical systems but, crucially, also people, who understand the purpose of the system, within the system itself. Sociotechnical systems have defined operational processes, and people (the operators) are inherent parts of the system." [@sommerville2015, p. 552].  -->
-<!-- So imputing is a sociotechnical system, not technical system, while mice is technical.  -->
-<!-- "sociotech systems "do not just include software and hardware but also people, processes, and organizational policies" p. 556] -->
-<!-- That means that mice is a technical system, whereas the imputation workflow is sociotechnical and depends on other components. -->
-<!-- "The successful functioning of each system component depends on the functioning of other components" [@sommerville2015, p. 556].  -->
-<!-- "Systems have properties that only become apparent when their components are integrated and operate together." -->
-<!-- For imputation this means that there should be ‘interoperability’ with other systems, such as ggplot for viz, and stats packages for analyses.  -->
-<!-- "a sociotechnical system as a set of layers, where each layer contributes, in some way, to the functioning of the system. At the core is a software-intensive technical system and its operational processes" (p.557) -->
-
-
-<!-- Why is validation needed?  -->
-<!-- "Sociotechnical systems are complex systems, which means that it is practically impossible to have a complete understanding, in advance, of their behavior. This complexity leads to three important characteristics of sociotechnical systems: 1. They have emergent properties that are properties of the system as a whole, rather than associated with individual parts of the system. Emergent properties depend on both the system components and the relationships between them. Some of these relationships only come into existence when the system is integrated from its components, so the emergent properties can only be evaluated at that time. Security and dependability are examples of important emergent system properties. 2. They are nondeterministic, so that when presented with a specific input, they may not always produce the same output. The system’s behavior depends on the human operators, and people do not always react in the same way. Furthermore, use of the system may create new relationships between the system components and hence change its emergent behavior. 3. The system’s success criteria are subjective rather than objective. The extent to which the system supports organizational objectives does not just depend on the system itself. It also depends on the stability of these objectives, the relationships" [@sommerville2015, p. 558] -->
-
-
-
-<!-- "Systems engineering (White et al. 1993; Stevens et al. 1998; Thayer 2002) is the activity of designing entire systems, taking into account the characteristics of hardware, software, and human elements of these systems. Systems engineering includes everything to do with procuring, specifying, developing, deploying, operating, and maintaining both technical and sociotechnical systems. Systems engineers have to consider the capabilities of hardware and software as well as the system’s interactions with users and its environment. They must think about the system’s services, the constraints under which the system must be built and operated, and the ways in which the system is used." [@sommerville2015, p. 552] -->
-
-<!-- "system is more than simply the sum of its parts. … A useful working definition of these types of system is as follows: A system is a purposeful collection of interrelated components of different kinds that work together to deliver a set of services to the system owner and its users." [@sommerville2015, p. 556] -->
-
-<!-- "Human, social, and organizational issues affect the requirements and design of software systems". -->
-
-<!-- Validation is often socio-technical: it combines technical inspection with human judgment and domain knowledge. -->
-
-In systems engineering, the system life cycle framework is used to build, develop and evaluate systems.
-There are standards for the evaluation of a system: verification & validation [@ieee2025].
-V&V is needed when the 'high road' of analytical derivations and proofs are impossible or unfeasible.
-<!-- Instead, computer scientists use computational evaluation to assess systems. -->
-
-Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'. 
-So with verification, we can check the quality of a system by plugging in an input with a known output. 
-Do we get the correct output in return? 
-For imputation methodology, this is what we do with simulation studies and with unit tests in software. 
-We want to check whether the system (or the method in this case) conforms to the requirements that we set (e.g. accuracy). 
-Verification is about conformity to specifications, usually before or independent of real-world use.
-
-Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. 
-Is a system able to accomplish its intended use? 
-Validation consists of use cases and usability testing to evaluate whether users have all they need to use the system. 
-In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
-Validation is often sociotechnical: it combines technical inspection with *human judgment* and domain knowledge.
-A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501].
-For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
 This dissertation describes computational and graphical evaluation tools.
 <!-- TODO: add that In the future, we might use integration tests and user evaluation studies too?  -->
 
@@ -1928,3 +1952,11 @@ In short, I hope this dissertation encourages to question defaults, to make eval
 # CV {.unnumbered}
 
 [TODO: write]
+
+# Dump
+
+Imputation with `mice` is a sociotechnical process.
+
+But how do we know under which conditions such an imputation workflow is both unbiased as well as confidence-valid?
+That's why we need evaluation.
+This dissertation investigates evaluation methods for imputation methodology.
