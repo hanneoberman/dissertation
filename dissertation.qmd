@@ -826,8 +826,10 @@ Because we have empirical estimates from simulation studies (and, if available, 
 And how do imputers know whether their imputation models worked in practice? 
 Our current answer is well, they don't know for sure. 
 And that's what this dissertation is all about. 
+
 I study which tools are required for evaluating the quality of imputation processes.
-Methodologists need standardized computational evaluations to justify new procedures, while applied researchers need accessible methods to assess whether a chosen method behaves adequately on their particular data.
+Methodologists need standardized computational evaluations to justify new procedures.
+Applied researchers need accessible methods to assess whether a chosen method behaves adequately on their particular data.
 
 What is the status quo?
 Verification via statistical evaluation (but not standardized), and some validation via computational and graphical evaluation (but not systematic).
@@ -835,10 +837,10 @@ Is the status quo sufficient?
 No, statistical evaluation is required, but not sufficient.
 How Rubin developed the methodology works in theory, but is not enough for contemporary practitioners.
 
-Can we use existing tools or do we need more? and how? 
+Can we use existing tools or do we need more, and how? 
 No, not all tools are present in the imputer's toolbox. 
 There are few diagnostic tools for imputation modeling, especially for large-scale datasets [@he2010].
-I contribute to the new status quo ("extending" = generalizable scientific contribution of this dissertation) by unifying how imputations are evaluated across the life cycle.
+I contribute to the new status quo by unifying how imputations are evaluated across the life cycle.
 <!-- - life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
 There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation).
 
@@ -1816,6 +1818,7 @@ In short, I hope this dissertation encourages to question defaults, to make eval
 
 [TODO: write]
 
+::: {.content-hidden}
 # Dump
 
 ## mice mod
@@ -2006,3 +2009,4 @@ So computational evaluation should never replace statistical evaluation.
 <!-- Research questions and scope and how each chapter answers part of the overarching question. -->
 
 <!-- ### TL;DR -->
+:::
