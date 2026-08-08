@@ -38,78 +38,6 @@ load("data/dat_xy.RData")
 <!-- `\fignote{...}`{=latex}  -->
 
 <!-- figure captions: https://stackoverflow.com/questions/73775001/quarto-pdf-document-figure-caption-size -->
-<!-- # Outline -->
-
-<!-- ## Eisen onderzoek -->
-
-<!-- Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf). -->
-
-<!-- > 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten: -->
-
-<!-- >   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan; -->
-<!--     b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van  -->
-<!-- het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van  -->
-<!-- nieuwe kennis; -->
-<!--     c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of  -->
-<!-- knowledge’, welke in ieder geval omvat de principes en methoden van de internationale  -->
-<!-- wetenschapsbeoefening en de theorievorming, methoden en studies van het  -->
-<!-- desbetreffende vakgebied; -->
-<!--     d. de promovendus beschikt over het vermogen om een omvangrijk project voor de  -->
-<!-- ontwikkeling van nieuwe kennis te ontwerpen en te implementeren; -->
-<!--     e. de promovendus is in staat om de kennis en methoden van het desbetreffende  -->
-<!-- specialisme en/of vakgebied adequaat over te dragen; -->
-<!--     f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien  -->
-<!-- van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen. -->
-
-<!-- > 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels -->
-
-<!-- \newpage -->
-
-<!-- ## Inhoud proefschrift -->
-
-<!-- ### Introductie -->
-
-<!-- Thema: computationele evaluatie van imputatiemethodologie. -->
-
-<!-- ### H1: Standardized evaluation -->
-
-<!-- - Inhoud hoofdstuk: review paper (manuscript).  -->
-
-<!-- - Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107 -->
-
-<!-- - Kwaliteitstoetsing (eis 1a) door peer-review. -->
-
-<!--   - Gepubliceerd, 20x geciteerd (bron: Google Scholar).  -->
-
-<!-- ### H2: Missing the point -->
-
-<!-- - Inhoud hoofdstuk: simulatiestudie (manuscript). -->
-
-<!-- - Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951 -->
-
-<!-- - Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model). -->
-
-<!--   - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar). -->
-
-<!-- ### H3: R package `ggmice` -->
-
-<!-- - Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette). -->
-
-<!-- - Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702 -->
-
-<!-- - Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues). -->
-
-<!--   - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar). -->
-
-<!--   - GitHub Issues as peer review (10x external Issue, 13x external PR). -->
-
-<!--   - CRAN downloads as impact (852x/month; 21k total). plus conda downloads 100+/month: https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview -->
-
-<!-- ### Discussie -->
-
-<!-- Plaatsing proefschrift in bredere ontwikkelingen wetenschap. -->
-
-<!-- \newpage -->
 
 
 [TODO: create cover, add boilerplate stuff]
@@ -263,6 +191,80 @@ load("data/dat_xy.RData")
 
 # Introduction
 
+<!-- # Outline -->
+
+<!-- ## Eisen onderzoek -->
+
+<!-- Bron: [promotiereglement](https://www.uu.nl/sites/default/files/UBD-Promotieregelement-UU-2025-vastgesteld-20-maart-NL.pdf). -->
+
+<!-- > 1. De promovendus is er verantwoordelijk voor dat het onderzoek dat ten grondslag ligt aan het proefschrift voldoet aan de volgende vereisten: -->
+
+<!-- >   a. de promovendus levert een oorspronkelijke bijdrage aan wetenschappelijk onderzoek die de in Nederland gebruikelijke kwaliteitstoetsing door vakgenoten kan doorstaan; -->
+<!--     b. de promovendus heeft aangetoond zelfstandig de wetenschappelijke methoden van  -->
+<!-- het vakgebied toe te kunnen passen in de ontwikkeling, interpretatie en toepassing van  -->
+<!-- nieuwe kennis; -->
+<!--     c. de promovendus heeft kennis genomen van en gewerkt met een substantiële ‘body of  -->
+<!-- knowledge’, welke in ieder geval omvat de principes en methoden van de internationale  -->
+<!-- wetenschapsbeoefening en de theorievorming, methoden en studies van het  -->
+<!-- desbetreffende vakgebied; -->
+<!--     d. de promovendus beschikt over het vermogen om een omvangrijk project voor de  -->
+<!-- ontwikkeling van nieuwe kennis te ontwerpen en te implementeren; -->
+<!--     e. de promovendus is in staat om de kennis en methoden van het desbetreffende  -->
+<!-- specialisme en/of vakgebied adequaat over te dragen; -->
+<!--     f. de promovendus is in staat om de maatschappelijk verantwoordelijkheid ten aanzien  -->
+<!-- van het uitvoeren, toepassen en benutten van het eigen onderzoek te dragen. -->
+
+<!-- > 2. Het onderzoek is verricht in overeenstemming met wettelijke en universitaire voorschriften en gedragsregels -->
+
+<!-- \newpage -->
+
+<!-- ## Inhoud proefschrift -->
+
+<!-- ### Introductie -->
+
+<!-- Thema: computationele evaluatie van imputatiemethodologie. -->
+
+<!-- ### H1: Standardized evaluation -->
+
+<!-- - Inhoud hoofdstuk: review paper (manuscript).  -->
+
+<!-- - Referentie: Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. Biometrical Journal, 66(1), 2200107. https://doi.org/10.1002/bimj.202200107 -->
+
+<!-- - Kwaliteitstoetsing (eis 1a) door peer-review. -->
+
+<!--   - Gepubliceerd, 20x geciteerd (bron: Google Scholar).  -->
+
+<!-- ### H2: Missing the point -->
+
+<!-- - Inhoud hoofdstuk: simulatiestudie (manuscript). -->
+
+<!-- - Referentie: Oberman, H. I., van Buuren, S., & Vink, G. (2021). Missing the Point: Non-Convergence in Iterative Imputation Algorithms. https://arxiv.org/abs/2110.11951 -->
+
+<!-- - Kwaliteitstoetsing (eis 1a) door openbaar maken vroege versie (zie ook [Publish Review Curate](https://www.coalition-s.org/blog/peer-reviewed-preprints-and-the-publish-review-curate-model/) model). -->
+
+<!--   - Pre-print gepubliceerd (4p summary presented at ICML). 11x geciteerd (bron: Google Scholar). -->
+
+<!-- ### H3: R package `ggmice` -->
+
+<!-- - Inhoud hoofdstuk: onderzoekssoftware (verwijzing naar software repository/software vignette). -->
+
+<!-- - Referentie: Oberman, H. I. (2022). `ggmice`: Visualizations for ’mice’ with ’ggplot2’. Zenodo. https://doi.org/10.5281/zenodo.6532702 -->
+
+<!-- - Kwaliteitstoetsing (eis 1a) door open bug reporting (GitHub Issues). -->
+
+<!--   - Code openbaar via GitHub, versie gepubliceerd via Zenodo. 5x geciteerd (bron: Google Scholar). -->
+
+<!--   - GitHub Issues as peer review (10x external Issue, 13x external PR). -->
+
+<!--   - CRAN downloads as impact (852x/month; 21k total). plus conda downloads 100+/month: https://anaconda.org/channels/conda-forge/packages/r-ggmice/overview -->
+
+<!-- ### Discussie -->
+
+<!-- Plaatsing proefschrift in bredere ontwikkelingen wetenschap. -->
+
+<!-- \newpage -->
+
+<!-- ## Start intro -->
 <!-- Problem setting: Missing data and MI/FCS are the central methodological context. -->
 <!-- Gap: Current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient. -->
 <!-- Conceptual tool: Introduce and define "computational evaluation" framework for imputation. -->
@@ -460,8 +462,10 @@ But first, let's start with some terminology and notation.
 Generally speaking, statistical inference works really well. 
 Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population: a sample. 
 If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
-In technical terms, this estimation procedure would then be an unbiased and confidence valid estimator for the quantity of scientific interest, $Q$, at the population level.
-The analysis model used for estimation can be referred to as the 'model of scientific interest' (or 'complete data model', when the sample is incomplete).
+The analysis model used for estimation will also be referred to as the 'model of scientific interest' or 'complete data model' (when the sample is incomplete) throughout this disseration.
+The analysis model yields sample estimates that ought to match the population of interest.
+
+In technical terms, we want our estimation procedure to be an unbiased and confidence valid estimator for the quantity of scientific interest, $Q$, at the population level.
 If our estimate of $Q$ matches the true population parameter, we have an unbiased estimate.
 If the variance surrounding the estimate correctly reflects the uncertainty in the estimation procedure, it could be considered confidence valid.
 Statisticians call uncertainty around estimates 'error'.
@@ -819,11 +823,15 @@ For example, we can include variables with a high linear association with this i
 The relations implied by the imputation models can correct for MAR missingness mechanisms, to yield an unbiased estimate of the quantity of scientific interest.
 
 <!-- [TODO: add segway] -->
-We have learned that imputation has the ability to produce unbiased estimates, but are they properly uncertain (i.e., confidence-valid) too?
+In short, we have learned that imputation has the ability to produce unbiased estimates.
+<!-- , because imputation allows for -->
+The next question to consider is whether these estimates are properly uncertain too (i.e., confidence-valid).
 <!-- Imputation is widely supported in software: one line of code can resolve the missing data problem at once. -->
-Not necessarily.
+Well, that depends.
+Imputation does not necessarily yield confidence valid inferences.
+Only imputation processes that correctly propagate uncertainty do.
 All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
-That's where multiple imputation (MI) comes in!
+That's where multiple imputation (MI) comes in.
 
 ### Why multiply impute? (or: several 'wrongs' *can* make a 'right')
 
@@ -835,6 +843,8 @@ The completed datasets can be analyzed as if the data were complete to begin wit
 On each completed dataset, we obtain estimates of the analysis of scientific interest.
 These estimates per imputation are then combined to obtain one pooled estimate.
 See @fig-scheme for a graphical presentation of these steps.
+
+In @fig-scheme, the incomplete data $Y$ is partially observed, consisting of observed and missing data, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ in $Y$ is imputed $m$ times to obtain $m$ completed datasets, $\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.
 
 ::: {#fig-scheme}
 
@@ -872,7 +882,7 @@ flowchart LR
     
 ```
 
-`\fignote{Read left to right. Incomplete data $Y$ is partially observed, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ is imputed $m$ times to obtain $m$ completed datasets $\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.}`{=latex} 
+`\fignote{$Y$ = incomplete data, $\ell$ = imputation number, $\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$ = imputed data per imputation, $\hat{Q}_{\ell}$ = estimated quantity of scientific interest per imputation, $\bar{Q}$ = pooled estimate.}`{=latex} 
 
 Multiple imputation scheme ($m=3$)
 
@@ -893,6 +903,11 @@ This is expressed in the 'simulation error'.
 The variance of the pooled estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
 The variability between imputations reflects uncertainty due to the missingness.
 
+MI is a convenient method for obtaining confidence-valid statistical inferences from incomplete data.
+There are many implementations of MI available in statistical software packages.
+In this dissertation, we will focus on the `mice` package in R.
+By default, `mice` runs variable-by-variable (FCS) multiple ($m=5$) imputation.
+Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
 
 <!-- The result is that the uncertainty in the data due to missingness is preserved in the inference.  -->
 <!-- In the context of hypothesis testing, we deduce probabilities (or probability distributions, if you prefer Bayesian statistics) by comparing a hypothesized test statistic to the data that was obtained. The resulting probability is a mathematical property, and thus certain knowledge (Gelman & Shalizi, 2013).  -->
@@ -904,23 +919,16 @@ The variability between imputations reflects uncertainty due to the missingness.
 <!-- Ergo, if we move from the context of hypothesis testing to the context of estimation, we need induction as our pattern of scientific reasoning. -->
 <!-- Under the right conditions, this yields valid, unbiased estimates. -->
 
-<!-- [TODO: bridge to MI in practice] -->
-
-<!-- TODO: introduce FCS with mice as topic. -->
-
-Multiple imputation in the 'flavor' of `mice` means that each missing value is not only filled in several times, but also with slightly different imputation model parameters to represent model uncertainty. 
-Correcting for missingness then happens at in two ways: 1) modeling the relation between missing cases and covariates (accommodating MAR mechanisms); 2) adding the appropriate variance to the models to represent the uncertainty due to missingness (reflecting non-response error and maintaining sampling error in the imputation models). 
-Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
 
 ## Imputation in practice
 
-### A `mice` workflow
+### What is involved in a `mice` workflow? (or: human in the loop)
 
 `mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
-
-The software will happily produce imputations with its defaults, but *good* imputation requires human input.
+The imputation function `mice()` will happily produce imputations with its defaults, but *good* imputation requires human input.
 There are some decisions that you, as imputer, implicitly or explicitly make.
-@fig-steps shows where human input in requested in the imputation workflow. This flowchart shows four steps in the imputation workflow where human judgement is useful: inspecting the missingness, defining imputation models, inspecting algorithmic convergence, and inspecting imputed values. Not depicted in the flowchart are steps that require external stakeholders (e.g., involving subject-matter experts).
+@fig-steps shows where human input in welcome in the imputation workflow. 
+This flowchart shows four steps in the imputation workflow where human judgement is useful: inspecting the missingness, defining imputation models, inspecting algorithmic convergence, and inspecting imputed values. Not depicted in the flowchart are steps that require external stakeholders (e.g., involving subject-matter experts).
 
 ::: {#fig-steps}
 
@@ -973,7 +981,8 @@ A data analyst faced with incomplete data should not start imputing right away.
 They should first ask themselves: what kind of missingness am I dealing with? 
 Inspect the patterns of missingness and consider which missingness mechanism(s) might be at play.
 A missing data pattern plot tells you where missingness occurs (which variables, which cases) and which variables tend to be missing together.
-For conclusions about the missing data mechanism, we need external information.
+For definitive conclusions about the missing data mechanism, however, we need external information.
+
 Imputation with `mice` assumes ignorable missingness.
 MCAR and MAR are modeling assumptions, not empirically verifiable facts.
 In practice, it it impossible to determinately differentiate between MCAR and MNAR.
@@ -982,7 +991,7 @@ If MNAR is suspect, use dedicated tools and/or design sensitivity analyses to as
 If MAR mechanisms show up, include the relevant relations into the imputation models.
 
 <!-- #### Methods -->
-Imputation models consist of imputation methods and imputation model predeictors.
+Imputation models consist of imputation methods and imputation model predictors.
 For each incomplete variable, `mice` asks you to specify an imputation method. 
 This is a choice of the functional form of the imputation model (e.g., logistic regression for dichotomous variables).
 How do we know which functional form to choose?
@@ -1006,28 +1015,28 @@ In short, the imputation method determines the distribution of the imputed value
 The next major decision concerns the predictor matrix: which variables should be used to impute which?
 Some common sources of input are the associations assumed by the analysis model, associations in the observed data, associations with missingness indicators, and external input and design information.
 If you already know your primary analysis model (e.g., multivariate regression), it is good practice to include all analysis model predictors and outcomes in the imputation models. 
-Using the associations implied by the analysis model may safegaurd against uncongeniality @meng1994.
+Using the associations implied by the analysis model may safeguard against uncongeniality [@meng1994].
 Roughly speaking, the concept of congeniality refers to how well the imputation model and complete data model 'fit together', and could stem from the same data-generating process.
 When an analysis model variable is omitted as a predictor from the imputation model, we are implicitly assuming that its association with the imputed variable is zero [@rubin1996].
 If we constrain these parameters to zero in the imputations, we are systematically suppressing relations in the imputed data (i.e., biasing the regression coefficients in the analysis model towards zero).
-We should therefore always use the complete data model---if available---when buildign imputation models.
+We should therefore always use the complete data model---if available---when building imputation models.
 If there is already one specific data analysis model for the effect of scientific interest that you have in mind, please using consider substantive model compatible fully conditional specification [SMC-FCS, @bartlett2015]. 
 SMC-FCS is optimized for known analysis model models: we assume a complete data model and derive the imputations from there.
 Imputation with `mice`, however, is complete data 'agnostic'.
 We do not need to know the model of scientific interest upfront.
+Instead, we can rely on other sources of information for choosing imputation model predictors.
 
-Apart from the complete data model, there are other sources of information for choosing imputation model predictors.
-You may include a broader set of predictors than strictly needed for the complete data model by adopting 'auxiliary variables' (i.e., extra imputation model predictors that are not part of the analysis model or variables of interest).
-Deciding which associations to include can be a data-driven process.
+<!-- Apart from the complete data model, there are other sources of information for choosing imputation model predictors. -->
+Deciding which associations to include in the imputation models can be a data-driven process.
 A data-driven approach would fit many modern data science pipelines, where the imputed data may be used for several exploratory and/or unsupervised analyses. 
 But also when the analysis model is known, it is advised to inspect associations in the incomplete data when choosing imputation model predictors.
-
-You may include predictors that are strongly associated with the incomplete variable, based on correlations ["include an auxiliary variable if its correlation with the main variable is ≥0.5", @nguyen2021, p. 4].
-Not just associations with each incomplete variable may be used to select imputation model predictors.
+You may include a broader set of predictors than strictly needed for the complete data model by adopting 'auxiliary variables' (i.e., extra imputation model predictors that are not part of the analysis model or variables of interest).
+For example, we can include predictors that are strongly associated with the incomplete variable: ["include an auxiliary variable if its correlation with the main variable is ≥0.5", @nguyen2021, p. 4].
+Not just associations with the incomplete variable itself may be used to select imputation model predictors.
 We can also use the association of the missingness indicator with other variables in the data.
 Predictors that explain missingness can help you approximate MAR or correct for design-related patterns.
 Other design-related patterns require expert knowledge e.g., about branching or which external information should be included to mitigate MNAR.
-Choosing imputation model predictors encodes your beliefs about what information is relevant for reconstructing missing values and for capturing missingness mechanisms.
+Choosing imputation model predictors encodes your beliefs about what information is relevant for reconstructing the incomplete data and capturing missingness mechanisms.
 
 <!-- - Model building: how do we know which imputation model predictors to select? -->
 <!--   - association of incomplete variable with other variables in the data ["include an auxiliary variable if its correlation with the main variable is ≥0.5 (in absolute value) [25]" @nguyen2021] -->
@@ -1038,12 +1047,12 @@ Choosing imputation model predictors encodes your beliefs about what information
 
 <!-- #### Other parameters -->
 After specifying the imputation model methods and predictors, there are still some optional parameters to consider changing in the imputation process.
-For example, the number of imputations ($m$, or `m` in `mice`) and number of iterations in the imputation algorithm (`maxit`) may affect the quality of the imputations and resulting statistical inferences.
+For example, the number of imputations (argument `m` in the `mice()` function) and number of iterations in the imputation algorithm (argument `maxit`) may affect the quality of the imputations and resulting statistical inferences.
 For guidance on these parameters, see e.g. @vanbuuren2018 and the `mice` documentation.
 We can now run the imputation algorithm and evaluate the output.
 
 <!-- #### Imputations -->
-After a succesful `mice` run, you need to ask whether the imputation process behaved adequately.
+After a successful `mice` run, you need to ask whether the imputation process behaved adequately.
 Some post hoc evaluation tools include algorithm-level diagnostics (e.g., traceplots of key parameters over iterations to assess algorithmic convergence), visual inspection of the distribution of the imputed values (e.g., to identify mismatch between observed and imputed data distributions), and sensitivity analyses (e.g., via over-imputation, which temporarily treats some observed values as missing to compare imputations to the true values).
 These evaluations are neither fully automated nor purely objective. 
 They involve building and reading plots, interpreting diagnostics, and deciding what degree of misfit is tolerable for your research aims.
@@ -1060,7 +1069,87 @@ Human input makes imputation workflows subjective to individual choices and pref
 
 <!-- The defaults provide a starting point, but the adequacy of the imputations—and therefore the validity of your inferences—ultimately depends on how thoughtfully you make and review these human inputs. -->
 
-### Imputation as a sociotechical system (or: human in the loop)
+
+<!-- ## Evaluating imputation methodology -->
+
+<!-- ### How to define imputation models? -->
+
+<!-- [TODO: edit!!]  -->
+
+
+<!-- FCS will create an implicit joint model. -->
+
+<!-- ### Why MI in the flavor of mice? -->
+
+<!-- [TODO: reframe as 'Why MI in the flavor of mice?' I.e., FCS is a flexible and agnostic way to specify conditionals to arrive at a joint. MICE also allows JOMO: a direct and inflexible way to arrive at a joint. With MICE, it's easy to generate synthetic values. mice is not just imputation software, but rather an 'information generating machine'. Describe imputation models, analysis models, non-response model and SMC.] -->
+
+<!-- - In general, imputation methods are developed to solve missing data problems. -->
+
+
+
+<!-- ### How to specify imputation models? -->
+
+<!-- With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases.  -->
+<!-- Induction thus only grants *plausible* conclusions--not certainty.  -->
+
+
+<!-- - verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE) -->
+<!-- - validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE) -->
+<!-- - verification asks whether the system has been built right whereas validation asks whether the right system has been built -->
+
+<!-- verification and validation (V&V) -->
+<!-- 1. process of determining whether the requirements for a system or component are complete and correct, the products of each development phase fulfill the requirements or conditions imposed by the previous phase, and the final system or component complies with specified requirementscf. independent verification and validation -->
+
+<!-- verification and validation (V&V) effort -->
+<!-- 1. work associated with performing the V&V processes, activities, and tasks [IEEE 1012-2012 IEEE Standard for System and Software Verification and Validation, 3.1.37] -->
+
+
+
+<!-- ### Why should we care about computational evaluation of imputation methodology?  -->
+
+<!-- [TODO: edit] -->
+
+## Dissertation outline
+
+
+<!-- ## Disseration outline -->
+
+### What is the scope of this dissertation? 
+
+<!-- [TODO: edit] -->
+
+In this dissertation, I will focus on missing data problems with item non-response and ignorable missingness mechanisms. 
+You might expect me to go into...
+
+- In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. 
+- In the category imputation algorithms: just FCS in the flavor of MICE (not JOMO or SMC-FCS). The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models. 
+- In the category substantive models: just GLM for statistical inference. The applications are aimed at statistical inference (not prediction or causal inference).
+
+
+**RQ: what tools are required to assess the quality of data-generating algorithms? in the development, evaluation, and application.**
+
+<!-- or: how do you actually know that your imputation method is any good? -->
+
+What is the status quo?
+Verification via statistical evaluation (but not standardized), and some validation via computational and graphical evaluation (but not systematic).
+Is the status quo sufficient? 
+No, statistical evaluation is required, but not sufficient.
+How Rubin developed the methodology works in theory, but is not enough for contemporary practitioners.
+
+Can we use existing tools or do we need more? and how? 
+No, not all tools are present in the imputer's toolbox. 
+I contribute to the new status quo ("extending" = generalizable scientific contribution of this dissertation) by unifying how imputations are evaluated across the life cycle.
+<!-- - life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
+There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation).
+
+Gold standard: analytical properties. 
+<!-- V&V not applicable, because not a system(?).  -->
+Deductive truths.
+But not feasible with FCS.
+So, implementation needed, which does require V&V.
+<!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
+
+### Imputation as a sociotechical system 
 
 <!-- ### Computational evaluation, verification and validation  -->
 
@@ -1068,24 +1157,42 @@ Human input makes imputation workflows subjective to individual choices and pref
 
 From a computer science perspective, imputation workflows are 'sociotechnical systems'.
 <!-- TODO: add refs Trist and Emery? -->
-In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users, consisting of software, hardware, *and* human operators [@sommerville2015, p. 556].
-Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556].
+A sociotechnical system is a collection of interrelated components (software, hardware, and people) that delivers services to users [@sommerville2015].
+<!-- In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users [@sommerville2015, p. 556]. -->
+In contrast to technical computer-based systems, sociotechnical systems contain both technical components as well as human operators.
+<!--  -->
+<!-- Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556]. -->
 <!-- Software systems can be categorized into 'technical computer-based systems' and 'sociotechnical systems' [@sommerville2015, p. 552]. -->
 Sociotechnical systems have three characteristics, namely: 
 
-- emergent properties of the system as a whole, which only becomes apparent when integrating the separate components (e.g., dependability);
+- emergent properties of the system as a whole, which only becomes apparent when integrating the separate components;
 - non-deterministic outputs, resulting from human operators who may differ in the choices they make; and
-- subjective success criteria, with objectives that depend on the context of evaluation [@sommerville2015, p. 558].
+- subjective success criteria, with objectives that depend on the context of evaluation. 
+<!-- [@sommerville2015, p. 558]. -->
 
-When we apply this terminology to imputation workflows, we can conclude that
-<!-- A statistical software package can be thought of as a system. -->
-<!-- In computer science, a system is a collection of interrelated components (software, hardware, and people) that together deliver services to users [@sommerville2015, p. 556]. -->
-`mice` is a technical system: a piece of software with algorithms to generate imputations.
-Applications of `mice`, however, are sociotechnical.
-In practice, imputation workflows include `mice`, the imputation script, the analysis script, visualizations, and the researcher interpreting the output and deciding what to accept.
-Imputing is a sociotechnical system, which includes more components than just `mice`.
-Successful use of `mice` depends on the usability of the software in practice.
-<!-- which depends on other components. -->
+The success of sociotechnical systems relies on the joint functioning of its system components: "systems have properties that only become apparent when their components are integrated and operate together".
+We should therefore evaluate the system as a whole, not as separate components.
+
+
+
+<!-- ### Verification & validation of systems -->
+
+Since "systems have properties that only become apparent when their components are integrated and operate together.", we should evaluate the imputation workflow not as separate functions, but as a whole.
+For imputation methods this means that they should work in practice, not just in simulations. 
+For such systems, analytic guarantees (e.g., asymptotic unbiasedness of MI) are not enough. 
+We need computational and empirical checks on the whole workflow. 
+And there should be interoperability with other systems an imputer might use in their imputation workflow, such as `ggplot2` [@wickham2016] for data visualization, and statistical analysis packages such as `stats` [@rcoreteam2025].
+That is where V&V comes in.
+
+This dissertation describes computational and graphical evaluation tools.
+<!-- TODO: add that In the future, we might use integration tests and user evaluation studies too?  -->
+
+What is computational evaluation and diagnostic visualization?
+Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies.
+Computational evaluation is use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment.
+Diagnostic visualization is the use of graphs to communicate system behavior to stakeholders. 
+It's 'diagnostic' because the purpose is to identify patterns and problems instead of descriptive/summaries.
+Diagnostic visualization/visual inspection helps stakeholders understand the system’s behavior and judge whether it’s acceptable for their needs.
 
 <!-- ### Building and evaluating imputation models  -->
 
@@ -1140,31 +1247,6 @@ Validation is often sociotechnical: it combines technical inspection with *human
 A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501].
 For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
 
-## Evaluating imputation methodology
-
-
-
-<!-- ### How to define imputation models? -->
-
-<!-- [TODO: edit!!]  -->
-
-
-<!-- FCS will create an implicit joint model. -->
-
-<!-- ### Why MI in the flavor of mice? -->
-
-<!-- [TODO: reframe as 'Why MI in the flavor of mice?' I.e., FCS is a flexible and agnostic way to specify conditionals to arrive at a joint. MICE also allows JOMO: a direct and inflexible way to arrive at a joint. With MICE, it's easy to generate synthetic values. mice is not just imputation software, but rather an 'information generating machine'. Describe imputation models, analysis models, non-response model and SMC.] -->
-
-<!-- - In general, imputation methods are developed to solve missing data problems. -->
-
-
-
-<!-- ### How to specify imputation models? -->
-
-<!-- With inductive inference alone, we can never obtain complete certainty, because we cannot verify whether the extrapolations from specific observations hold true for all (possible) cases.  -->
-<!-- Induction thus only grants *plausible* conclusions--not certainty.  -->
-
-
 ### How do we know imputation works? (or: analytical, experimental, and experiential evaluation)
 
 Let's consider a typical life cycle for imputation methodology.
@@ -1192,7 +1274,7 @@ One can evaluate:
 The first and preferred option is to obtain the formal statistical properties of the imputation method using analytic derivations. 
 However, this is often impossible or unfeasible, such as when no known joint model exists for an FCS method.
 Without analytical proof, we cannot definitively conclude that an imputation method is an unbiased and confidence valid estimator of a population quantity. 
-Instead, we estimate the empirical performance of these methods using simulation studies. 
+Instead, we estimate the empirical performance of these methods using simulation studies.
 This is the default evaluation in the missing data methodology field. 
 
 Simulation studies are the standard, but not standardized. 
@@ -1240,158 +1322,6 @@ Then take the most complex possible model and check that, because if you would t
 <!-- [TODO: add back in?] Similarly, we need to evaluate the choice of imputation models for signs of assumption violations. -->
 <!-- [TODO: add back in?] Some assumption checks are visual inspection, some are quantitative, some need external info. -->
 
-We will borrow some terms from related fields.
-I will connect it to concepts from systems and software engineering, and the information retrieval sub-field of computer science.
-
-
-
-### Verification & validation of systems
-
-Since "Systems have properties that only become apparent when their components are integrated and operate together.", we should evaluate the imputation workflow not as separate functions, but as a whole.
-For imputation methods this means that they should work in practice, not just in simulations. 
-For such systems, analytic guarantees (e.g., asymptotic unbiasedness of MI) are not enough. 
-We need computational and empirical checks on the whole workflow. 
-And there should be interoperability with other systems an imputer might use in their imputation workflow, such as `ggplot2` [@wickham2016] for data visualization, and statistical analysis packages such as `stats` [@rcoreteam2025].
-That is where V&V comes in.
-
-This dissertation describes computational and graphical evaluation tools.
-<!-- TODO: add that In the future, we might use integration tests and user evaluation studies too?  -->
-
-What is computational evaluation and diagnostic visualization?
-Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies.
-Computational evaluation is use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment.
-Diagnostic visualization is the use of graphs to communicate system behavior to stakeholders. 
-It's 'diagnostic' because the purpose is to identify patterns and problems instead of descriptive/summaries.
-Diagnostic visualization/visual inspection helps stakeholders understand the system’s behavior and judge whether it’s  acceptable for their needs.
-
-<!-- - verification = "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" (ISO/IEC/IEEE) ... "process of providing objective evidence that the system, software, or hardware and its associated products conform to requirements (e.g., for correctness, completeness, consistency, and accuracy)" (IEEE) ... "Verification in a life cycle context is a set of activities that compares a product of the life cycle against the required characteristics for that product. ... The system has been built right. ... A system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users." (IEEE) -->
-<!-- - validation = "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled" (ISO/IEC/IEEE) ... "Validation in a system life cycle context is the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals, and objectives. The right system has been built. Validation demonstrates that the system can be used by the users for their specific tasks." (IEEE) -->
-<!-- - verification asks whether the system has been built right whereas validation asks whether the right system has been built -->
-
-<!-- verification and validation (V&V) -->
-<!-- 1. process of determining whether the requirements for a system or component are complete and correct, the products of each development phase fulfill the requirements or conditions imposed by the previous phase, and the final system or component complies with specified requirementscf. independent verification and validation -->
-
-<!-- verification and validation (V&V) effort -->
-<!-- 1. work associated with performing the V&V processes, activities, and tasks [IEEE 1012-2012 IEEE Standard for System and Software Verification and Validation, 3.1.37] -->
-
-
-### What is computational evaluation? 
-
-<!-- [TODO: edit] -->
-
-Computational evaluation is originally from information retrieval research [see e.g. @wiki].
-The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008].
-The term 'computational evaluation' is not specifically defined for the field of statistics, but it could be useful. 
-One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] 
-Translated to statistics, a model may be statistically valid, but not fit for purpose. 
-For example, computations that take too long to converge for use in a production pipeline/real-time use in patient care.
-Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
-We can use this when a statistical process has different purposes and thus different usability/requirements. 
-For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
-Since the term is not defined for statistics, there is no definition to use for the computational evaluation of imputation methodology.
-In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology?
-Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. 
-These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
-
-Computational evaluation is not equal to statistical evaluation. 
-Computational evaluation goes beyond statistical evaluation.
-Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
-Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
-Dimensions of computational evaluation: e.g. inferential validity, algorithmic behavior, data-level plausibility, user utility, ...
-<!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
-
-
-### Why should we care about computational evaluation of imputation methodology? 
-
-<!-- [TODO: edit] -->
-
-What do we care about when evaluating imputation workflows? 
-Statistical properties such as bias/coverage/variance, empirical relevance/plausibility of the imputations, and software-engineering nitpicks like speed/convergence/fault rate.
-Statistical evaluation is not possible in practice, only in simulation studies.
-Why is statistical evaluation may not possible IRL? 
-Bias and confidence interval coverage are impossible to determine without a comparative truth (although PPC and bootstrapping allows us to compare with respect to observed values).
-In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
-
-User utility does not only require statistical validity, but also usability/appropriateness/plausibility of the imputations.
-Even if we know the process yields correct inferences, we can evaluate the 'fit' of the solution. 
-
-One question to consider is: do the imputed values lie within the range of the observed values?
-For statistical validity this is not needed. 
-Imputation theory does not require the imputed values to be plausible. 
-Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample. 
-<!-- [TODO: consider adding that since then, data analysis has changed] -->
-Bluntly stated: imputation pragmatists/purists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
-But end-users (e.g. clinicians) do care for plausibility.
-For example, imputing negative values for age will yield 'unrealistic' imputed values. 
-Sometimes this is bad, such as using PMM for a variable with a sparse region, because PMM with part of sample space with too little donors might lead to bias.
-Sometimes this is okay, such as with polynomials (ignoring the U in imps *could* still get statistical validity).
-
-What are other limitations of purely inferential metrics (bias, coverage)? 
-Statistical evaluation relies on known analysis models, while FCS is substantive model agnostic. 
-So, supplement it with computational evaluation and visual inspection. 
-These are also possible without analysis model, which makes it more pressing today, because imputations might be used with several analyses.
-Not knowing the analysis model up front risks non-congeniality.
-
-Another problem of unknown applications with potential non-congeniality is non-convergence.
-Without graphical or computational diagnostic for non-convergence, users might analyze imputed values of non-converged chain.
-For example, FCS iterations not stable, but estimand okay (because in simulation study we have true value), but what about convergence at cell level?
-Statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample.
-
-But also vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? 
-When 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stochastic regression), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. 
-Another example: in a psychological research study with baseline, some of which are missing; baseline, intervention, follow-up -> `mice` would inflate baseline and follow-up if both are incomplete; statistical evaluation will not show this (unbiased, coverage is okay, etc.); over-imputation or posterior predictive checks would show differences in distribution for observed and imputed data; circularity should be removed: follow-up should not predict baseline.
-<!-- [TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp? Not now!] -->
-So computational evaluation should never replace statistical evaluation.
-<!-- - statistical evaluation vs computational evaluation: does one come before the other? not necessarily. -->
-
-<!-- [TODO: rephrase as ability to explain differences between observed and imputed data (e.g., lower means in boys data), not as reverse engineering but as statistical evaluation of the data -> then computational evaluation may be needed to explain differences?] Computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure. E.g., implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained? -->
-
-
-<!-- Gerko: "How does computational evaluation differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
-<!-- Example: {irmi} package by mattias temple yields unbiased estimates, but coverage of 0 because variance was 0 -->
-<!-- Gerko: "Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology." -->
-<!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
-<!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
-
-## Dissertation outline
-
-
-<!-- ## Disseration outline -->
-
-### What is the scope of this dissertation? 
-
-<!-- [TODO: edit] -->
-
-In this dissertation, I will focus on missing data problems with item non-response and ignorable missingness mechanisms. 
-You might expect me to go into...
-
-- In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation. 
-- In the category imputation algorithms: just FCS in the flavor of MICE (not JOMO or SMC-FCS). The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models. 
-- In the category substantive models: just GLM for statistical inference. The applications are aimed at statistical inference (not prediction or causal inference).
-
-
-**RQ: what tools are required to assess the quality of data-generating algorithms? in the development, evaluation, and application.**
-
-<!-- or: how do you actually know that your imputation method is any good? -->
-
-What is the status quo?
-Verification via statistical evaluation (but not standardized), and some validation via computational and graphical evaluation (but not systematic).
-Is the status quo sufficient? 
-No, statistical evaluation is required, but not sufficient.
-How Rubin developed the methodology works in theory, but is not enough for contemporary practitioners.
-
-Can we use existing tools or do we need more? and how? 
-No, not all tools are present in the imputer's toolbox. 
-I contribute to the new status quo ("extending" = generalizable scientific contribution of this dissertation) by unifying how imputations are evaluated across the life cycle.
-<!-- - life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
-There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation).
-
-Gold standard: analytical properties. 
-<!-- V&V not applicable, because not a system(?).  -->
-Deductive truths.
-But not feasible with FCS.
-So, implementation needed, which does require V&V.
-<!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
 
 Methodologists need standardized computational evaluations to justify new procedures, while applied researchers need accessible tools to assess whether a chosen method behaves adequately on their particular data.
 
@@ -1419,6 +1349,33 @@ Computational (quantitative) evaluation – metrics, tests, simulations.
 Graphical (qualitative) evaluation – diagnostic visualization/visual inspection.
 This dissertation offers insight and tools to do so.
 Validation tools to assess operational utility.
+
+
+### What is computational evaluation? 
+
+<!-- [TODO: edit] -->
+
+Computational evaluation is originally from information retrieval research [see e.g. @wiki].
+The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008].
+The term 'computational evaluation' is not specifically defined for the field of statistics, but it could be useful. 
+In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology?
+
+Since the term is not defined for statistics, there is no definition to use for the computational evaluation of imputation methodology.
+One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] 
+Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
+Translated to statistics, a model may be statistically valid, but not fit for purpose. 
+For example, computations that take too long to converge for use in a production pipeline or real-time use in a patient consultation.
+
+
+<!-- Computational evaluation is not equal to statistical evaluation.  -->
+Computational evaluation goes beyond statistical evaluation.
+Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
+Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
+<!-- Dimensions of computational evaluation: e.g. inferential validity, algorithmic behavior, data-level plausibility, user utility, ... -->
+<!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
+Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. 
+In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
+These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
 
 <!-- Computational (quantitative) evaluation – metrics, tests, simulations -->
 <!-- Graphical (qualitative) evaluation – diagnostic visualization/visual inspection -->
@@ -1955,8 +1912,86 @@ In short, I hope this dissertation encourages to question defaults, to make eval
 
 # Dump
 
-Imputation with `mice` is a sociotechnical process.
+## mice mod
+Multiple imputation in the 'flavor' of `mice` means that each missing value is not only filled in several times, but also with slightly different model parameters in each imputation, to represent model uncertainty. 
+Correcting for missingness then happens at in two ways: 1) modeling the relation between missing cases and covariates (accommodating MAR mechanisms); 2) adding the appropriate variance to the models to represent the uncertainty due to missingness (reflecting non-response error and maintaining sampling error in the imputation models). 
 
+## eval
 But how do we know under which conditions such an imputation workflow is both unbiased as well as confidence-valid?
 That's why we need evaluation.
 This dissertation investigates evaluation methods for imputation methodology.
+
+## mice as sociotech
+Imputation with `mice` is a sociotechnical process.
+When we apply this terminology to imputation workflows, we can conclude that
+<!-- A statistical software package can be thought of as a system. -->
+<!-- In computer science, a system is a collection of interrelated components (software, hardware, and people) that together deliver services to users [@sommerville2015, p. 556]. -->
+`mice` is a technical system: a piece of software with algorithms to generate imputations.
+Applications of `mice`, however, are sociotechnical.
+In practice, imputation workflows include `mice`, the imputation script, the analysis script, visualizations, and the researcher interpreting the output and deciding what to accept.
+Imputing is a sociotechnical system, which includes more components than just `mice`.
+Successful use of `mice` depends on the usability of the software in practice.
+<!-- which depends on other components. -->
+
+## bridge to V&V
+We will borrow some terms from related fields.
+I will connect it to concepts from systems and software engineering, and the information retrieval sub-field of computer science.
+
+## future research
+For example, FCS iterations not stable, but estimand okay (because in simulation study we have true value), but what about convergence at cell level?
+Statistical models like MI are optimized to distinguish between effect and noise of population averages–not the individuals that make up your sample.
+
+PPC and bootstrapping allows us to compare with respect to observed values.
+
+## def. comp eval
+We can use this when a statistical process has different uses or purposes and thus different requirements. 
+For example, calculating uncertainty at the level of a single case, a sample, or inferring to a population.
+
+## conv
+What are other limitations of purely inferential metrics (bias, coverage)? 
+<!-- Statistical evaluation relies on known analysis models, while FCS is substantive model agnostic.  -->
+Without graphical or computational diagnostic for non-convergence, users might analyze imputed values of non-converged chain.
+So, supplement it with computational evaluation and visual inspection. 
+<!-- These are also possible without analysis model, which makes it more pressing today, because imputations might be used with several analyses. -->
+<!-- Not knowing the analysis model up front risks non-congeniality. -->
+<!-- Another problem of unknown applications with potential non-congeniality is non-convergence. -->
+
+## stat eval 
+Statistical evaluation is not possible in practice, only in simulation studies.
+Why is statistical evaluation not possible IRL? 
+Bias and confidence interval coverage are impossible to determine without a comparative truth.
+
+## utility
+What do we care about when evaluating imputation workflows? 
+Statistical properties such as bias/coverage/variance, empirical relevance/plausibility of the imputations, and software-engineering nitpicks like speed/convergence/fault rate.
+User utility does not only require statistical validity, but also usability/appropriateness/plausibility of the imputations.
+Even if we know the process yields correct inferences, we can evaluate the 'fit' of the solution. 
+
+## stat vs comp eval
+One question to consider is: do the imputed values lie within the range of the observed values?
+For statistical validity this is not needed. 
+Imputation theory does not require the imputed values to be plausible. 
+Rubin [-@rubin1976; -@rubin1987] developed the methodology to get correct population-level inferences from incomplete samples, not at the individual case-level within the sample. 
+<!-- [TODO: consider adding that since then, data analysis has changed] -->
+Bluntly stated: imputation theorists don't care for the imputed values themselves, as long as they result in statistically valid inferences.
+But end-users (e.g. clinicians) often do care for plausibility.
+For example, imputing negative values for age will yield 'unrealistic' imputed values. 
+Sometimes this is bad, such as using PMM for a variable with a sparse region, because PMM with part of sample space with too little donors might lead to bias.
+Sometimes this is okay, such as with polynomials (ignoring the U in imps *could* still get statistical validity).
+
+But also vice versa: when might the plausibility of imputed values mislead a data analyst into believing the imputations are statistically valid? 
+When 'looking reasonable' is confused with 'being consistent with the data-generating process', such as single imputation (stochastic regression), or imputing under MCAR assumption when there is a MAR mechanism, or destroying the joint distribution of the data while preserving the marginals. 
+Another example: in a psychological research study with baseline, some of which are missing; baseline, intervention, follow-up -> `mice` would inflate baseline and follow-up if both are incomplete; statistical evaluation will not show this (unbiased, coverage is okay, etc.); over-imputation or posterior predictive checks would show differences in distribution for observed and imputed data; circularity should be removed: follow-up should not predict baseline.
+<!-- [TODO: figure out the difference with Gerko's interpretation of joint occurrence (cross tabs) within conditional distribution; should we make an algorithm to show user which combinations of bivariate obs only occur in imp? Not now!] -->
+So computational evaluation should never replace statistical evaluation.
+<!-- - statistical evaluation vs computational evaluation: does one come before the other? not necessarily. -->
+
+<!-- [TODO: rephrase as ability to explain differences between observed and imputed data (e.g., lower means in boys data), not as reverse engineering but as statistical evaluation of the data -> then computational evaluation may be needed to explain differences?] Computational evaluation means not just taking the answer as-is, but tracing back the solution of an algorithm to its origin/back-tracing the procedure: you should *always* be able to retrieve the chain of the imputation procedure. E.g., implausible or impossible imputed values can yield valid statistical inference, but are we satisfied with the way that the imputation were obtained? -->
+
+
+<!-- Gerko: "How does computational evaluation differ from statistical eval? IMO it goes beyond it -> e.g. plausible imputations, tracing back the black box to some extend instead of just taking the answer - even if it is correct. You can give examples here wrp nonconverged solutions that yield plausible inference, implausible values that yield valid inference, etcetera."
+<!-- Example: {irmi} package by mattias temple yields unbiased estimates, but coverage of 0 because variance was 0 -->
+<!-- Gerko: "Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology." -->
+<!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
+<!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
+
