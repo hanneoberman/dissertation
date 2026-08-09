@@ -941,7 +941,7 @@ We therefore have to rely on assumptoins and theoretical justifications, combine
 Some assumptions are impossible to definitively determine (e.g., MNAR mechanisms), while some we can partially evaluate by looking at the data.
 We can, for example, inspect the imputation algorithm output for signs of non‑convergence, or compare the distributions of the imputed data against the observed.
 Diagnosing algorithmic non-convergence, however, is a challenging task [see, e.g., @gelman2013; @vanbuuren2018].
-And there are few diagnostic tools for assessing imputation model fit, especially for large datasets [abayomi2008; @he2010; @bond16].
+And there are few diagnostic tools for assessing imputation model fit, especially for large datasets [@abayomi2008; @he2010; @bond16].
 Therefore, it remains difficult to aquire proof of imputation success in practice.  
 <!-- but in practice we have to rely on assumptions.  -->
 <!-- Those assumptions are crucial precisely because they cannot be (fully) proven. -->
@@ -970,7 +970,7 @@ The central question then becomes: what is needed for the experimental and exper
 <!-- There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation). -->
 <!-- The central questions for applied use are: how do we choose appropriate imputation models, and how do we know whether we have chosen well?  -->
 To address this question, I will borrow some terminology from the computer science discipline.
-Specifically, I will use the systems evaluation framework to propose a unified perspective on how imputations are evaluated.
+Specifically, I will use the 'system life cycle' framework to provide a unified perspective on how imputations may be evaluated.
 <!-- This is not systematic at all currently.  -->
 <!-- That is a problem.  -->
 <!-- Users of the method then do not know whether they have correctly applied the method.  -->
@@ -1021,13 +1021,13 @@ Specifically, I will use the systems evaluation framework to propose a unified p
 <!-- or: how do you actually know that your imputation method is any good? -->
 
 
-### Imputation as a sociotechical system 
+### How is evaluation defined and operationalized? (or: imputation as a sociotechical system)
 
 <!-- ### Computational evaluation, verification and validation  -->
-
 <!-- [TODO: edit] -->
-
-From a computer science perspective, imputation workflows are 'sociotechnical systems'.
+In this section we will learn how imputation methodology can be evaluated as a 'system'.
+The system life cycle framework offers terminology and tools for systems engineering: to build, develop and evaluate systems.
+From this perspective, imputation workflows are 'sociotechnical systems' specifically.
 <!-- TODO: add refs Trist and Emery? -->
 A sociotechnical system is a collection of interrelated components (software, hardware, and people) that delivers services to users [@sommerville2015].
 <!-- In contrast to a purely technical system, a sociotechnical system is a collection of interrelated components that delivers services to users [@sommerville2015, p. 556]. -->
@@ -1035,15 +1035,28 @@ In contrast to technical computer-based systems, sociotechnical systems contain 
 <!--  -->
 <!-- Sociotechnical systems "include one or more technical systems but, crucially, also people" [@sommerville2015, p. 552], and their success relies on the joint functioning of the system components [@sommerville2015, p. 556]. -->
 <!-- Software systems can be categorized into 'technical computer-based systems' and 'sociotechnical systems' [@sommerville2015, p. 552]. -->
-Sociotechnical systems have three characteristics, namely: 
+Imputation workflows, therefore, are sociotechical systems.
+They contain not just software (e.g., `mice`), but also the imputer who runs the imputations.
 
-- emergent properties of the system as a whole, which only becomes apparent when integrating the separate components;
-- non-deterministic outputs, resulting from human operators who may differ in the choices they make; and
-- subjective success criteria, with objectives that depend on the context of evaluation. 
+The inclusion of a 'human in the loop', has three noteworthy consequences. 
+<!-- Sociotechnical systems have three characteristics, namely:  -->
+Firstly, sociotechnical systems have non-deterministic outputs, resulting from human operators who may differ in the choices they make.
+Secondly, they have emergent properties of the system as a whole, which only becomes apparent when integrating the separate components.
+And thirdly, the success criteria of sociotechnical systems are subjective, depending on the context of evaluation: "it is practically impossible to have a complete understanding, in advance, of their behavior" [@sommerville2015, p. 558].
 <!-- [@sommerville2015, p. 558]. -->
+So, the success of sociotechnical systems as a whole relies on the joint functioning of its components, plus the context of its application.
+<!-- : "systems have properties that only become apparent when their components are integrated and operate together". -->
+We therefore cannot judge a sociotechnical system by its parts, or in isolation.
+Evaluating sociotechnical systems thus requires assessment of the entire system in use.
+<!-- We should evaluate the system as a whole, not as separate components. -->
 
-The success of sociotechnical systems relies on the joint functioning of its system components: "systems have properties that only become apparent when their components are integrated and operate together".
-We should therefore evaluate the system as a whole, not as separate components.
+What a full system evaluation looks like in practice, depends on the system properties.
+Still, irrespective of the system specifics, there are certain standards for evaluating systems.
+The 'International Organization for Standardization' (ISO) and 'International Electrotechnical Commission' (IEC) collectively publish 'Information technology' vocabularies, which include definitions of evaluation practices [@iso2015].
+A set of two of these practices are relevant here: verification and validation (V&V).
+Roughly stated, verification asks 'was the system built well?', whereas validation asks 'was the right system built?'.
+These two terms are further detailed by the 'Institute of Electrical and Electronics Engineers' (IEEE), which routinely publishes versions of the 'Standard for System, Software, and Hardware Verification and Validation' [-@ieee2025].
+We will explore and operationalize the verification and validation standards for imputation methodology.
 
 <!-- ### Verification & validation of systems -->
 
@@ -1078,29 +1091,48 @@ We should therefore evaluate the system as a whole, not as separate components.
 
 <!-- Validation is often socio-technical: it combines technical inspection with human judgment and domain knowledge. -->
 
-In systems engineering, the system life cycle framework is used to build, develop and evaluate systems.
-There are standards for the evaluation of a system: verification & validation [@ieee2025].
-V&V is needed when the 'high road' of analytical derivations and proofs are impossible or unfeasible.
+<!-- There are standards for the evaluation of a system: verification & validation [@ieee2025]. -->
+<!-- V&V is needed when the 'high road' of analytical derivations and proofs are impossible or unfeasible. -->
 <!-- Instead, computer scientists use computational evaluation to assess systems. -->
 <!-- Verification and validation (V&V) is a process for the evaluation of systems, used when the 'high road' of formal proofs is blocked. -->
 <!-- It is framework for checking whether we have both built the system correctly as well as built the correct system. -->
 
-Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'. 
-So with verification, we can check the quality of a system by plugging in an input with a known output. 
-Do we get the correct output in return? 
-<!-- For imputation methodology, verification is what we do with simulation studies and with unit tests in software.  -->
-We want to check whether the system (or the method in this case) conforms to the requirements that we set (e.g. accuracy). 
-Verification is about conformity to specifications, usually before or independent of real-world use.
+System evaluation through verification is about whether the system conforms to its specifications.
+The technical definition of verification is "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled" [@iso2017, def. 3.4538].
+In other words, does the system produce the expected output?
+We can verify a system's output if we have a clearly defined input–output relation.
+For a given input, we then already know what the correct output should be, and we can review whether the system reproduces that output. 
+A typical form of verification are unit tests in software.
+Unit tests check if individual function in software packages return the correct output when a certain known input is supplied.
+<!-- If we plug in an input with a known truth, do we get the right answer in return? -->
+<!-- In other words: if we plug in an input with a known truth, do we get the right answer in return? -->
+<!-- Verification asks 'was the system built right?', whereas validation asks 'was the right system built?'.  -->
+<!-- So with verification, we can check the quality of a system by plugging in an input with a known output.  -->
+<!-- Do we get the correct output in return?  -->
+<!-- TODO: add back?? For imputation methodology, verification is what we do with simulation studies and with unit tests in software.  -->
+<!-- We want to check whether the system (or the method in this case) conforms to the requirements that we set (e.g. accuracy).  -->
+<!-- Verification is about conformity to specifications, usually before or independent of real-world use. -->
+Verification is typically carried out before or independent of real‑world use.
+Note, therefore, that "a system could be verified to meet the stated requirements, yet be unsuitable for operation by the actual users" [@iso2017, def. 3.4538].
+For evaluation of systems in actual use, we need validation.
 
-Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application. 
-Is a system able to accomplish its intended use? 
-Validation consists of use cases and usability testing to evaluate whether users have all they need to use the system. 
-In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions.
-Validation is often sociotechnical: it combines technical inspection with *human judgment* and domain knowledge.
-A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501].
-For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models).
+Validation concerns whether the system is suitable for applied use.
+Validation is "the set of activities ensuring and gaining confidence that a system is able to accomplish its intended use, goals and objectives" [@iso2017, def. 3.4500]. 
+Validation evaluates how well a system satisfies the user needs.
+<!-- ... "satisfy intended use and user needs" [@ieee2017, def. 3.4500]. -->
+<!-- Then validation, on the other hand, asks whether the system is suitable for operation by the actual users in a specific intended use or application.  -->
+<!-- Is a system able to accomplish its intended use?  -->
+Typical validation processes consists of use cases and usability testing, to evaluate whether users have all they need to use the system. 
+Validation combines technical inspection with human judgment and domain knowledge.
+That's why validation is a crucial element in evaluating sociotechnical systems, such as imputation processes.
+<!-- If we want to verify and validate, however, we first have to operationalize the two standards for  -->
+<!-- In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions. -->
+<!-- A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501]. -->
+<!-- TODO: add back?? For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models). -->
+To use it as a tool for evaluating imputation methodology, will operationalize the standards of verification and validation in terms of computational and graphical evaluation tools.
 
-This dissertation describes computational and graphical evaluation tools.
+<!-- We will operationalize verification and validation by  -->
+<!-- This dissertation describes computational and graphical evaluation tools. -->
 
 
 ### What are graphical and computational evaluation? (= operationalization of V&V)
