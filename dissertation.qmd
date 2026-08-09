@@ -297,7 +297,7 @@ Unfortunately, this is often impossible for imputation algorithms, many of which
 Instead, the de facto standard is to estimate their empirical performance via simulation studies.
 These studies, however, are not standardized and are therefore hard to compare.
 Moreover, simulation study results might not always translate to applied use.
-Thirdly, for these real-world applications there is no systematic framework for evaluating the practical performance of imputation algorithms, such as diagnostics for algorithmic convergence.
+For real-world applications, there is no systematic framework for evaluating the operational utility of imputation algorithms, such as their algorithmic convergence.
 Ergo, evaluating whether imputations should be trusted remains challenging.
 
   <!-- - Theoretical properties: analytically (often impossible) -->
@@ -307,9 +307,11 @@ Ergo, evaluating whether imputations should be trusted remains challenging.
 In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
 I thereby focus on the imputation procedure 'MICE' [@vanbuuren1999] as implemented in the R package `mice` [@vanbuuren2011].
 
-Why? Because current evaluation practices (simulation design, convergence diagnostics, visual diagnostics) are fragmented and insufficient. 
+Why do I study the evaluation of imputation methodology? 
+Because current evaluation practices (such as computational evaluation via simulation studies, and graphical evaluation via diagnostic plots) are fragmented and may be insufficient. 
 
-How? By bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods.
+How will I contribute to the evaluation of imputation methodology? 
+By bridging inferential evaluation and data-/algorithm-level diagnostics for imputation methods.
 
 <!-- - Missing data may be widespread, but so are missing data treatment methods. -->
 <!-- - Imputation = filling in missing values to fix the missing data problem. -->
