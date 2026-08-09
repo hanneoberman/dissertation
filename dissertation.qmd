@@ -1129,47 +1129,83 @@ That's why validation is a crucial element in evaluating sociotechnical systems,
 <!-- In stats, it's proving that a statistical model or analytical procedure behaves as intended under real-world operating conditions. -->
 <!-- A validation test is a "test to determine whether an implemented system fulfils [sic.] its specified requirements" [@iso2015, def. 3.4501]. -->
 <!-- TODO: add back?? For imputation methodology, it is tools for users to evaluate their imputation workflow with specific data (and, optionally, their intended analysis models). -->
-To use it as a tool for evaluating imputation methodology, will operationalize the standards of verification and validation in terms of computational and graphical evaluation tools.
+In the next paragraphs, I will operationalize the standards of verification and validation for evaluating imputation methodology specifically.
+I define two evaluation approaches, that together provide a toolbox for V&V of imputation workflows: computational evaluation and graphical evaluation.
 
 <!-- We will operationalize verification and validation by  -->
 <!-- This dissertation describes computational and graphical evaluation tools. -->
-
-
-### What are graphical and computational evaluation? (= operationalization of V&V)
-
-<!-- [TODO: edit] -->
-
-What is computational evaluation and diagnostic visualization?
-
-- Computational (quantitative) evaluation – metrics, tests, simulations.
-- Graphical (qualitative) evaluation – diagnostic visualization/visual inspection.
-
-Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies.
-Computational evaluation is use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment.
-Diagnostic visualization is the use of graphs to communicate system behavior to stakeholders. 
-It's 'diagnostic' because the purpose is to identify patterns and problems instead of descriptive/summaries.
-Diagnostic visualization/visual inspection helps stakeholders understand the system’s behavior and judge whether it’s acceptable for their needs.
-
-Computational evaluation is originally from information retrieval research [see e.g. @wiki].
+Computational evaluation is a largely quantitative evaluation approach.
+It covers the use of metrics, tests, and simulations to evaluate properties of a system.
 The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008].
+Computational evaluation can therefore contribute both to verification as well as validation of systems.
+A type of computational evaluation for verification, for example, is the use of simulation studies to quantify the performance of statistical methods.
+For validation, computational evaluation can be useful, for example, to quantify a certain method's fault rate in applied use.
 The term 'computational evaluation' is not specifically defined for the field of statistics, but it could be useful. 
-In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology?
+I want to plant a flag: how can we define computational evaluation in the context of imputation methodology?
 
-Since the term is not defined for statistics, there is no definition to use for the computational evaluation of imputation methodology.
+Since 'computational evaluation' is not defined for statistics, there is no direct definition to use to define computational evaluation for imputation methodology.
+Computational evaluation stems originally from information retrieval research [see e.g. @wiki].
 One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004] 
 Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014].
-Translated to statistics, a model may be statistically valid, but not fit for purpose. 
-For example, computations that take too long to converge for use in a production pipeline or real-time use in a patient consultation.
+A working definition for imputation methodology is: the systematic assessment of algorithmic behavior and data-level outputs of imputation procedures.
+In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
+<!-- , focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers.  -->
+These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
+Please note that computational evaluation does not replace statistical evaluation; it extends the scope of the evaluations.
+Computational evaluation encompasses all systematic, computer-based evaluation tools, including inferential estimates and statistical performance measures such as bias and confidence validity.
+Computational evaluation goes beyond statistical evaluation.
+Even if we know the process yields correct inferences, we can evaluate the 'fit' of the solution. 
+For example, a certain model may be statistically valid, but take too long to converge for real-time use in a production pipeline or patient consult.
+Computational evaluation will then tell us that this statistically valid method is not fit for purpose. 
+
+<!-- Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation. -->
+<!-- Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation.  -->
+<!-- Translated to statistics, a model may be statistically valid, but not fit for purpose.  -->
+<!-- This may happen, for example, when a model takes too long to converge to be used in real-time in a production pipeline or patient consult. -->
+
+<!-- Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies. -->
+
+<!-- ### What are graphical and computational evaluation? (= operationalization of V&V) -->
+
+<!-- [TODO: edit] -->
+Graphical evaluation is the second approach I will employ.
+This is a largely qualitative type of evaluation.
+Graphical evaluation stands in a long tradition within the scientific discipline of statistics.
+Many data analysis workflows encourage visual inspection prior to and after modeling.
+For example, statistical assumptions are often checked by means of diagnostic visualization.
+<!-- What is computational evaluation and diagnostic visualization? -->
+<!-- - Computational (quantitative) evaluation – metrics, tests, simulations. -->
+<!-- - Graphical (qualitative) evaluation – diagnostic visualization/visual inspection. -->
+<!-- Computational evaluation encompasses a range of systematic, computer-based evaluation tools such as numerical experiments or simulation studies. -->
+<!-- Computational evaluation is use of metrics, tests, and simulations to evaluate properties of the system with minimal human judgment. -->
+This practice is diagnostic because the purpose is to identify patterns and problems, such as mismatches between the data and model assumptions.
+<!-- instead of descriptive/summaries. -->
+Graphical evaluation helps users understand the system’s behavior and judge whether it’s acceptable for their needs.
+As a working definition, I will consider graphical evaluation to be the use of plots and figures to communicate system behavior to end users.
+For imputation methodology, graphical evaluation is mostly applicable as validation tool.
+Graphical evaluation can aid imputers in assessing user utility, such as usability of the system, appropriateness of the methods, and plausibility of the imputations.
+To show how computational and graphical evaluation can be useful in practice, the next section outlines a typical imputation workflow with `mice`.
+
+<!-- Computational evaluation is originally from information retrieval research [see e.g. @wiki]. -->
+<!-- The practice of computational evaluation combines *effectiveness* (i.e., did the process yield the correct result, e.g., accuracy, precision, recall, etc.), *system quality* (e.g., speed, coverage of all possible results, etc.) and, importantly, *user utility* (e.g., happiness, productivity, etc.) [@manning2008]. -->
+<!-- The term 'computational evaluation' is not specifically defined for the field of statistics, but it could be useful.  -->
+<!-- In this dissertation, I want to plant a flag: how can we define 'computational evaluation' in the context of imputation methodology? -->
+
+<!-- Since the term is not defined for statistics, there is no definition to use for the computational evaluation of imputation methodology. -->
+<!-- One definition of computational evaluation is "to determine the quality of solutions attainable" [@dudek2004]  -->
+<!-- Another definition of computational evaluation is "the process of ensuring an algorithmic solution is a good one: that it is fit for purpose" [@curzon2014]. -->
+<!-- Translated to statistics, a model may be statistically valid, but not fit for purpose.  -->
+<!-- For example, computations that take too long to converge for use in a production pipeline or real-time use in a patient consultation. -->
 
 <!-- Computational evaluation is not equal to statistical evaluation.  -->
-Computational evaluation goes beyond statistical evaluation.
-Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation.
-Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation. 
+<!-- Computational evaluation goes beyond statistical evaluation. -->
+<!-- Statistical evaluation is important, e.g. to quantify  bias and variance of estimators/procedures, but not the focus of this dissertation. -->
+<!-- Computational evaluation is something to check *conditional on* acceptable statistical properties, and does not replace statistical evaluation.  -->
 <!-- Dimensions of computational evaluation: e.g. inferential validity, algorithmic behavior, data-level plausibility, user utility, ... -->
 <!-- - which of these is the problem when we use PMM with parse data? on the one hand, it might lead to imputations that are so close that the CI is too narrow and confidence validity is ar risk. on the other hand, it might lead to implausible imputed values for cases with missingness in the sparse region. -->
-Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers. 
-In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity.
-These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*. 
+<!-- Working definition: *systematic assessment of the algorithmic behavior and data-level outputs of imputation procedures*, focused on: algorithmic stability (convergence, failure modes), sensitivity to modeling choices, plausibility and coherence of imputed values, and usability for applied researchers.  -->
+<!-- In this dissertation I will use computational evaluation as a suite of tools to investigate the domains of algorithmic stability, data plausibility, and user burden, next to inferential validity. -->
+<!-- These aspects are often already taken into account by imputers, but I try to systematize and operationalize these aspects that are often informal or *ad hoc*.  -->
 
 <!-- Computational (quantitative) evaluation – metrics, tests, simulations -->
 <!-- Graphical (qualitative) evaluation – diagnostic visualization/visual inspection -->
@@ -1177,12 +1213,9 @@ These aspects are often already taken into account by imputers, but I try to sys
 <!-- - [in simulation study kun je waarheid maken, maar in de praktijk moet je aannames doen. die aannames zijn belangrijk, juist omdat ze niet/ten dele te bewijzen zijn] -->
 <!-- - [what is a simulation study? add a brief methodological background section on simulation studies in statistics?] -->
 
-What do we care about when evaluating imputation workflows? 
-Statistical properties such as bias/coverage/variance, empirical relevance/plausibility of the imputations, and software-engineering nitpicks like speed/convergence/fault rate.
-User utility does not only require statistical validity, but also usability/appropriateness/plausibility of the imputations.
-Even if we know the process yields correct inferences, we can evaluate the 'fit' of the solution. 
 
-### What is involved in a `mice` workflow? (or: MI in the flavor of `mice`, or: human in the loop) 
+
+### What is involved in a `mice` workflow? (or: computational and graphical evaluation) 
 
 The R package `mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
 @fig-steps shows an imputation workflow with `mice`.
@@ -1340,11 +1373,21 @@ For example, imputing negative values for age will yield 'unrealistic' imputed v
 
 Taken together, these decisions show that a `mice` workflow is not a push-button solution. 
 It is a modeling exercise in which the user is involved in model building and evaluation.
+Imputation with `mice` is a sociotechnical process.
+<!-- When we apply this terminology to imputation workflows, we can conclude that -->
+<!-- A statistical software package can be thought of as a system. -->
+<!-- In computer science, a system is a collection of interrelated components (software, hardware, and people) that together deliver services to users [@sommerville2015, p. 556]. -->
+While `mice` is a technical system (i.e., a piece of software with algorithms to generate imputations) applications of `mice` are sociotechnical.
+In practice, imputation workflows include `mice`, the imputation script, the analysis script, visualizations, and the researcher interpreting the output and deciding what to accept.
+<!-- Imputing is a sociotechnical system, which includes more components than just `mice`. -->
+<!-- Successful use of `mice` depends on the usability of the software in practice. -->
 Human input makes imputation workflows subjective to individual choices and preferences.
-How, then, do we know which decisions are the right ones?
+<!-- How, then, do we know which decisions are the right ones? -->
 <!-- The defaults provide a starting point, but the adequacy of the imputations—and therefore the validity of your inferences—ultimately depends on how thoughtfully you make and review these human inputs. -->
-
-
+Since "systems have properties that only become apparent when their components are integrated and operate together", we should evaluate the imputation workflow not as separate functions, but as a whole.
+For imputation methods this means that they should work in practice, not just in simulations. 
+For such systems, analytic guarantees (e.g., asymptotic unbiasedness of MI) are not enough. 
+We need computational and graphical checks on the whole workflow. 
 
 
 <!-- But what if that model is not (yet) available?  -->
@@ -1360,10 +1403,7 @@ How, then, do we know which decisions are the right ones?
 ## Application/chapters
 
 Imputation with `mice` is a sociotechnical system.
-Since "systems have properties that only become apparent when their components are integrated and operate together", we should evaluate the imputation workflow not as separate functions, but as a whole.
-For imputation methods this means that they should work in practice, not just in simulations. 
-For such systems, analytic guarantees (e.g., asymptotic unbiasedness of MI) are not enough. 
-We need computational and empirical checks on the whole workflow. 
+
 And there should be interoperability with other systems an imputer might use in their imputation workflow, such as `ggplot2` [@wickham2016] for data visualization, and statistical analysis packages such as `stats` [@rcoreteam2025].
 That is where V&V comes in.
 
@@ -1921,6 +1961,8 @@ In short, I hope this dissertation encourages to question defaults, to make eval
 
 # References {.unnumbered}
 
+[TODO: merge refs from chapters]
+
 ::: {#refs}
 :::
 
@@ -1928,7 +1970,7 @@ In short, I hope this dissertation encourages to question defaults, to make eval
 
 # CV {.unnumbered}
 
-[TODO: write]
+[TODO: summarize, include]
 
 ::: {.content-hidden}
 # Dump
@@ -2015,6 +2057,12 @@ So computational evaluation should never replace statistical evaluation.
 <!-- Gerko: "Would be nice to also consider that taking just a single imputed solution can not be distinguished from another sinle imputed solution, and that the monte carlo variance of the solution should be studied. Therefore it goes way beyond the statistical properties of the imputation methodology." -->
 <!-- Hanne:  even if you get the same results based on different SIs, you want to be able to tell which one you should use, that leads us to the need for MI -->
 <!-- Gerko: "I think it would be nice to relate it to other stuff/metrics that we value, such as bias/coverage/variance, empirical relevance/plausibility, software-engineering nitpicks like speed/convergence/fault rate." -->
+
+## eval in mice
+
+What do we care about when evaluating imputation workflows? 
+Statistical properties such as bias/coverage/variance, empirical relevance/plausibility of the imputations, and software-engineering nitpicks like speed/convergence/fault rate.
+User utility does not only require statistical validity, but also usability/appropriateness/plausibility of the imputations.
 
 ## comments
 
