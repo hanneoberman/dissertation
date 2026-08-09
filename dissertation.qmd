@@ -814,7 +814,8 @@ In this dissertation, we will focus on the `mice` package in R.
 By default, `mice` runs variable-by-variable (FCS) multiple ($m=5$) imputation.
 `mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
 Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
-But how can we know when this is the case? That's the topic of my PhD research.
+But how can we know when this is the case? 
+That's the topic of this dissertation.
 
 ## Dissertation outline
 
@@ -830,7 +831,8 @@ In this dissertation, I investigate how imputation methodology can be evaluated.
 <!-- And how do imputers know whether their imputation models worked in practice?  -->
 <!-- Our current answer is well, they don't know for sure.  -->
 <!-- And that's what this dissertation is all about.  -->
-Please allow me to present a caricature of the status quo for evaluating imputation methodology:
+The status quo for evaluating imputation methodology may not always be sufficient.
+Please allow me to illustrate this by presenting a bit of a caricature:
 
 - Q: How do methodologists know whether an imputation approach 'works'? 
   - A: They obtain estimates of its performance via simulation studies (and--if available--formal properties via analytical derivations).
@@ -870,7 +872,7 @@ Ideally, the method is then put to scrutiny by peers in the scientific community
 Finally, the method is applied in practice. 
 End users run the imputation procedure on real-world data and, implicitly or explicitly, evaluate its appropriateness in that setting.
 <!-- In this life cycle of imputation methodology, there are three types of evaluation.  -->
-<!-- <!-- ### How do we know imputation works? (or: analytical, experimental, and experiential evaluation) --> -->
+ <!-- ### How do we know imputation works? (or: analytical, experimental, and experiential evaluation) --> 
 <!-- Let's consider a typical life cycle for imputation methodology. -->
 <!-- First, an imputation method is theorized, and---if possible---it's analytical properties are derived. -->
 <!-- Then, the method is implemented in code as a 'proof of concept'. -->
