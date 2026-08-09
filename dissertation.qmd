@@ -869,19 +869,21 @@ Simulation studies provide experimental evidence of the method’s properties un
 Ideally, the method is then put to scrutiny by peers in the scientific community, who may run additional simulations to replicate or challenge its reported performance. 
 Finally, the method is applied in practice. 
 End users run the imputation procedure on real-world data and, implicitly or explicitly, evaluate its appropriateness in that setting.
-In this life cycle of imputation methodology, there are three types of evaluation. 
+<!-- In this life cycle of imputation methodology, there are three types of evaluation.  -->
+<!-- <!-- ### How do we know imputation works? (or: analytical, experimental, and experiential evaluation) --> -->
+<!-- Let's consider a typical life cycle for imputation methodology. -->
+<!-- First, an imputation method is theorized, and---if possible---it's analytical properties are derived. -->
+<!-- Then, the method is implemented in code as a 'proof of concept'. -->
+<!-- With the method implemented in a script or software, we can run a simulation study. -->
+<!-- Simulation studies provide experimental evidence of the method's properties under a certain set of conditions.  -->
+<!-- Ideally, the method will then be put to scrutiny by scientific community peers, who might run different experiments to replicate the method's efficacy. -->
+<!-- And finally, the method is applied in practice. -->
+<!-- The end user of the imputation method can then evaluate the appropriateness of method in real-world data. -->
+In this life cycle of imputation methodology, we can differentiate three types of evaluation:
 
-
-### How do we know imputation works? (or: analytical, experimental, and experiential evaluation)
-
-Let's consider a typical life cycle for imputation methodology.
-First, an imputation method is theorized, and---if possible---it's analytical properties are derived.
-Then, the method is implemented in code as a 'proof of concept'.
-With the method implemented in a script or software, we can run a simulation study.
-Simulation studies provide experimental evidence of the method's properties under a certain set of conditions. 
-Ideally, the method will then be put to scrutiny by scientific community peers, who might run different experiments to replicate the method's efficacy.
-And finally, the method is applied in practice.
-The end user of the imputation method can then evaluate the appropriateness of method in real-world data.
+1. Analytical evaluation---using analytical derivations to evaluate the formal statistical properties of the method.
+2. Experimental evaluation---using simulation studies to evaluate the empirical performance (estimates of the method's attributes).
+3. Experiential evaluation---using real-world data to evaluate the operational utility (the method's usefulness in practice).
 
  <!-- a few desirable properties of a statistical esti-mator under the frequentist framework: both the point and variance estimateare unbiased or consistent, and the 95% confidence interval has a nominalcoverage under repeated sampling. In certain cases, such properties might bedemonstrated by mathematical derivations. However in many other scenarios,especially if estimators are complicated, a more feasible approach to evaluat-ing their performances is through Monte Carlo simulation studies, based onwhich we can numerically generate sampling distributions of the estimator ofinterest. -->
 <!-- REF: He, 2021, p. 40 -->
@@ -889,72 +891,111 @@ The end user of the imputation method can then evaluate the appropriateness of m
 
 <!-- ### Evaluating imputations -->
 
-In this life cycle of imputation methodology, there are three types of evaluation. 
-One can evaluate:
+<!-- One can evaluate: -->
 
-- analytically---the formal statistical properties of the method via analytical derivations;
-- experimentally---the empirical performance (estimates of the method's attributes) via simulation studies; and
-- experientially---the operational utility (practical usefulness) in real data.
+<!-- - analytically---the formal statistical properties of the method via analytical derivations; -->
+<!-- - experimentally---the empirical performance (estimates of the method's attributes) via simulation studies; and -->
+<!-- - experientially---the operational utility (practical usefulness) in real data. -->
 
-The first and preferred option is to obtain the formal statistical properties of the imputation method using analytic derivations. 
-However, this is often impossible or unfeasible, such as when no known joint model exists for an FCS method.
+The first and preferred option is analytic evaluation.
+<!-- to obtain the formal statistical properties of the imputation method using analytic derivations. -->
+If we can derive closed‑form results for bias, variance, and confidence validity of an estimator, we obtain deductive truths: under stated assumptions, the method has proven properties.
+<!-- However, for many imputation methods this is unfeasible or even impossible, such as for FCS methods without an existing known joint model. -->
+However, this route is often impossible or unfeasible, for example when no known joint model exists for a fully conditional specification (FCS) method.
 Without analytical proof, we cannot definitively conclude that an imputation method is an unbiased and confidence valid estimator of a population quantity. 
-Instead, we estimate the empirical performance of these methods using simulation studies.
-This is the default evaluation in the missing data methodology field. 
+In such cases, we fall back on experimental evaluation.
+<!-- Instead, we estimate the empirical performance of these methods using simulation studies. -->
+<!-- This is the default evaluation in the missing data methodology field.  -->
 
-Simulation studies are the standard, but not standardized. 
-If we have a specific analysis model of interest, we can calculate performance metrics such as bias and confidence interval coverage to conclude whether a method is unbiased and confidence valid for a certain estimand.
-Note that this requires a specific analysis model, which might not always be available
-The quality of the imputation model can only be assessed based on the complete data model:
-"A missing‑value treatment cannot be properly evaluated apart from the model estimation or testing procedure in which it is embedded" [@schafer2002, p. 149].
-Moreover, it is impossible to cover all the potential use cases. 
-Another problem is that simulation studies for imputation methodology are not standardized, so it's difficult to compare different methods across studies.
+Simulation studies are the default mode of evaluation for imputation methodology.
+In a simulation study, we can assess imputation workflows under varying missing data conditions. 
+Because we introduce the missingness in the simulation design ourselves, there is a 'comparative truth' (e.g., population parameters, or the generated complete data).
+We can then evaluate the results of our imputation process against the complete data to assess imputation accuracy.
+But better yet, if we have a specific analysis model and estimand in mind, we can compute performance metrics such as bias and confidence interval coverage.
+These performance measures provide evidence about whether the estimation process (the combination of imputation and inference) is approximately unbiased and confidence valid under the simulated conditions. 
+Note that this requires a specific analysis model: "A missing‑value treatment cannot be properly evaluated apart from the model estimation or testing procedure in which it is embedded" [@schafer2002, p. 149].
+And for FCS imputation specifically, the use of imputation models "creates new responsibilities for substantiating its correctness for a given statistical analysis" [@vanbuuren2007, p. 222]. 
+The quality of an imputation model is thus best assessed in pair with the complete data model.
+In practice, however, simulation studies cannot cover all potential use cases.
+Not all possible complete data models can be known or available to the simulator who designs the evaluation proocedure.
+This makes simulation studies no guarantee for practical performance.
+An additional problem is that the design and documentation of simulation studies for imputation methodology are not standardized, so it's difficult to compare different methods across studies.
+In short, simulation studies may be the standard, but they are not standardized or sufficient for evaluating imputation methodology.
+<!-- Simulation studies are the standard, but not standardized.  -->
+<!-- If we have a specific analysis model of interest, we can calculate performance metrics such as bias and confidence interval coverage to conclude whether a method is unbiased and confidence valid for a certain estimand. -->
+<!-- Note that this requires a specific analysis model, which might not always be available -->
+<!-- The quality of the imputation model can only be assessed based on the complete data model: -->
+<!-- "A missing‑value treatment cannot be properly evaluated apart from the model estimation or testing procedure in which it is embedded" [@schafer2002, p. 149]. -->
+<!-- Moreover, it is impossible to cover all the potential use cases.  -->
 <!-- We could also calculate the imputation accuracy by comparing the imputations against the complete data, but this is ill-advised.  -->
 
-<!-- TODO: edit the MESS from here!! -->
-
-The third option is the operational utility. 
-This is case-by-case evaluation in applied use with real data. 
+The third kind of evaluation is experiential.
+Experiential evaluation focuses on operational utility in applied use, on a case‑by‑case basis with real data. 
+<!-- The third option is the operational utility.  -->
+<!-- This is case-by-case evaluation in applied use with real data.  -->
 <!-- In practice, confidence validity is not guaranteed.  -->
-In simulation studies we can construct the "truth", but in practice we have to rely on assumptions. 
-Those assumptions are crucial precisely because they cannot be (fully) proven.
-In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part.
-The thing we need is not available by definition.
-In practice, the best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence. 
-Some assumptions are impossible to definitively determine (e.g. MNAR), some we can evaluate by looking at the data.
-Multiple imputation aims to propagate uncertainty due to missingness, but this only succeeds only under specific conditions such as correct assumptions about the missingness mechanism, 'congeniality' between imputation and analysis models, and adequate algorithmic behavior. 
-When these conditions fail (e.g. under MNAR missingness, incomplete imputation models, or non-convergence in the algorithm), the estimates may not be unbiased and/or confidence-valid.
-Therefore, we should check the imputation model itself, for example to see whether the algorithm has converged. 
-We can also inspect the output and we might run sensitivity analyses. 
-This is not systematic at all currently. 
-That is a problem. 
-Users of the method then do not know whether they have correctly applied the method. 
+Whereas we could construct the 'truth' in simulation studies, in practice we cannot.
+We therefore have to rely on assumptoins and theoretical justifications, combined with indirect evidence about imputation model performance.
+Some assumptions are impossible to definitively determine (e.g., MNAR mechanisms), while some we can partially evaluate by looking at the data.
+We can, for example, inspect the imputation algorithm output for signs of non‑convergence, or compare the distributions of the imputed data against the observed.
+Diagnosing algorithmic non-convergence, however, is a challenging task [see, e.g., @gelman2013; @vanbuuren2018].
+And there are few diagnostic tools for assessing imputation model fit, especially for large datasets [abayomi2008; @he2010; @bond16].
+Therefore, it remains difficult to aquire proof of imputation success in practice.  
+<!-- but in practice we have to rely on assumptions.  -->
+<!-- Those assumptions are crucial precisely because they cannot be (fully) proven. -->
+<!-- In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part. -->
+<!-- The thing we need is not available by definition. -->
+<!-- In practice, the best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence.  -->
+
+Even if we known from simulation studies that an imputation method yields unbiased and confidence valid inferences, this only holds under certain conditions.
+And these conditions cannot be definitively met in practice.
+<!-- For widely used FCS methods, no general analytical proof exists, so we have to rely on evidence from simulation studies and on diagnostics in real‑world applications. -->
+For FCS imputation specifically, we would need correct assumptions about the missingness mechanism, 'congeniality' between imputation and analysis models, and adequate algorithmic behavior. 
+When these conditions fail (e.g., under MNAR missingness, incomplete imputation models, or non-convergence in the algorithm), our inferences may not be unbiased and/or confidence valid.
+However, there is not a systematic way to flag potential risks.
+<!-- Therefore, we should check the imputation model itself, for example to see whether the algorithm has converged.  -->
+<!-- We can also inspect the output and we might run sensitivity analyses.  -->
+Users of imputation methods often do not know whether they have correctly applied the procedure.
+<!-- The current practice is ad hoc. -->
+
+In this dissertation, I focus on experimental and experiential evaluation of imputation methodology. 
+The studies I present will follow this distinction into the two phases in the life cycle of FCS imputation methods: first a simulation study, and then applied use.
+For both phases, I will investigate which existing evaluation tools are already avialable, and whether all necessary tools are present yet in the imputer's toolbox.
+The central question then becomes: what is needed for the experimental and experiential evaluation of imputation methodology?
+<!-- Some questions I consider are ... -->
+<!-- I thereby contribute to the new status quo by unifying how imputations are evaluated across the life cycle. -->
+<!-- What is needed to design and report experimental evaluation imputation methodology  -->
+<!-- There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation). -->
+<!-- The central questions for applied use are: how do we choose appropriate imputation models, and how do we know whether we have chosen well?  -->
+To address this question, I will borrow some terminology from the computer science discipline.
+Specifically, I will use the systems evaluation framework to propose a unified perspective on how imputations are evaluated.
+<!-- This is not systematic at all currently.  -->
+<!-- That is a problem.  -->
+<!-- Users of the method then do not know whether they have correctly applied the method.  -->
 <!-- Inferential validity cannot be established. -->
 
-In this dissertation, I focus on the second and third routes. 
-FCS has no deductive or analytical proof, so we have to rely on evidence from simulation studies.
-It has been shown that FCS works under many conditions.
-But FCS implicitly relies on the joint distribution: 
-"Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222].
+<!-- In this dissertation, I focus on the second and third routes.  -->
+<!-- FCS has no deductive or analytical proof, so we have to rely on evidence from simulation studies. -->
+<!-- It has been shown that FCS works under many conditions. -->
+<!-- But FCS implicitly relies on the joint distribution:  -->
+<!-- "Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222]. -->
 <!-- The nice thing about joint modeling is that convergence of the model is guaranteed, whereas this is not the case with fully conditional specification. -->
-The question becomes: how do we choose an appropriate imputation model? 
-And how do we know whether we have chosen an appropriate imputation model?
+<!-- The question becomes: how do we choose an appropriate imputation model?  -->
+<!-- And how do we know whether we have chosen an appropriate imputation model? -->
 <!-- That's where computational evaluation comes in! -->
 
-Can we use existing tools or do we need more, and how? 
-No, not all tools are present in the imputer's toolbox. 
-There are few diagnostic tools for imputation modeling, especially for large-scale datasets [@he2010].
-I contribute to the new status quo by unifying how imputations are evaluated across the life cycle.
+<!-- Can we use existing tools or do we need more, and how?  -->
+<!-- No, not all tools are present in the imputer's toolbox.  -->
+<!-- I contribute to the new status quo by unifying how imputations are evaluated across the life cycle. -->
 <!-- - life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
-There two phases: statistical properties of the method in simulation (e.g., bias and confidence-validity; statistical evaluation) & practical application (graphical and computational evaluation).
 
-Gold standard: analytical properties. 
+<!-- Gold standard: analytical properties.  -->
 <!-- V&V not applicable, because not a system(?).  -->
-Deductive truths.
-But not feasible with FCS.
-So, implementation needed, which does require V&V.
+<!-- Deductive truths. -->
+<!-- But not feasible with FCS. -->
+<!-- So, implementation needed, which does require V&V. -->
 <!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
-We will borrow terminology from the systems evaluation framework from computer science.
+<!-- We will borrow terminology from the systems evaluation framework from computer science. -->
 
 <!-- - In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation.  -->
 <!-- - In the category imputation algorithms: just FCS in the flavor of MICE (not JOMO or SMC-FCS). The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models.  -->
