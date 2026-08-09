@@ -1,5 +1,5 @@
 ---
-title: "Missing but not missed?"
+title: "Missing, but not overlooked"
 subtitle: "Graphical and computational evaluation of imputation methodology"
 format:
   pdf:
@@ -1057,7 +1057,7 @@ Still, irrespective of the system specifics, there are certain standards for eva
 The 'International Organization for Standardization' (ISO) and 'International Electrotechnical Commission' (IEC) collectively publish 'Information technology' vocabularies, which include definitions of evaluation practices [@iso2015].
 A set of two of these practices are relevant here: verification and validation (V&V).
 Roughly stated, verification asks 'was the system built well?', whereas validation asks 'was the right system built?'.
-These two terms are further detailed by the 'Institute of Electrical and Electronics Engineers' (IEEE), which routinely publishes versions of the 'Standard for System, Software, and Hardware Verification and Validation' [-@ieee2025].
+These two terms are further detailed by the 'Institute of Electrical and Electronics Engineers' (IEEE), which routinely publishes versions of the 'Standard for System, Software, and Hardware Verification and Validation'. \nocite{ieee2025}
 We will explore and operationalize the verification and validation standards for imputation methodology.
 
 <!-- ### Verification & validation of systems -->
@@ -1787,7 +1787,7 @@ However, some results may generalize to other iterative (FCS) imputation algorit
 
 \newpage
 
-# Chapter 2: evaluation
+# Computation evaluation for verifying imputation methodology
 
 Published as @oberman2024.
 
@@ -1797,7 +1797,7 @@ Published as @oberman2024.
 
 \newpage
 
-# Chapter 3: convergence
+# Computational evaluation for validatiing imputation methodology
 
 Pre-printed as @ober21. 
 
@@ -1807,7 +1807,7 @@ Pre-printed as @ober21.
 
 \newpage
 
-# Chapter 4: ggmice
+# Graphical evaluation for validating imputation methodology
 
 Published as @oberman2022.
 
