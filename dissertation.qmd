@@ -1,5 +1,5 @@
 ---
-title: "Making the invisible visible"
+title: "Missing but not missed?"
 subtitle: "Graphical and computational evaluation of imputation methodology"
 format:
   pdf:
