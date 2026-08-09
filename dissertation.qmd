@@ -307,11 +307,13 @@ Ergo, evaluating whether imputations should be trusted remains challenging.
 In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
 I thereby focus on the imputation procedure 'MICE' [@vanbuuren1999] as implemented in the R package `mice` [@vanbuuren2011].
 
-Why do I study the evaluation of imputation methodology? 
-Because current evaluation practices (such as computational evaluation via simulation studies, and graphical evaluation via diagnostic plots) are fragmented and may be insufficient. 
+This dissertation in a nutshell:
 
-How will I contribute to the evaluation of imputation methodology? 
-By bridging inferential evaluation and data- or algorithm-level diagnostics for imputation workflows.
+- Q: Why do I study the evaluation of imputation methodology? 
+  - A: Because current evaluation practices (such as computational evaluation via simulation studies, and graphical evaluation via diagnostic plots) are fragmented and may be insufficient. 
+
+- Q: How will I contribute to the evaluation of imputation methodology? 
+  - A: By bridging inferential evaluation and data- or algorithm-level diagnostics for imputation workflows.
 
 <!-- - Missing data may be widespread, but so are missing data treatment methods. -->
 <!-- - Imputation = filling in missing values to fix the missing data problem. -->
@@ -1400,7 +1402,7 @@ We need computational and graphical checks on the whole workflow.
 <!-- [TODO: add back in?] Similarly, we need to evaluate the choice of imputation models for signs of assumption violations. -->
 <!-- [TODO: add back in?] Some assumption checks are visual inspection, some are quantitative, some need external info. -->
 
-## What to expect in this dissertation? (or: structure & scope)
+### What to expect in this dissertation? (or: structure & scope)
 <!-- Application/chapters -->
 
 In this dissertation, I investigate how imputation workflows with `mice` [@vanbuuren2011] can be evaluated.
@@ -1594,7 +1596,8 @@ The `ggmice` package aims to solve the following problems:
  `ggmice` offers functions that visualize incomplete data distributions and their completed counterparts.
 
 - No previously existing methods for visualizing `mice` imputation models.
- The structure of `mice` imputation models (i.e., predictor matrix and methods vector) are often printed to the R console as text. Or, [experientially?], exported to spreadsheets. 
+ The structure of `mice` imputation models (i.e., predictor matrix and methods vector) are often printed to the R console as text.
+ <!-- Sometimes, they may be exported to spreadsheets.  -->
  Complex imputation models are easier to review through visualization.
  `ggmice` provides imputation model plots that make complex imputation specifications easier to review and discuss.
  
@@ -1605,7 +1608,7 @@ The `ggmice` package aims to solve the following problems:
 <!-- #### Existing solutions -->
 
 The `ggmice` package fills a hiatus in the software landscape, with other packages generally supporting either `mice` or `ggplot2`, but not both. 
-Table REF provides an overview of R packages that offer visualization tools for incomplete and imputed data. 
+@tbl-software provides an overview of R packages that offer visualization tools for incomplete and imputed data. 
 In short: with `mice` you cannot plot incomplete data distributions, all other packages lack support for `mice`-imputed data, and visualization of `mice` imputation models did not exist at all prior to `ggmice`.
 
 In particular, visualization of `mice` imputation models did not exist prior to `ggmice`.
