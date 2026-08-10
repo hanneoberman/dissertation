@@ -1560,7 +1560,7 @@ Compatibility with `ggplot2`'s 'grammar of graphics' [@wickham2016] makes `ggmic
 
 Although `ggmice` has not undergone the traditional journal-based peer review, it has been vetted in practice.
 The package has been released on CRAN in 2022 [@oberman2025]. 
-CRAN downloads are reaching approximately 1.000x per month at the time of writing.
+CRAN downloads are reaching approximately 1.000x per month at the time of writing [@balamuta2026].
 The accompanying Zenodo publication [@oberman2022] has been cited in seven scientific works.
 Open source code and issue tracking are available in a repository on the programming platform GitHub ([github.com/amices/ggmice](https://github.com/amices/ggmice)).
 There have been multiple external 'Issues' and 'Pull Requests' on GitHub, indicating that other researchers and developers have actively reviewed and improved the codebase.
