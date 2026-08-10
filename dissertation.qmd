@@ -77,7 +77,7 @@ load("data/dat_xy.RData")
 }
 ```
 
-[TODO: fix which sections are included]
+<!-- [TODO: fix which sections are included] -->
 
 \newpage
 
@@ -1799,9 +1799,9 @@ Published as @oberman2024.
 
 # Computational evaluation for validatiing imputation methodology
 
-Pre-printed as @ober21. 
+A pilot version of this study was pre-printed as @ober21. 
 
-[TODO: update version, add credit statement, merge formatting]
+[TODO: review content, add credit statement, merge formatting]
 
 \includepdf[pages=-, fitpaper=true]{chapters/convergence.pdf}
 
@@ -2006,7 +2006,104 @@ In short, I hope this dissertation encourages to question defaults, to make eval
 
 # CV {.unnumbered}
 
-[TODO: summarize, include]
+<!-- **Email**   -->
+<!-- h.i.oberman@uu.nl   -->
+
+<!-- **ORCID**   -->
+<!-- 0000-0003-3276-2141   -->
+
+### Education
+
+- 2023 -- present   
+  *Graduate school 'IOPS'*   
+  Interuniversity Graduate School of Psychometrics and Sociometrics (IOPS), The Netherlands & Belgium  
+
+- 2018 -- 2020   
+  *MSc, Methodology and Statistics for the Behavioural, Biomedical and Social Sciences*   
+  Utrecht University, The Netherlands  
+
+- 2018    
+  *International Graduate Summer School, Global Academy of Liberal Arts*    
+  Concordia University, Montréal, Canada  
+
+- 2014 -- 2018   
+  *BSc, Liberal Arts and Sciences*  
+  Utrecht University, The Netherlands
+
+---
+
+### Academic positions
+
+- 2024 -- present  
+  *Junior assistant professor*  
+  <!-- (0.6 FTE research, 0.4 FTE teaching)  -->
+  Methodology & Statistics, Utrecht University, The Netherlands
+
+- 2023 -- present  
+  *PhD candidate*   
+  <!-- (0.8 FTE research, 0.2 FTE teaching) -->
+  Methodology & Statistics, Utrecht University, The Netherlands
+
+- 2020 -- 2023  
+  *Research and education officer*  
+  Methodology and Statistics, Utrecht University, and Julius Center for Health Sciences and Primary Care, UMC Utrecht, The Netherlands
+
+---
+
+### Selected ancillary roles
+
+- Faculty ambassador (and chair since 2025), Open Science Community Utrecht (OSCU)
+- Member (and chair 2024–2025), Faculty Open Science Team (FOST), Utrecht University
+- Member of the Community for Open Science in Education (COSiE), Utrecht University (USO project)
+- Leadership committee of rainbowR
+
+---
+
+### Grants and awards
+
+- 2023 -- *MICE ONLINE: A new service to solve missing data problems*  
+  Open Science Fund, Utrecht University
+- 2022 -- *dessert: An automated tool for transparent and reproducible scientific reporting*  
+  Open Science Fund, Utrecht University
+- 2019 -- Best Poster Award  
+  Social and Behavioural Sciences Graduate Poster Fair, Utrecht University
+- 2018 -- Fellowship Award  
+  Global Academy of Liberal Arts Annual Conference, Concordia University, Montréal
+
+---
+
+### Selected conference contributions
+
+- 2025 -- Presentation, *“Data visualization for incomplete datasets in R”*, ISI (The Hague, NL)
+- 2025 -- Presentation, *“Computational Reproducibility in Statistics”*, ESRA (Utrecht, NL)
+- 2024 -- Tutorial, *“Missing data exploration, imputation, and evaluation”*, useR! (Salzburg, Austria)
+- 2024 -- Talk, *“Data visualization for incomplete datasets in R”*, VVSOR Annual Meeting (Utrecht, NL)
+- 2023 -- Talk, *“Towards a standardized evaluation of imputation methodology”*, European Congress of Methodology (Ghent, BE)
+- 2021 -- Late‑breaking work, *“Visualizing Uncertainty Due to Missing Data”*, IEEE VIS workshop VisComm (online)
+- 2020 -- Talk, *“Missing the Point: Non‑Convergence in Iterative Imputation Algorithms”*, ICML workshop ARTEMISS (online)
+- 2019 -- Poster, *“ShinyMICE: Developing a Missing Data Evaluation Suite”*, SIPS Conference (Rotterdam, NL)
+
+### Publications
+
+Journal articles and book chapters
+
+- van Buuren, S., & Oberman, H. I. (2025). Is the most likely value also the best imputation? *Paediatric and Perinatal Epidemiology*. <https://doi.org/10.1111/ppe.70081>
+- Oberman, H. I., & Vink, G. (2024). Toward a standardized evaluation of imputation methodology. *Biometrical Journal*, 66(1), 2200107. <https://doi.org/10.1002/bimj.202200107>
+- Liu, D., Oberman, H. I., Muñoz, J., Hoogland, J., & Debray, T. P. A. (2023). Quality control, data cleaning, imputation. In F. W. Asselbergs et al. (Eds.), *Clinical Applications of Artificial Intelligence in Real-World Data* (pp. 7–36). Springer. <https://doi.org/10.1007/978-3-031-36678-9_2>
+- Snel, E., Engbersen, G., Van Der Heijden, P., & Oberman, H. I. (2023). Een longitudinale studie naar het afgenomen vertrouwen gedurende de coronapandemie. *Mens & Maatschappij*, 98(4), 369–394. <https://doi.org/10.5117/MEM2023.4.004.SNEL>
+
+Software, reports and other outputs
+
+- Oberman, H. I. (2024). Measuring open science. <https://doi.org/10.53962/tn38-4q91>
+- Vink, G., Volker, T. B., Oberman, H. I., Shehwana, H., Cai, M., & van Buuren, S. (2024). *A series of instructional vignettes for mice in R with applications to real and synthetic data* (Version v0.1) [Computer software]. Zenodo. <https://doi.org/10.5281/zenodo.12586939>
+- Snel, E., Engbersen, G., de Boom, J., van de Heijden, P., & Oberman, H. (2024). *Ongelijke verdeling van de sociale gevolgen van de coronapandemie*. Erasmus Universiteit/Risbo. <https://www.risbo.nl/media/125038>
+- Oberman, H. I., van Harten, V., Rozsos, T., & Peeters, S. (2024). *CODECHECK certificate 2024-021*. Zenodo. <https://doi.org/10.5281/zenodo.14261193>
+- van Veelen, R., de Haan, J., Oberman, H. I., Vink, P., & Nelson, J. (2023). *Open Science Monitor 2022*. Zenodo. <https://doi.org/10.5281/zenodo.8375726>
+- Oberman, H. I. (2022). *ggmice: Visualizations for “mice” with “ggplot2”* [Computer software]. Zenodo. <https://doi.org/10.5281/zenodo.6532702>
+- Oberman, H. I. (2021). Visualizing uncertainty due to missing data. *IEEE VIS, VisComm track*. <https://doi.org/10.31219/osf.io/ahtfy>
+- Oberman, H. I., Bakker, M., Nguyen, D., & Oberski, D. (2021). Preregistration of data science studies. *Open Science Festival*. <https://doi.org/10.17605/OSF.IO/Y6J73>
+- Oberman, H. I., van Buuren, S., & Vink, G. (2021). *Missing the Point: Non-Convergence in Iterative Imputation Algorithms*. <https://arxiv.org/abs/2110.11951>
+- Oberman, H. I., Nijman, S. W. J., Vink, G., Debray, T. P. A., & van Smeden, M. (n.d.). Real-time handling of missing data in the application of prediction models: A comparison of methods.
 
 ::: {.content-hidden}
 # Dump
