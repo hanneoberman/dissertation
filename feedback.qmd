@@ -24,7 +24,7 @@ Hieronder gedetailleerd commentaar en suggesties op de eerste 30 bladzijden
 
 ---
 
-p. 7: "There are three approaches." Ik zie er twee, geen drie.
+~~p. 7: "There are three approaches." Ik zie er twee, geen drie.~~
 
 p. 9: “Rooted in mathematical probability theory, which deals in absolute truths, statistical inference is a framework for inferring with uncertainty from noisy real-world data.” Ik vind dit een wat vreemde zin, zowel inhoudelijk als qua stijl. Dat geldt eigenlijk voor de hele alinea. Tot nu toe is de tekst prettig, persoonlijk en eenvoudig te volgen, maar hier wordt ineens een aantal abstracte begrippen geïntroduceerd (mathematical probability theory, absolute truths, statistical inference, noisy real-world data) zonder dat duidelijk wordt wat je ermee wilt zeggen.
 
