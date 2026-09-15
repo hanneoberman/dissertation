@@ -3,7 +3,21 @@ title: "Missing, but not overlooked"
 subtitle: "Graphical and computational evaluation of imputation methodology"
 format:
   pdf:
+    geometry:
+      - paperwidth=170mm
+      - paperheight=240mm
+      # - inner=3cm
+      # - outer=4cm
+      # - top=3cm
+      # - bottom=4cm
+      # - headsep=22pt
+      # - headheight=11pt
+      # - footskip=33pt
+      # - ignorehead
+      # - ignorefoot
+      - heightrounded
     # documentclass: report
+    linestretch: 1.1
     include-in-header:
       text: |
         \usepackage[labelfont={bf}]{caption}
