@@ -1,0 +1,329 @@
+Betreft: Concept dissertatie: Missing, but not overlooked - Hanne Oberman
+dd. 12 aug 2026
+
+1. Een vlot geschreven dissertatie-introductie met een verfrissende stijl. De probleemstelling is origineel en het onderzoek is goed ingebed in de wetenschappelijke context.
+
+2. De eerste dertig pagina’s vormen een behoorlijk lange zit. Enkele suggesties om de leesbaarheid te vergroten:
+- Overweeg dit gedeelte op te delen in kleinere, beter afgebakende secties/hoofdstukken.
+- Verbeter de lay-out door minder woorden per regel te gebruiken en de regelafstand iets te vergroten.
+- De paragrafen zijn vaak vrij lang. Probeer ze op te splitsen, compacter te formuleren en te voorzien van een duidelijke opening en afsluiting.
+- Schrap secties die niet relevant zijn.
+
+3. In de beschrijving van de missing-data-methodologie trof ik regelmatig alledaags en soms vaag taalgebruik aan, wat op enkele plaatsen leidt tot technische onnauwkeurigheden of zelfs feitelijk onjuiste uitspraken. Een dissertatie vraagt om een scherpe en precieze formuleringen. Bijgaand geef ik een aantal voorbeelden en suggesties voor helderder en technisch nauwkeuriger taalgebruik.
+
+4. Zinnen als “In this dissertation I will …” komen op verschillende plaatsen terug. Ik zou overwegen dit soort metatekst te concentreren op één logische plek. Dat maakt de tekst compacter en voorkomt dat de lezer steeds opnieuw wordt georiënteerd.
+
+---
+
+Hieronder gedetailleerd commentaar en suggesties op de eerste 30 bladzijden
+
+---
+
+p. 7: "There are three approaches." Ik zie er twee, geen drie.
+
+p. 9: “Rooted in mathematical probability theory, which deals in absolute truths, statistical inference is a framework for inferring with uncertainty from noisy real-world data.” Ik vind dit een wat vreemde zin, zowel inhoudelijk als qua stijl. Dat geldt eigenlijk voor de hele alinea. Tot nu toe is de tekst prettig, persoonlijk en eenvoudig te volgen, maar hier wordt ineens een aantal abstracte begrippen geïntroduceerd (mathematical probability theory, absolute truths, statistical inference, noisy real-world data) zonder dat duidelijk wordt wat je ermee wilt zeggen.
+
+Vraag jezelf af: wat is precies de boodschap die je de lezer wilt meegeven? Als je die kern helder hebt, kun je de tekst waarschijnlijk veel eenvoudiger formuleren. De daaropvolgende quote van Hand (2025) maakt het verhaal weer concreet en begrijpelijk; dat contrast laat zien dat deze alinea waarschijnlijk nog een herschrijving kan gebruiken.
+
+p. 9: “But first, let’s start with some terminology and notation.” De toon is hier iets te populair. Overweeg een meer neutrale, academische formulering die beter aansluit bij de rest van de dissertatie.
+
+p. 8: “Why this dissertation?” Je legt hier goed uit waarom dit onderwerp jou persoonlijk fascineert. Wat ik nog mis, is een expliciete toelichting waarom het onderwerp ook voor de lezer relevant is. Waarom is dit een belangrijk wetenschappelijk of maatschappelijk probleem? Welke lacune vult deze dissertatie, en waarom zou de lezer daar geïnteresseerd in moeten zijn? Een korte alinea hierover zou de motivatie versterken.
+
+Mijn indruk is dat je het voorwoord op dit punt het beste kunt afronden. Daarna kun je beginnen met Hoofdstuk 2, waarin je de inhoudelijke lijn van de dissertatie oppakt. Dat zorgt voor een duidelijke scheiding tussen de persoonlijke motivatie en het wetenschappelijke verhaal.
+
+---
+
+p. 9: “Generally speaking, statistical inference works really well.” Als openingszin vind ik “works really well” wat te informeel en te weinig precies. Probeer specifieker te formuleren wat je bedoelt. Bijvoorbeeld dat statistische inferentie een krachtig en breed toepasbaar raamwerk biedt voor het trekken van conclusies uit onzekere en onvolledige gegevens.
+
+p. 9: Spelling. "a means" Enkelvoud of meervoud? Statistical "models"?
+
+p. 9: "plus some uncertainty surrounding it" --> stemming from the fact that we observed only a subset of the population.
+
+p. 9: "used for estimation" beetje dun. Beter iets als "used to answer our questions of scientific interest"
+
+p. 9: “yields sample estimates that ought to match the population of interest.” Ik zou deze zin concreter maken en het woord “ought” vermijden; dat roept meteen de vraag op wanneer en waarom dat wel of niet het geval is. Je kunt beter expliciet maken wat statistische inferentie oplevert, bijvoorbeeld: “yields estimates (together with their sampling uncertainty) for quantities of scientific interest, such as the average height of 10-year-old girls, the effect of a treatment on a disease, or the association between well-being and employment status.”
+
+p. 9: “If our estimate of Q matches the true population parameter, we have an unbiased estimate.” Dit is niet correct en te kort door de bocht. Unbiasedness is geen eigenschap van één gerealiseerde schatting, maar van de sampling distribution van de estimator. Voeg minimaal iets toe als: “An estimator of Q is unbiased if, over repeated samples, its average equals the true population parameter Q.”
+
+p. 9: “If the variance surrounding the estimate correctly reflects the uncertainty in the estimation procedure, it could be considered confidence valid.” Hier worden verschillende begrippen door elkaar gehaald. Het voornaamwoord “it” lijkt te verwijzen naar de variantieschatting, terwijl confidence validity een eigenschap is van de volledige inferentiële of beslisprocedure, niet van de variantieschatting alleen. 
+
+Ik zou eerst uitleggen wat een confidence-valid procedure is, bijvoorbeeld dat een nominale 95%-betrouwbaarheidsinterval in herhaalde steekproeven inderdaad ongeveer 95% dekking heeft, of dat een hypothesetoets het beoogde type-I-foutniveau behoudt. Leg vervolgens uit hoe dit in principe kan worden beoordeeld (bijvoorbeeld via herhaalde steekproeven of simulaties).
+
+Pas daarna kun je concluderen dat een correcte variantieschatting een noodzakelijke, maar niet voldoende voorwaarde is voor confidence validity. Met andere woorden: een confidence-valid procedure vereist onder meer een juiste variantieschatting, maar een correcte variantieschatting op zichzelf garandeert nog geen confidence-valid inferentie. Dat voorkomt dat de causale relatie tussen deze begrippen wordt omgedraaid.
+
+Dit moet precies. De begrippen unbiasedness en confidence validity vormen de statistische basis van de rest van het verhaal. Als deze hier niet zorgvuldig en in de juiste volgorde worden uitgelegd, raak je de statistisch geschoolde lezer al vroeg kwijt.
+
+Ik zie nu dat de rest van de sectie wel degelijk ingaat op de definities. In dat geval zou ik de compositie van de sectie herorganiseren: introduceer eerst de formele begrippen en hun betekenis, geef vervolgens aan hoe ze kunnen worden beoordeeld (bijvoorbeeld via herhaalde steekproeven of simulaties), en trek daarna pas de conclusies. Op dit moment lopen definities, interpretaties en consequenties te veel door elkaar, waardoor de rode draad moeilijk te volgen is.
+
+p. 9: “Statisticians call uncertainty around estimates ‘error’. There is, for example, ‘sampling error’…” Ik vraag me af of deze uitleg hier echt nodig is. Je introduceert in korte tijd veel nieuwe begrippen (error, sampling error, standard error) die niet essentieel lijken voor de hoofdboodschap. Probeer alleen die concepten te introduceren die je direct nodig hebt; de rest kan later altijd nog aan bod komen.
+
+p. 9: “Standard errors can get translated into decision tools.” Ik zou de redenering omdraaien. Het uitgangspunt is niet dat standaardfouten worden omgezet in beslisprocedures, maar dat beslisprocedures (zoals betrouwbaarheidsintervallen en hypothesetoetsen) afhankelijk zijn van correct geschatte standaardfouten. Anders gezegd: decision tools require properly constructed standard errors, niet andersom. Dat sluit ook beter aan bij je latere uitleg over confidence-valid inferentie.
+
+p. 10: “that matches the nominal confidence level” De term “matches” is hier te vaag en voor meerdere interpretaties vatbaar. In de klassieke formulering van Neyman gaat het erom dat de werkelijke dekkingskans gelijk is aan of groter is dan het nominale betrouwbaarheidsniveau. Wees hier zo precies mogelijk.
+
+Hetzelfde geldt voor “should cover”. Formuleer liever “should cover at least” het nominale percentage. Dat sluit beter aan bij de oorspronkelijke definitie van confidence-validity en voorkomt dat je een sterkere uitspraak doet dan de theorie rechtvaardigt.
+
+p. 10: "Confidence valid statistical methods give us certainty about the uncertainty in our inferences from a sample to the population." Beter: Confidence-valid statistical methods ensure that our reported uncertainty is itself trustworthy.
+
+p. 10: “Some thousands of people.” Dit klinkt wat onnauwkeurig en ook enigszins onpersoonlijk. Als het aantal bekend is, noem dat dan gewoon, bijvoorbeeld “about 4600 people” (of het exacte aantal). Dat is informatiever en respectvoller naar de deelnemers. Overweeg ook een bronverwijzing toe te voegen, zodat duidelijk is waar dit aantal vandaan komt.
+
+p. 10: “This uncertainty, however, does not only stem from the sampling process.” Ik zou deze algemene uitspraak direct concreet maken met voorbeelden uit de context van jouw onderzoek, zoals uitval tijdens de studie, deelnemers die vragen overslaan, voortijdig stoppen, of planned missing data. Dat maakt meteen duidelijk waarom missing data in de praktijk ontstaan en waarom ze relevant zijn.
+
+Vervolgens kun je de brug slaan naar het theoretische kader. Begin de volgende sectie bijvoorbeeld met “More generally, …”, waarin je uitlegt hoe deze praktische voorbeelden passen binnen de algemene theorie over missing-data mechanismen en statistische inferentie. Zo ontstaat een natuurlijke overgang van praktijk naar theorie.
+
+p. 10: "Of course, non-response can lead to additional uncertainty in our inferences, because we are missing some information." Dat is altijd zo. --> "Of course, non-response leads to additional inferential uncertainty because some of the information needed to estimate the quantities of interest is unavailable."
+
+p. 10: “But even the way we treat non-response may introduce error.” Dit is een nieuw punt en zou daarom beter in een aparte alinea kunnen staan. Je maakt hier de overgang van de onzekerheid die inherent is aan ontbrekende informatie naar de gevolgen van de gekozen methode om met die ontbrekende informatie om te gaan. Overweeg ook een formulering die deze overgang explicieter maakt, bijvoorbeeld: “Apart from the information lost through non-response, the method used to handle missing data may itself introduce bias or additional uncertainty.”
+
+p. 10: “In this dissertation, I study the way we handle incomplete observations in partially observed data, and how that affects our inferences.” Voor mijn gevoel hoort deze zin eerder in het hoofdstuk thuis. Dit is immers de centrale onderzoeksvraag van de dissertatie. Door deze eerder te introduceren weet de lezer vanaf het begin waar het verhaal naartoe werkt en waarom de daaropvolgende uitleg over statistische inferentie en missing data relevant is. Nu verschijnt de onderzoeksvraag pas nadat al veel achtergrond is behandeld.
+
+p. 10: “I aim to provide methodology for minimizing non-response error and imputation error.” Deze formulering lijkt mij niet helemaal passend. De dissertatie gaat volgens mij niet over het voorkómen of minimaliseren van non-response; non-response wordt juist als gegeven genomen. Bovendien is “minimize imputation error” een ongelukkige formulering, omdat die suggereert dat het doel is om de meest waarschijnlijke of “juiste” waarde te imputeren. Dat is niet het uitgangspunt van de klassieke multiple-imputationtheorie.
+
+p. 10: ”… because it is impossible to do statistical inferences with incomplete data.” Dit is niet juist: statistische inferentie met incomplete data is wel degelijk mogelijk. Het praktische probleem is eenvoudiger: we kunnen geen berekeningen uitvoeren met waarden die onbekend zijn --> ”… because we cannot perform calculations with values that are unknown.”
+
+p. 10: "When there is just one missing value in a dataset, statistical inference cannot be performed." Onwaar. Zelfde probleem.
+
+p. 11: “ideal circumstances for inference.” Ik denk dat je hier iets preciezer kunt zijn. Het gaat niet zozeer om “ideale omstandigheden”, maar om het feit dat alle onzekerheid in de schattingen uitsluitend voortkomt uit het steekproefproces, waarvoor een goed uitgewerkt statistisch theoretisch kader bestaat.
+
+Je zou vervolgens het contrast met de rechterfiguur expliciet kunnen maken: daar hangt de onzekerheid af van twee opeenvolgende selectieprocessen: eerst de steekproeftrekking uit de populatie en vervolgens het non-responsproces binnen de steekproef. Dat tweede selectieproces introduceert extra onzekerheid (en mogelijk bias) waarvoor aanvullende aannames en methoden nodig zijn. Zo wordt de rol van missing data in het inferentieprobleem veel duidelijker.
+
+p. 11: “has to be employed.” Ik ben over het algemeen voorzichtig met “must” of “has to” in wetenschappelijke teksten. Een neutralere formulering, zoals “is needed to” of “is required to”, leest vaak prettiger en maakt de claim iets minder absoluut.
+
+Daarnaast zou ik dit deel eigenlijk helemaal uit de figure caption weglaten. Een figuuronderschrift hoeft in de eerste plaats de figuur toe te lichten; interpretatie en inhoudelijke conclusies kun je beter in de lopende tekst bespreken. Dat houdt het onderschrift korter en de functie ervan duidelijker.
+
+p. 11: "Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem." Iets minder dramatisch: "When missing data are unavoidable, they need to be handled appropriately".
+
+p. 11: “Figure 2 shows that some kind of missing data method has to be employed to get a population estimate from an incomplete sample.” Ik zou de nadruk minder leggen op de noodzaak van een specifieke methode en meer op het onderliggende statistische probleem --> “Figure 2 shows that missing data introduce an additional selection process that must be accounted for alongside the usual sampling process.” Deze formulering legt beter uit waarom missing-data-methoden nodig zijn.
+
+p. 11: "Even without specifying a missing data method explicitly, there will be handling of the missing data. " --> "Even without explicitly specifying a missing data method, the missing data will be handled in some way, often without the user’s knowledge."
+
+p. 11: "Ignoring missingness" --> "Deleting data"
+
+p. 11: “LWD assumes that the observed part of the data is equivalent to the missing part of the data, which is not usually the case.” Met “is equivalent” bedoel je waarschijnlijk iets anders. Deze formulering is namelijk niet de aanname die ten grondslag ligt aan listwise deletion en kan daardoor gemakkelijk verkeerd worden geïnterpreteerd.
+
+Probeer preciezer te beschrijven onder welke voorwaarden listwise deletion geldige inferentie oplevert. Dat is niet eenvoudig, omdat de benodigde aannames afhangen van de analyse, het missing data patroon en de estimand. In het algemeen gaat het om situaties waarin de kans op ontbrekende waarden geen vertekening introduceert in de inferentie (bijvoorbeeld onder MCAR, of in sommige specifieke gevallen onder strengere modelaannames). Een nauwkeuriger formulering voorkomt dat de lezer denkt dat LWD uitgaat van een soort “gelijkheid” tussen geobserveerde en ontbrekende gegevens, want dat is niet de juiste intuïtie.
+
+KOP: Why are the missing and observed parts not equivalent? beter vervangen door Missing Data Mechanisms
+
+p. 11: “is representative.” Ook deze formulering is mij te sterk. Representative is opnieuw een specifieke interpretatie van de voorwaarden waaronder analyse van incomplete data geldig kan zijn, maar die is niet in het algemeen correct. Zie bijvoorbeeld FIMD2, Sectie 2.7, waar verschillende uitzonderingen worden besproken waarin geldige inferentie mogelijk is zonder dat de geobserveerde gegevens in deze zin representatief zijn.
+
+Ik zou daarom voorzichtig zijn met dergelijke karakteriseringen. Beschrijf liever de formele aannames (bijvoorbeeld in termen van het missingness mechanism of ignorability) dan te spreken over “representativeness” of “equivalence”. Dat voorkomt misverstanden en sluit beter aan bij de statistische literatuur.
+
+p. 11: Ik zou deze sectie anders opbouwen. Begin met de kernboodschap, bijvoorbeeld: “Missing data models describe and classify the causes of missingness. These models determine under which assumptions missing data can be handled to obtain statistically valid inferences.” Introduceer vervolgens de notatie (Y en R) en daarna de algemene vorm van het missing-data model. Op die manier begrijpt de lezer eerst waarom missing-data-modellen worden geïntroduceerd, voordat de formele notatie aan bod komt. Dat maakt de opbouw logischer en motiveert de wiskundige formulering beter.
+
+p. 12: Ik zou Rubin (1976) hier een prominentere plaats geven. Bijvoorbeeld: “Rubin (1976) introduced a classification of three missing-data mechanisms…”. Daarmee maak je duidelijk waar deze inmiddels klassieke indeling vandaan komt. Ik zou de verwijzing naar Hand (2020) op dit punt achterwege laten (eventueel later terug laten komen), omdat die de historische lijn eerder vertroebelt dan versterkt.
+
+Daarnaast zou ik - waar mogelijk - het preciezere begrip “the response probability” (of “the probability of response/non-response”) gebruiken in plaats van “the missingness”. Missingness wordt vaak als verzamelterm gebruikt, maar wat in de modellen wordt gespecificeerd is uiteindelijk de kans op respons of non-respons gegeven de data. Dat maakt de tekst statistisch preciezer.
+
+P. 12: "the missingness is ‘at random’ " --> "the data are said to be missing at random (MAR) ... "
+
+Ik zou hier een inhoudelijke opmerking van maken, want de formulering is niet helemaal juist.
+
+p. 12: “If the cause of the missingness is missing too, the missingness is ‘not at random’ (MNAR), or ‘unseen data dependent’.” Dit is een te informele intuïtie en geen correcte definitie van MNAR. Het probleem is niet dat “the cause” ontbreekt, maar dat de responskans afhangt van niet-geobserveerde waarden, ook nadat voor de geobserveerde gegevens is gecorrigeerd. Ik zou daarom dichter bij de formele definitie van Rubin (1976) blijven --> “The data are said to be missing not at random (MNAR) if the probability of response depends on unobserved values, even after conditioning on the observed data.” 
+
+Als je “unseen data dependent” wilt gebruiken, presenteer dat dan als een intuïtieve alternatieve benaming ná de formele definitie, niet als vervanging ervan. Dat voorkomt verwarring over wat MNAR precies betekent.
+
+p. 12: Indien je Figure 3 wilt handhaven, zou ik hiervoor een nieuwe alinea beginnen en de figuur stap voor stap uitleggen. Leg eerst uit wat X, Y, \psi en R voorstellen. Leg vervolgens uit wat een pijl betekent en wat het juist betekent als een pijl ontbreekt. Op dit moment wordt de figuur vrijwel niet toegelicht, waardoor de lezer zelf moet reconstrueren wat de bedoeling is. 
+
+Het zou helpen om elk van de drie diagrammen te illustreren met een eenvoudig praktijkvoorbeeld (MCAR, MAR en MNAR). Dat maakt de abstracte notatie veel toegankelijker.
+
+Eerlijk gezegd heb ik de oorspronkelijke figuur uit Schafer & Graham (2002) nooit helemaal begrepen. In hun versie wordt Z gebruikt (niet \psi) en hebben de verbindingen bovendien geen richting. Omdat jouw figuur hiervan afwijkt, lijkt het me verstandig om kort toe te lichten wat er precies is aangepast. Een verwijzing naar de bron waarin deze aangepaste representatie is geïntroduceerd zou daarbij helpen, of anders een korte toelichting op de betekenis van de wijzigingen.
+
+p. 12: “Since then, many others have extended the use of causal diagrams…” Dat is ongetwijfeld waar, maar ik zie niet goed hoe deze historische opmerking de lezer helpt om Figure 3 beter te begrijpen. Als je deze literatuur noemt, maak dan expliciet welke extra inzichten zij biedt ten opzichte van de figuur, of verplaats deze verwijzing naar een plek waar de verdere ontwikkeling van causale diagrammen daadwerkelijk relevant is. Nu voelt het als een zijstap die de uitleg onderbreekt.
+
+p. 12: De tekst onder Figure 3 vind ik verwarrend. Rubin (1976) laat juist zien dat onder een MAR-mechanisme met distinct parameters (dus een ignorable missingness mechanism) het niet nodig is om het non-responsmechanisme expliciet te modelleren om geldige likelihood- of Bayesiaanse inferentie te verkrijgen. De formulering “Modeling the non-response can aid the analysis of incomplete data” wekt de indruk dat het modelleren van het non-responsmechanisme in het algemeen wenselijk of noodzakelijk is. Dat is echter pas aan de orde wanneer het missingness-mechanisme nonignorable is (meestal MNAR), of wanneer men het mechanisme zelf wil bestuderen. Anders bestaat het risico dat de lezer precies de verkeerde les uit Rubin (1976) meeneemt.
+
+p. 13: “Using only the observed data to infer to the population leads to biased estimates if the missingness is not MCAR.” De grens bij MCAR lijkt mij hier te sterk geformuleerd. Onder MAR kunnen analyses op basis van de geobserveerde data, zoals likelihood-gebaseerde methoden of multiple imputation, nog steeds geldige inferenties opleveren.
+
+Bedoel je hier specifiek een complete-case (of listwise deletion) analyse? Als dat zo is, maak dat dan expliciet. Anders wek je de indruk dat inferentie op basis van geobserveerde data in het algemeen alleen onder MCAR geldig is, en dat is niet correct.
+
+p. 13. "But if we can accurately model the missingness probability based on known data, we have MAR missingness, which can yield valid inferences." Deze passage lijkt niet consistent met de vorige. Daar lijkt MCAR als voorwaarde voor geldige inferentie te worden gepresenteerd, terwijl hier correct wordt gesteld dat ook MAR tot geldige inferenties kan leiden. Wellicht verduidelijken dat de eerdere uitspraak alleen geldt voor complete-case analyse of andere methoden die de missings negeren.
+
+p. 13: “That is why we also speak of ‘ignorable’ missingness.” Deze formulering is niet helemaal juist. Ignorable is geen synoniem voor MAR. In de klassieke formulering van Rubin (1976) vereist ignorability zowel MAR als distinct parameters (parameter distinctness). MAR alleen is dus niet voldoende.
+
+Verderop in de sectie leg je dit wél correct uit. Ik zou daarom de volgorde aanpassen: introduceer eerst de formele definitie van ignorability en gebruik de term pas daarna. Zo voorkom je dat de lezer eerst een vereenvoudigde, en feitelijk onjuiste, interpretatie krijgt die later weer moet worden gecorrigeerd.
+
+p. 13: "..., where the missingness depends the unobserved values themselves". Te losjes. --> "..., where the probability of observation still depends on the missing values after accounting for the observed data."
+
+p. 13: "you cannot treat". Gebruik van "we" is consistent met overige tekst.
+
+p. 13: “so you always have to make an assumption.” Ik zou hier nog expliciet vermelden dat deze aannames vaak impliciet worden gemaakt. Ook wanneer de onderzoeker zich daar niet van bewust is, veronderstelt vrijwel iedere analysemethode een bepaald missingness-mechanisme. Een veelvoorkomende expliciete formulering is bijvoorbeeld: “We assume that the data are missing at random (MAR).”
+
+p. 14: "sometimes even". Usually?
+
+p. 14: “If the missingness level is low.” Het woord missingness komt in dit hoofdstuk erg vaak terug, bovendien in verschillende betekenissen (het ontbreekmechanisme, de responskans, de hoeveelheid ontbrekende data). Dat maakt de tekst soms onnodig zwaar. Varieer waar mogelijk de formulering. "If only few values are unknown" 
+
+p. 14: "Under most kinds of missingness" --> "Under MAR and MNAR"
+
+p. 14: “which may be a problem when working with applied researchers.” Dat is zeker een terecht punt, maar je zou hier ook de andere kant van het verhaal kunnen belichten. Likelihood-gebaseerde methoden zijn juist erg geschikt in disciplines waar de analysemethoden grotendeels een vaste vorm hebben en steeds opnieuw worden toegepast.
+
+Je zou bijvoorbeeld kunnen opmerken dat ML-methoden goed werken wanneer het wetenschappelijke model vooraf duidelijk is en weinig varieert. In zulke situaties is het niet nodig om voor elke nieuwe analyse een imputatiemodel op te zetten dat met uiteenlopende downstream analyses compatibel moet zijn. Dat maakt de afweging tussen ML en multiple imputation evenwichtiger en laat zien dat de keuze afhangt van de beoogde toepassing.
+
+p. 15: "With imputation, we fill in the missing part of the data based on the observed part". Leesbare compacte variant. "Imputation replaces unobserved values by exploiting relationships in the observed data." De rest van de alinea is dan overbodig.
+
+p. 15: “The simplest model is no model at all.” Ik zou de voorbeelden hier in een andere volgorde introduceren. Begin eerst met een vaste waarde (bijvoorbeeld het gemiddelde of een constante) als eenvoudigste vorm van imputatie. Pas daarna kun je hot-deck introduceren.
+
+Vervolgens kun je beargumenteren dat unconditional hot-deck het basismodel onder MCAR representeert. De impliciete (en sterke) modelaanname is dan dat de verdeling van de geobserveerde waarden representatief is voor die van de ontbrekende waarden. Vanuit dat uitgangspunt kun je vervolgens op natuurlijke wijze laten zien waarom rijkere imputatiemodellen nodig zijn wanneer deze aanname niet houdbaar is. Dat geeft de sectie een duidelijkere statistische opbouw.
+
+p. 15: "disrupts the multivariate distribution of the data". De purist zal zeggen dat dit niet waar is bij ongecorreleerde variabelen. Een simpele "may disrupt" kan dat ondervangen.
+
+p. 15: "a univariate statistic" --> a fixed value
+
+p. 15: “all univariate imputation methods fail to retain multivariate associations in the data.” De term “univariate imputation methods” is hier ongelukkig gekozen. Er bestaan immers ook univariate imputatiemethoden die conditioneren op covariaten en die juist bedoeld zijn om multivariate relaties te behouden.
+
+Waarschijnlijk bedoel je hier onvoorwaardelijke (unconditional) imputatiemethoden, zoals mean imputation of unconditional hot-deck. Als dat inderdaad de bedoeling is, zou ik dat expliciet maken. Daarmee voorkom je dat de lezer denkt dat de uitspraak ook geldt voor conditionele univariate imputatiemethoden, wat niet correct is.
+
+p. 15: "So, instead of imputing variables univariately," Geef een argument. Bijvoorbeeld: "If we wish to preserve the relations in de data.."
+
+p. 15: “The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved.” Deze formulering is wat stellig en legt de nadruk op een specifiek technisch probleem. Ik zou het iets algemener en soepeler formuleren, bijvoorbeeld: “Available joint models are limited, and no single model may capture the full complexity of the data.” Overigens geldt deze kanttekening niet alleen voor joint modeling, maar ook FCS. Geen van beide benaderingen biedt een universeel model dat alle datatypen en afhankelijkheidsstructuren volledig kan representeren. Dat bredere perspectief zou ik hier meenemen.
+
+p. 15: "but inflexible" Ik zou dat weglaten.
+
+p. 15: “Good thing we do not need this joint model explicitly. Missing observations can also be filled in using several separate imputation models, instead of one joint distribution.” Ik zou dit iets neutraler en statistisch preciezer formuleren. Bijvoorbeeld: “A practical alternative to joint modeling is to specify how each incomplete variable depends on the other variables. Together, these conditional models define the fully conditional specification (FCS) approach.”
+
+p. 15: “FCS does not assume any specific joint distribution.” Deze formulering is niet helemaal gelukkig. FCS vermijdt weliswaar een expliciete specificatie van een joint model, maar impliceert uiteindelijk wel een gezamenlijke verdeling via de verzameling conditionele modellen. Ik zou daarom iets schrijven als: “FCS does not specify an explicit joint model. Instead, it implicitly defines a joint distribution through a collection of conditional models.”
+
+p. 15: In plaats van een contrast tussen joint modeling en FCS op te zetten, zou ik FCS presenteren als een logisch alternatief dat voortbouwt op Rubin’s oorspronkelijke formulering --> “Starting from a joint model, Rubin (1987) derived three tasks: ... FCS simplifies each of these steps by splitting the work over the columns, while remaining flexible enough to accommodate different types of outcomes.”
+
+Ruim hier ook plaats in om de beperkingen van FCS (only approximate joint, hogere orde interacties lastig, incompatibility) even te benoemen.
+
+p. 15: "With FCS, ..." Eerste twee zinnen doubleren met vorige sectie.
+
+p. 16: "In short, we have learned that imputation has the ability to produce unbiased estimates". Dit zou de samenvatting kunnen zijn van een oefening waarin we stapsgewijs de hele imputatiecyclus doorlopen, en aan het eind zien dat de schatter zuiver is. De voorgaande tekst is echter een introductie in een aantal concepten. Ik vind "learned" dan niet het juiste woord. 
+
+p. 16: "properly uncertain". Vreemde constructie. Gebruik meer specifieke terminologie.
+
+p. 16: "Well, that depends." Goed als spreektaal, minder geschikt in een technisch document. Het ontbreekt aan precisie. 
+
+Wellicht kun je brug maken als: "Until now, we have viewed imputation primarily as a way to avoid bias. An equally important question is what imputation does to the information in the data. Does it create information that was not there? Or does it merely preserve and propagate the information contained in the observed data?"
+
+p. 16 Multiple imputation
+
+In de eerste sectie zou ik eerst even het probleem van single imputatie beschrijven: de downstream analyse maakt geen onderscheid tussen de geobserveerde en geimputeerde data, en interpreteert alle datapunten als geobserveerd. Dat process komt neer op het toevoegen van informatie aan de data. Dat is ongewenst omdat de downstream analyse systematisch de onzekerheid als gevolg van ontbrekende data zal onderschatten.
+
+p. 17: "Conceptualized by Rubin (1976), MI ...". Rubin 1976 gaat over MCAR/MAR/MNAR. Het idee van multipele imputatie is voor het eerst geintroduceerd in 1977: The Design of a General and Flexible System for Handling Nonresponse in Sample Surveys, in 2004 heruitgegeven in TAS. MI is pas volledig ontwikkeld in zijn 1987 boek.
+
+p. 17/18: Ik snap dat je de presentatie eenvoudig wilt houden, maar figuur 4 is naar mijn smaak té eenvoudig. De figuur laat de between-variantie en de pooling tot de totale variantie weg. Dat is geen technisch detail, maar een essentieel onderdeel van Rubin’s theorie. Juist via deze variantieschatting wordt de extra onzekerheid door missing data meegenomen in de inferentie. Zonder dit onderdeel blijft onduidelijk waarom multipele imputatie tot confidence-valid inferentie kan leiden.
+
+p. 17: Ik zou eerst de within- en between- componenten introduceren, hoe die combineren bij oneindige m (met wat licht formules) en daarna pas iets zeggen over de simulatie error, en het (kleine) aandeel daarvan in de totale error. Het lijkt nu alsof de simulatie error een allesbepalende error is.
+
+p. 17: "mice enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty." --> "mice enables researchers to account for missing data in a way that reduces bias and properly reflects the uncertainty introduced by the missing data."
+
+
+--- Research Problem
+
+De opzet is toegankelijk en uitnodigend. De vraag-en-antwoordstructuur maakt de kern van het probleem direct duidelijk voor een breed publiek.
+
+De toon is iets te informeel voor een proefschrift. Het woord "works" is vaag, en de uitspraak "well, they do not know for sure" behoeft nuancering. Het is sterker om te benadrukken dat bestaande diagnostieken slechts indirect bewijs leveren en niet kunnen vaststellen of de imputaties voor de concrete dataset geschikt zijn voor het beoogde gebruik. Dat sluit bovendien beter aan bij de centrale onderzoeksvraag van het proefschrift. Bijvoorbeeld
+
+To motivate the problem addressed in this dissertation, consider the following simplified dialogue.
+
+Q: How do methodologists determine whether a new imputation method performs well?
+
+A: They study its statistical properties, typically through simulation studies and, where possible, analytical results.
+
+Q: How can an analyst determine whether an imputation procedure has performed well for a particular dataset?
+
+A: Current practice offers a range of diagnostic tools, but none can directly verify whether the imputed values are correct, because the missing values are unobserved. As a result, assessing whether an imputation is adequate for its intended downstream purpose remains challenging.
+
+p. 18 "This highlights" --> "This conversation highlights"
+
+p. 18: "this is rarely achieved". Wat is precies "this"?
+
+p. 18: "This allows us" --> "Simulation allows us"
+
+p. 18: "this too comes with downsides" --> "simulation is no panacea". 
+
+p. 18: "That is why" --> "These difficulties provide the main motivation for studying tools for ..., both in applied use ..."
+
+p. 18: "status quo" veronderstelt een proces met tegengestelde belangen. Bedoel je niet meer "current practice"?
+
+p. 18: Tweede deel: Sterke alinea over de life cycle
+
+p. 19: Het blok simulation oogt nogal massief. Opdelen in meerdere paragrafen?
+
+p. 19: "assumptoins"
+
+p. 19: "The third kind of evaluation is experiential." MOOI! Dit is een nieuw concept in binnen missing data. Je kunt dit begrip als novelty claimen. Geen dan ook een definitie van de term, bijv. "In this dissertation I distinguish between *experimental* evaluation, where imputation methods are assessed under controlled conditions with known ground truth, and *experiential* evaluation, where practitioners evaluate an imputation workflow on a specific dataset using only indirect evidence because the missing values are unavailable. Experimental evaluation asks: How well does the method perform? Experiential evaluation asks: How much can the analyst know that the method is appropriate for this particular dataset?" Voor zover ik weet is dit laatste niet eerder onderzocht.
+
+p. 20: avialable
+
+p. 20: "we will learn" --> "In this section, we examine how imputation methodology can be evaluated as a complete system."
+
+p. 23: "The R package mice enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty." -->
+"The R package mice enables researchers to address missing data in a statistically principled way, reducing bias due to missing data while preserving the appropriate level of uncertainty."
+
+p. 23: "They", enkelvoud/meervoud
+
+p. 23: "If MNAR is suspect" --> "If MNAR is suspected". Eventueel selection models, pattern-mixture models en delta-adjustment methods noemen.
+
+p. 23: "If MAR mechanisms show up, include the relevant relations into the imputation models." Zwak begin --> "If missingness can plausibly be explained by observed variables, include those variables and their relevant relationships in the imputation model."
+
+p. 23: "Imputation models consist of imputation methods and imputation model predictors." 3 keer imputation. --> "Specifying an imputation model involves two main choices: the imputation method and the predictor variables."
+
+p. 23: "mice asks you". Dat is niet wat er feitelijk gebeurt. --> "requires a specification of the imputation model"
+
+p. 23: p. 23: Deze alinea is erg lang en behandelt meerdere onderwerpen tegelijk. Breng meer structuur aan door de tekst op te splitsen en elke alinea op één centraal onderwerp te richten.
+
+p. 24: Mooi, vernieuwend figuur dat goed inzichtelijk maakt in welke stappen de gebruiker de workflow kan sturen.  
+
+p. 25: Predictor matrix. Sectie is erg lang en behandelt teveel verschillende zaken. Structureer. Je zou bijvoorbeeld het praktisch recept uit Van Buuren et al (1999), p 687 kunnen nemen, en het waarom van de vier stappen toelichten. 
+
+p. 25 Congeniality en/of FCS-SMC verdient een apart paragrafen, niet als onderdeel van predictorselectie.
+
+p. 25: Er bestaat spanning tussen “We should therefore always use the complete data model—if available—when building imputation models.” en “We do not need to know the model of scientific interest upfront.” in dezelfde sectie. Zonder nadere toelichting lijken deze uitspraken moeilijk met elkaar te verenigen. Probeer uit te leggen hoe beide zich tot elkaar verhouden, zodat de lezer niet met tegenstrijdige boodschappen achterblijft.
+
+p. 25: “Deciding which associations to include in the imputation models can be a data-driven process.” De vraag is vooral: waarom zouden we dat willen doen? Misschien helpt het om predictorselectie niet alleen als een statistisch probleem te presenteren, maar ook als een socio-technisch ontwerpvraagstuk. Je zou bijvoorbeeld verschillende optimalisatiedoelen kunnen onderscheiden en voor elk de voor- en nadelen bespreken, zoals:
+
+1. minimale inspanning voor de gebruiker;
+2. optimale prestaties voor één specifiek downstream model;
+3. robuustheid over een breed scala aan downstream modellen;
+4. maximale statistische efficiëntie;
+5. gebruikersvertrouwen en uitlegbaarheid;
+6. informatie-neutraliteit (geen voorkeur voor een specifieke analyse);
+7. maximale predictieve nauwkeurigheid;
+8. behoud van deterministische relaties en logische consistentie.
+
+In de praktijk zijn deze doelen vaak niet tegelijkertijd te realiseren en is predictorselectie een afweging tussen concurrerende optimalisatiecriteria. Een dergelijke indeling zou een nuttige kapstok kunnen bieden om de verschillende predictorselectiestrategieën te bespreken en hun onderliggende ontwerpkeuzes expliciet te maken.
+
+p. 26: "you need to ask". Alternatief: "it is important to assess"
+
+p. 26: De methoden voor post-hoc evaluatie kun je classificeren naar de vragen die ze beantwoorden:
+- Heeft het algoritme gewerkt? Trace plots, autocorrelaties, convergence diagnostics.
+- Zijn de imputaties plausibel? Density plots, strip plots, boxplots.
+- Blijven relaties tussen variabelen behouden? Scatterplots, correlaties, regressiecoëfficiënten.
+- Zijn de conclusies robuust? Over-imputation, leave-one-out analyses, sensitivity to alternative imputation models of MNAR-assumpties.
+
+Hier is heel duidelijk de human-in-the-loop. 
+
+p. 26: Rubin (1987) developed the methodology ...". Maak een aparte alinea over de verschillende perspectieven op het belang van realistische data imputaties. 
+
+“Bluntly stated, …” Deze formulering is wel erg absoluut. Misschien iets genuanceerder, bijvoorbeeld: “Imputation theorists care less about the imputed values themselves than about whether they lead to statistically valid inferences.”
+
+Dit perspectief lijkt ook terug te komen in de literatuur. Little & Rubin (3rd ed.) definiëren missing data als “unobserved values that would be meaningful for analysis if observed; in other words a missing value hides a meaningful value.” Schafer (1997) en Hand (2020) maken een vergelijkbaar punt. De implicatie is dat individuele imputaties vooral een middel zijn om geldige statistische inferentie mogelijk te maken; hun intrinsieke juistheid is van ondergeschikt belang zolang de inferentie correct blijft.
+
+Juist dit klassieke statistische perspectief contrasteert mooi met andere doelstellingen, zoals het behouden van gebruikersvertrouwen, waarin de plausibiliteit en geloofwaardigheid van individuele imputaties wél centraal kunnen staan. Dat contrast zou je explicieter kunnen uitwerken.
+
+p. 26: "these decisions show" --> "these considerations show"
+
+p. 26: "analytic guarantees (e.g., asymptotic unbiasedness) are not enough" --> "Analytic guarantees (e.g., the asymptotic unbiasedness) are necessary but not sufficient." --> we hebben systeembenadering nodig voor de gehele workflow.
+
+p. 26: “What to expect in this dissertation?” Deze vooruitblik komt wat laat. De lezer is op dat moment al zo’n 26 pagina’s onderweg. Ik zou de globale structuur van het proefschrift veel eerder introduceren, zodat de lezer vanaf het begin weet waar het verhaal naartoe werkt.
+
+Een mogelijke opbouw zou kunnen zijn:
+
+H1: Motivatie, onderzoeksvraag en overzicht van de dissertatie (ca. 6–7 pagina’s).
+H2: Imputatie als een socio-technisch systeem: waarom een systeembenadering nodig is.
+H3: Verschillende perspectieven op de belangrijkste stappen in de workflow (Inspect missingness, Define imputation models, Inspect convergence en Inspect imputed values).
+H4: De bijdrage van Oberman & Vink in deze context.
+H5: Computational evaluation van imputatieprocessen.
+H6: ggmice als praktische uitwerking van deze ideeën.
+H7: Korte afsluiting (ca. 3–4 pagina’s) met een synthese van de belangrijkste inzichten en een bespreking van openstaande onderzoeksvragen.
+
+Dit is uiteraard slechts één mogelijke indeling, maar een explicietere structuur zou de rode draad van het proefschrift versterken en de lezer meer houvast geven.
+
+Er ligt al een sterk fundament. Met de voorgestelde aanscherpingen verwacht ik dat het proefschrift zowel inhoudelijk als qua leesbaarheid nog duidelijk aan kracht wint. 
+
+Veel succes met de verdere uitwerking.
+
+Stef.
