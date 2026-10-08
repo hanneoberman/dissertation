@@ -20,19 +20,22 @@ book:
   repo-actions: [edit, issue]
   chapters:
     - index.qmd
-    # - acknowledgements.qmd
-    # - toc.qmd
     - samenvatting.qmd
     - notation.qmd
-    # - preface.qmd
 
     - part: intro.qmd
       chapters:
         - motivation.qmd
+        - background.qmd
+        - framework.qmd
     - part: research.qmd
       chapters:
-        - dissertation.qmd    
+        - dissertation.qmd
+    - part: discussion.qmd
+    - part: references.qmd
+    - part: cv.qmd
 
+        
 format:
   # html:
   #   theme:

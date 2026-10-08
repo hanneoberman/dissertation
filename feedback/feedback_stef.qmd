@@ -1,6 +1,7 @@
 ---
 title: "feedback Stef"
 format: html
+embed-resources: true
 ---
 
 Betreft: Concept dissertatie: Missing, but not overlooked - Hanne Oberman

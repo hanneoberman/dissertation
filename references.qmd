@@ -1,0 +1,6 @@
+# References {.unnumbered}
+
+<!-- [TODO: merge refs from chapters] -->
+
+::: {#refs}
+:::
