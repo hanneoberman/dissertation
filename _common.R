@@ -1,14 +1,14 @@
-set.seed(1014)
+set.seed(11)
 
-knitr::opts_chunk$set(
-  comment = "#>",
-  collapse = TRUE,
-  # cache = TRUE,
-  fig.retina = 2,
-  fig.width = 6,
-  fig.asp = 2 / 3,
-  fig.show = "hold"
-)
+# knitr::opts_chunk$set(
+#   comment = "#>",
+#   collapse = TRUE,
+#   # cache = TRUE,
+#   fig.retina = 2,
+#   fig.width = 6,
+#   fig.asp = 2 / 3,
+#   fig.show = "hold"
+# )
 
 options(
   dplyr.print_min = 6,
@@ -23,7 +23,7 @@ options(
   width = 77 # 80 - 3 for #> comment
 )
 
-ggplot2::theme_set(ggplot2::theme_gray(12))
+# ggplot2::theme_set(ggplot2::theme_gray(12))
 
 # use results: "asis" when setting a status for a chapter
 status <- function(type) {

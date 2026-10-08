@@ -8,8 +8,8 @@ book:
   reader-mode: true
 
   page-footer:
-    # left: |
-    #   Hanne Oberman
+    left: |
+      Hanne Oberman
     # right: |
     #   [TODO: create cover, add boilerplate stuff]
   cover-image: cover.jpg
@@ -85,7 +85,7 @@ format:
       echo: false
     include-before-body:
       - text: |
-          \pagenumbering{roman}
+          \pagenumbering{gobble}
     bibliography: resources/dissertation.bib
     csl: resources/apa.csl
 

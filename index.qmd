@@ -1,5 +1,7 @@
 # &nbsp; {.unnumbered .unlisted}
 
+\thispagestyle{empty}
+
 ```{r}
 #| message: false
 #| warning: false
@@ -10,3 +12,5 @@ load("data/dat_xy.RData")
 ```
 
 [TODO: create cover, add boilerplate stuff]
+
+\pagenumbering{roman}
