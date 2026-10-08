@@ -8,10 +8,10 @@ book:
   reader-mode: true
 
   page-footer:
-    left: |
-      Hanne Oberman
-    right: |
-      [TODO: create cover, add boilerplate stuff]
+    # left: |
+    #   Hanne Oberman
+    # right: |
+    #   [TODO: create cover, add boilerplate stuff]
   cover-image: cover.jpg
   favicon: cover.jpg
   # site-url: https://r4ds.hadley.nz/
@@ -20,7 +20,7 @@ book:
   repo-actions: [edit, issue]
   chapters:
     - index.qmd
-    - samenvatting.qmd
+    - acknowledgements.qmd
     - notation.qmd
 
     - part: intro.qmd
@@ -31,10 +31,15 @@ book:
     - part: research.qmd
       chapters:
         - dissertation.qmd
+  
     - part: discussion.qmd
-    - part: references.qmd
-    - part: cv.qmd
-
+    # - discussion.qmd
+    
+    - references.qmd
+    
+  appendices: 
+    - cv.qmd
+    - samenvatting.qmd
         
 format:
   # html:
