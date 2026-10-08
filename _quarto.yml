@@ -1,0 +1,42 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Missing, but not overlooked"
+  reader-mode: true
+
+  page-footer:
+    left: |
+      R for Data Science (2e) was written by Hadley Wickham, Mine
+      Çetinkaya-Rundel, and Garrett Grolemund.
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  cover-image: cover.jpg
+  favicon: cover.jpg
+  site-url: https://r4ds.hadley.nz/
+  repo-url: https://github.com/hadley/r4ds/
+  repo-branch: main
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+
+    - preface.qmd
+
+    - part: whole-game.qmd
+      chapters:
+        - dissertation.qmd
+
+
+format:
+  html:
+    theme:
+      - cosmo
+      # - r4ds.scss
+    code-link: true
+
+    author-meta: "Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund"
+    # include-in-header: "plausible.html"
+    callout-appearance: simple
+
+editor: source
