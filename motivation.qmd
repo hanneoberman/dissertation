@@ -1,0 +1,48 @@
+# Motivation
+
+## Why this dissertation? (or: certainty with uncertainty)
+
+<!-- #### Personal motivation -->
+<!-- [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?] -->
+
+My academic tagline has long been "statistician, interdisciplinarian, open scientist". 
+And while there's no doubt I am an interdisciplinarian and an open scientist, I am no longer keen on calling myself a statistician necessarily.
+I am more inclined to say I am a methodologist rather than a statistician. 
+As a methodologist, I am interested in how science is done, and how it can be done better.
+Especially in the social and biomedical sciences, research should not be purely quantitative. 
+Statistics is just *one* way of doing science. 
+
+Don't get me wrong, statistics is still a favorite of mine. 
+I love stats (I even have a mug that says so). 
+Statistical inference allows us to distinguish between real-world effects and random noise [@rosenberg2018].
+<!-- Statistical inference is a tool for expressing certain (i.e., formal laws, probability theory)  -->
+It gives scientists a tool to get certainty about uncertainty.
+
+[TODO: edit, see comment Stef] Rooted in mathematical probability theory, which deals in absolute truths, statistical inference is a framework for inferring with uncertainty from noisy real-world data.
+Epistemologically speaking, statistical inference may therefore be classified either as deductive or inductive inference; there is no consensus in the literature about which pattern of scientific reasoning suits statistical inference [@deruiter2017].
+@gelman2013 argue that statistical inference is deductive in the context of hypothesis testing (i.e., when general laws from mathematical probability theory are used) and inductive in the context of parameter estimation (i.e., when sample statistics are extrapolated to the population).
+In other words, statistics is the science of uncertainty and extracting information from data [@hand2025].
+<!-- Statistics is both the science of uncertainty and the technology of extracting information from data. (Hand, 2025, p. 2654) -->
+The latter can feel magical at times: the process of turning data into insights. 
+But I am most a fan of the uncertainty aspect.
+<!-- Since statistical inference employs mathematical probability theory (i.e., general laws) to generalize from a sample to a population (i.e., extrapolation), it may be classified as either deductive or inductive inference (respectively).   -->
+<!-- There is no consensus in the literature about which pattern of scientific reasoning suits statistical inference (Ruiter & Albert, 2017). -->
+<!-- Gelman & Shalizi argue that statistical inference is deductive in the context of hypothesis testing–when general laws from mathematical probability theory are used–and inductive in the context of parameter estimation–when sample statistics are extrapolated to the population.  -->
+<!-- "Statistics is both the science of uncertainty and the technology of extracting information from data." - featured in the International Encyclopedia of Statistical Science (Hand, 2010).  -->
+
+<!-- Stef, p. 9: “Rooted in mathematical probability theory, which deals in absolute truths, statistical inference is a framework for inferring with uncertainty from noisy real-world data.” Ik vind dit een wat vreemde zin, zowel inhoudelijk als qua stijl. Dat geldt eigenlijk voor de hele alinea. Tot nu toe is de tekst prettig, persoonlijk en eenvoudig te volgen, maar hier wordt ineens een aantal abstracte begrippen geïntroduceerd (mathematical probability theory, absolute truths, statistical inference, noisy real-world data) zonder dat duidelijk wordt wat je ermee wilt zeggen. -->
+<!-- Vraag jezelf af: wat is precies de boodschap die je de lezer wilt meegeven? Als je die kern helder hebt, kun je de tekst waarschijnlijk veel eenvoudiger formuleren. De daaropvolgende quote van Hand (2025) maakt het verhaal weer concreet en begrijpelijk; dat contrast laat zien dat deze alinea waarschijnlijk nog een herschrijving kan gebruiken. -->
+
+I am motivated to contribute to trust in science by making it easier to reflect uncertainty in data analysis efforts, inferences, and graphs. 
+In this dissertation, I hope to achieve that for missing data methodology.
+We will start out with a theoretical background, and slowly zoom in: 
+from statistical inference under ideal circumstances to inference with incomplete data, then from missing data methods in general to imputation methods specifically, and finally to multiple imputation with `mice`.
+The introduction section ends with a framework for evaluating imputation methodology, the scope of this dissertation, and a description of each of the chapters in this dissertation.
+[TODO: rewrite, see comment Stef] But first, let's start with some terminology and notation.
+<!-- Stef, p. 9: “But first, let’s start with some terminology and notation.” De toon is hier iets te populair. Overweeg een meer neutrale, academische formulering die beter aansluit bij de rest van de dissertatie. -->
+
+[TODO: add sci and societal relevance, see comment Stef]
+<!-- p. 8: “Why this dissertation?” Je legt hier goed uit waarom dit onderwerp jou persoonlijk fascineert. Wat ik nog mis, is een expliciete toelichting waarom het onderwerp ook voor de lezer relevant is. Waarom is dit een belangrijk wetenschappelijk of maatschappelijk probleem? Welke lacune vult deze dissertatie, en waarom zou de lezer daar geïnteresseerd in moeten zijn? Een korte alinea hierover zou de motivatie versterken. -->
+<!-- Mijn indruk is dat je het voorwoord op dit punt het beste kunt afronden. Daarna kun je beginnen met Hoofdstuk 2, waarin je de inhoudelijke lijn van de dissertatie oppakt. Dat zorgt voor een duidelijke scheiding tussen de persoonlijke motivatie en het wetenschappelijke verhaal. -->
+
+<!-- ### But first, some terminology and notation -->

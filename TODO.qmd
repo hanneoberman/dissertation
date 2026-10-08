@@ -1,0 +1,24 @@
+---
+title: "TODO"
+format: html
+---
+
+<!-- `\fignote{...}`{=latex}  -->
+
+<!-- figure captions: https://stackoverflow.com/questions/73775001/quarto-pdf-document-figure-caption-size -->
+
+
+
+
+
+<!-- TODO: add CREDIT and publication packages -->
+
+<!-- CREDIT: a footnote at the start of each article with an ‘acknowledgement  -->
+<!-- of author contributions’. This ‘acknowledgement of author contributions’ will specify the contribution made by each co-author. -->
+<!-- For every article to which this applies, the ‘acknowledgement of author contributions’ will be included in the manuscript for -->
+<!-- the Assessment Committee and in the final PhD thesis; -->
+
+<!-- \newpage -->
+
+
+<!-- [TODO: fix which sections are included in ToC] -->

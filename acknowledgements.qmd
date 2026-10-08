@@ -24,16 +24,3 @@ load("data/dat_xy.RData")
 <!-- - CNBP coordinator Stella -->
 <!-- - COSiE team -->
 <!-- - vrienden, koor, fam (incl. oppas Ida) -->
-
-\newpage
-
-```{=latex}
-\clearpage
-{
-\hypersetup{linkcolor=black}
-\setcounter{tocdepth}{1}
-\tableofcontents
-}
-```
-
-\pagenumbering{arabic}
