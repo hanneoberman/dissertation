@@ -1,0 +1,99 @@
+# Abbreviations and symbols {.unnumbered}
+
+::: {.list-table header-rows=0 tbl-colwidths="[12,88]"}
+- - $n$
+  - number of units in a sample or rows in a dataset, indexed $i=1,\dots,n$
+- - $p$
+  - number of variables in a sample or columns in a dataset, indexed $j=1,\dots,p$
+- - $Y$
+  - partially observed sample data (sized $n \times p$), also called the (hypothetically) **complete data**
+- - $R$
+  - response indicator matrix (sized $n \times p$), which stores the locations of the observed ($R_{ij}=1$) and missing ($R_{ij}=0$) parts of $Y$
+- - $Y_\mathrm{obs}$
+  - **observed data** (elements of $Y_{ij}$ where $R_{ij}=1$), also called the **incomplete data**
+- - $Y_\mathrm{mis}$
+  - **missing data** (elements of $Y_{ij}$ where $R_{ij}=0$)\linebreak
+
+- - $Q$
+  - quantity of scientific interest; the scientific estimand we would like to estimate if we had complete data
+- - $P(Q | ...)$
+  - **complete-data model**; the analysis model we would like to fit if we had complete data, also called the 'model of scientific interest'
+- - $P(R|...)$ 
+  - **missing data model**; the model that relates $Y$ to $R$, which is interpreted as the 'probability to be missing'; also called the 'response model'
+- - $X$
+  - fully observed sample data for covariate(s) of $Y$, used in missing data models
+- - $\psi$
+  - parameter(s) of the missing data model that represent any cause of the missingness unrelated to $X$ and $Y$\linebreak
+
+- - MCAR
+  - 'Missing Completely At Random'; missing data mechanism with missing data model $P(R|\psi)$, also called 'not data dependent'
+- - MAR
+  - 'Missing At Random'; missing data mechanism with missing data model $P(R|Y_\mathrm{obs}, X, \psi)$, also called 'seen data dependent'
+- - MNAR
+  - 'Missing Not At Random'; missing data mechanism with  missing data model $P(R|Y_\mathrm{obs}, Y_\mathrm{mis}, X, \psi)$, also called 'unseen data dependent'\linebreak
+  
+- - LWD
+  - list-wise deletion
+- - CCA
+  - complete case analysis 
+- - MI
+  - multiple imputation
+- - JM
+  - joint modeling; imputation technique
+- - FCS
+  - fully conditional specification; imputation technique
+- - SMC-FCS
+  - substantive model compatible fully conditional specification; imputation technique
+- - MICE
+  - multivariate imputation by chained equations algorithm
+- - `mice`
+  - multivariate imputation by chained equations software\linebreak
+
+- - $m$
+  - number of imputations, indexed $\ell=1,\dots,m$
+- - $P(Y, X, R)$
+  - joint distribution of the incomplete data, fully observed covariate(s), and the missingness
+- - $P(Y_\mathrm{mis}| ...)$
+  - joint (imputation) model, where $P(Y_\mathrm{mis}|Y_\mathrm{obs},R)$ denotes the posterior distribution of the missing data conditional on the observed data and the missingness
+- - $Y_j$
+  - univariate subset of $Y$ (sized $n \times 1$); an incomplete variable
+- - $Y_{-j}$
+  - all data in $Y$ except for column $j$ (sized $n \times (p-1)$)
+- - $P(Y_{\text{mis}, j} | ...)$
+  - **imputation model** for column $j$, where $P(Y_{\mathrm{mis}, j}|Y_{\mathrm{obs}, j}, Y_{-j}, R)$ would indicate all other variables are imputation model predictors \linebreak
+  
+- - $\dot{Y}_{\ell}$
+  - **imputed data** in imputation number $\ell$ (of $m$ total)
+- - $Y_\ell$
+  - **completed data** in imputation number $\ell$, consisting of $\{Y_{\text{obs}}, \dot{Y}_\ell\}$
+- - $\hat{Q_{\ell}}$
+  - estimate of $Q$ calculated from completed data in imputation number $\ell$
+- - $\bar{Q}$
+  - pooled estimate based on $m$ imputations  \linebreak
+  
+- - $T$
+  - total variance of $Q - \bar{Q}$
+- - $U$
+  - within-imputation variance due to sampling
+- - $B$
+  - between-imputation variance due to nonresponse
+- - SE
+  - standard error
+- - CI
+  - confidence interval
+- - $\gamma$
+  - fraction of information missing due to nonresponse, also called  'fraction of missing information' (FMI) \linebreak
+
+- - PMM
+  - predictive mean matching; imputation method
+
+- - V&V
+  - verification and validation of (software) systems, where verification refers to the process of evaluating a system's output, and validation assesses its fit for purpose.
+
+:::
+
+<!-- , consisting of observed data $Y_\mathrm{obs}$ and missing data $Y_\mathrm{mis}$ -->
+
+
+
+<!-- CCA en mean imp noemen als verplichte figuren ter volledigehid, maar niet alle voor en nadelen. dus compact houden. info per pagina is belangrijker dan aantal pagina's. geen uitgebreide verhalen van dingen die je ergens anders kunt vinden. JM wel noemen want mice is niet de enige. er bestaan ook andere methodes, waar de specificatie van het model anders geregeld is. in voor compleetheid: meerdere oplossing voor multivariate probleem. -->

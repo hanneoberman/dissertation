@@ -1,0 +1,659 @@
+# Theoretical background
+
+### Why are missing data problematic? (or: don't ignore the missingness)
+
+Generally speaking, statistical inference works really well. 
+Statistical analyses are a means to infer conclusions about a population after observing only a subset of this population: a sample. 
+If the sample is representative, sample estimates will reflect the population characteristics plus some uncertainty surrounding it.
+The analysis model used for estimation will also be referred to as the 'model of scientific interest' or 'complete data model' (when the sample is incomplete) throughout this disseration.
+The analysis model yields sample estimates that ought to match the population of interest.
+
+In technical terms, we want our estimation procedure to be an unbiased and confidence valid estimator for the quantity of scientific interest, $Q$, at the population level.
+If our estimate of $Q$ matches the true population parameter, we have an unbiased estimate.
+If the variance surrounding the estimate correctly reflects the uncertainty in the estimation procedure, it could be considered confidence valid.
+Statisticians call uncertainty around estimates 'error'.
+There is, for example 'sampling error' due to observing only a subset of the population.
+This uncertainty is often expressed in terms of the standard error (SE) of an estimate.
+Standard errors can get translated into decision tools for inference such as $p$-values and confidence intervals (CIs), which help researchers distinguish between signal and noise. 
+CIs, for example, should cover the the true population parameter at the frequency of the nominal confidence level (e.g., 95%).
+A statistical procedure with a coverage probability that matches the nominal confidence level is called 'confidence valid' [@neyman1934].
+The concept of confidence validity provides an operational link between the mathematics of probability and empirical practice.
+Confidence valid statistical methods give us certainty about the uncertainty in our inferences from a sample to the population. 
+So, statistics is a means of estimating effects within a sample and inferring back to the population with some expression of uncertainty. 
+To illustrate these concepts, I will use an empirical example.
+
+When sociologists wanted to study trust in the government during the COVID-19 pandemic, it was not feasible to survey all Dutch citizens. 
+Instead, they used a representative sample. 
+Some thousands of people were asked to fill in a questionnaire about their trust in the government over the course of the pandemic. 
+By repeating the questionnaire over time, the researchers wanted to gain insight into the development of (dis)trust among different subgroups in Dutch society.
+<!-- The researchers would use an analysis model on the sample (the ), to estimate a quantity of scientific interest $Q$ at the population level. -->
+<!-- This model of scientific interest The analysis model the researchers wanted -->
+The estimates from the sample would then be used to inform policy, by inferring back to the population with some expression of uncertainty. 
+<!-- The estimates from this sample would have been used to infer back to the population and inform policy, if it had not been for missing data... -->
+This uncertainty, however, does not only stem from the sampling process.
+
+Uncertainty in statistical inferences can stem from many sources, such as non-response.
+Uncertainty due to non-response is often called 'non-response error', cf. the 'Total Survey Error' framework [TSE, @deming1944].
+Non-response error occurs when participants do not (fully) respond to data collection efforts [@groves2002].
+We speak of 'unit non-response' for intended study participants who do not provide any data at all (for example because they could not be reached, or refused to participate). 
+'Item non-response' refers to patterns of missingness where some--but not all--data are missing for a participant (for example because they skipped a survey question).
+<!-- What types of missing data problems are we considering?  -->
+<!-- We are interested in data with incomplete cases and/or variables, or 'item non-response'.  -->
+<!-- Incomplete samples where some---but not all---entries are missing per row or per column.  -->
+<!-- Entirely missing rows would be 'unit non-response'; entirely missing columns would be unobserved variables. -->
+Of course, non-response can lead to additional uncertainty in our inferences, because we are missing some information.
+But even the way we *treat* non-response may introduce error.
+<!-- How we treat non-response is reflected in the uncertainty of our inferences. -->
+For unit non-response, the non-response treatment is typically weighting, which may introduce 'weighting error' [@alsalti2026].
+Item non-response treatment can also produce error, such as 'imputation error' [@FCSM2001].
+Imputation error is not typically part of the TSE framework, but it can have great impact on our inferences.
+<!-- "FCSM (2001) also discussed imputation error, noting that when imputation is used to replace missing or incorrect variables, the missing or erroneous data are replaced with values generated by an assumed model for the nonrespondents’ data".  -->
+In this dissertation, I study the way we handle incomplete observations in partially observed data, and how that affects our inferences.
+I aim to provide methodology for minimizing non-response error and imputation error.
+
+Non-response error and imputation error can be circumvented by preventing missingness altogether.
+A truism attributed to Gertrude Mary Cox posits that the best way to treat missing data is by not having any.
+But anyone who analyses data will run into a missing data problem at some point [@allison2002].
+<!-- "The best thing to do with missing data is to not have any" -->
+<!-- TODO: Some precautionary measures... -->
+<!-- TODO: For example by  motivating participants to ... -->
+<!-- - offer monetary and/or educational incentives (e.g., credits, feedback about  performance/personality) - Consider the trade‐off between study length decreasing response rates and increasing reliability - Send multiple study invitations/reminders - If some information about nonresponders is available, compare them to those of responders -->
+<!-- If there are missing data, there will be uncertainty due to non-response. -->
+<!-- "Item non-response refers to the situation in which the respondent skipped one or more items in the survey.  -->
+<!-- Unit non-response occurs if the respondent refused to participate, so all outcome data are missing for this respondent." [@vanbuuren2018] -->
+Missing data are a nuisance because it is impossible to do statistical inferences with incomplete data. 
+When there is just one missing value in a dataset, statistical inference cannot be performed. 
+With incomplete data, even simple statistics such as the mean of variables are mathematically undefined.
+<!-- It is not possible to use an incomplete sample to infer about a larger population without .  -->
+To obtain results from your incomplete dataset, you will always employ a missing data strategy---whether deliberately or not. 
+<!-- Missing data are not a problem with purely descriptive statistics; the problems arise when we want to infer from incomplete sample to the population (or the complete sample).  -->
+
+<!-- "It is helpful to distinguish among frequently used terms including "complete cases", "observed data", "complete data", and "completed data".For a rectangular dataset with missing values, observed data contain allthe observed data elements, including those from units for which not all thevariables are observed. And observed data more generally also include the re-sponse indicators for each data element (observed or missing). Complete casesare part of the observed data, only including units for which every variableis observed. Complete data usually imply data elements before missing valuesoccur and are mostly hypothetical in the context of missing data analysis. Insimulation studies complete data are known. Completed data usually refer tothe datasets with missing values imputed." -->
+<!-- He 2021, p. 46 -->
+
+<!-- "the missing not at random scenario following Rubin's (1976) model of missing data, is always nonignorable and very hard to deal with without very strong assumptions." @alsalti2026 p. 6-->
+
+<!-- The topic of this dissertation is missing data. -->
+<!-- - Methodology and statistics as a tool for expressing/quantifying uncertainty.  -->
+<!-- While statistics is also a research discipline in itself, we develop tools that are domain-agnostic. -->
+
+<!-- We reveal that the relationship is very complex between the validity of approaches -->
+<!-- taken for individual phases and the validity of the final multi-phase inference, and -->
+<!-- indeed that it is a nontrivial matter to quantify or even qualify the meaning of validity itself in such setting -->
+
+
+<!-- See @fig-workflow. 
+%%| fig-cap: "MI workflow"
+%%| fig-cap: "MI workflow" -->
+
+<!-- ### Why are missing data problematic? (or: missingness is impossible to ignore) -->
+
+<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset.  -->
+<!-- We will investigate which strategies you may employ when faced with such a missing data problem. -->
+
+<!-- According to Gelman & Shalizi "statistical models are tools that let us draw inductive inferences on a deductive background" (2013, p. 27).  -->
+
+::: {#fig-mis}
+
+```{mermaid}
+%%| fig-height: 2.2
+
+flowchart TD
+  A1[population] --sampling--> B1([complete<br> sample])
+  B1 --inference--> A1
+
+x:::hidden ~~~ y:::hidden
+classDef hidden display: none;
+
+  A2[population] --sampling--> B2([complete<br> sample]) --non-response--> C2([incomplete<br> sample])
+  style B2 stroke:#f66,stroke-width:1px,stroke-dasharray: 4
+  C2 --inference +<br>missing data<br>method--> A2
+```
+
+`\fignote{Schematic view of statistical inference in the presence of non-response. Left: no missing data in the sample from the population (i.e., ideal circumstances for inference). Right: incomplete sample due to non-response. If a complete sample cannot be obtained, a missing data method has to be employed for inferring to the population.}`{=latex} 
+
+<!-- ::: {style="font-size: 50%;"} -->
+<!-- ::: -->
+
+Inference with incomplete data
+
+:::
+
+<!-- %%| fig-cap: test -->
+Whenever missing data cannot be prevented, the only way forward is to treat the missing data problem. 
+@fig-mis shows that some kind of missing data method has to be employed to get a population estimate from an incomplete sample. 
+<!-- It's only possible to do descriptive statistics like Statistics Netherlands does, but it is not possible to use a sample to infer about a larger population.  -->
+<!-- For example, when sociologists wanted to use a sample to estimate the trust in the government during the Covid pandemic, if there is just one missing data point, it is impossible to infer back to the population.  -->
+<!-- To obtain results from your incomplete dataset, you will always employ a missing data strategy-–whether deliberately or not.  -->
+<!-- TODO: add back here? I will not pretend to provide an encompassing overview on treating missing data problems.  -->
+<!-- TODO: add back here?  Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @vanbuuren2018, and @little2019. -->
+Even without specifying a missing data method explicitly, there will be handling of the missing data. 
+The default strategy in most statistical software packages is to ignore all cases that have missing values. 
+<!-- [@vanbuuren2018]  -->
+This practice is called 'list-wise deletion' (LWD), also referred to as 'complete case analysis' (CCA). 
+Ignoring missingness, however, lowers statistical power and may yield invalid inferences:
+"results from case deletion may be biased, because the complete cases can be unrepresentative of the full population" [@schafer2002, p. 155].
+Under many missing data conditions, list-wise deletion is therefore ill-advised.
+<!-- [for exceptions see e.g., @vanbuuren2018 $\S$ 2.7; @carpenter2021, $\S$ 3.1]. -->
+<!-- [see e.g., @vanbuuren2018, \S 1.3.1] -->
+<!-- With substantive missingness, list-wise deletion often results in bias:  -->
+<!-- "When the missing data are not MCAR, results from case deletion may be biased, because the complete cases can be unrepresentative of the full population. If the departures from MCAR are not serious, then the impact of this bias might be unimportant, but in practice it can be difficult to judge how large the biases might be." -->
+LWD assumes that the observed part of the data is equivalent to the missing part of the data, which is not usually the case.
+<!-- It is better to treat the missing data than to ignore it. -->
+ 
+<!-- This corresponds to a missing completely at random (MCAR) mechanism; when MCAR does not hold, listwise deletion yields biased estimates. -->
+
+### Why are the missing and observed parts not equivalent? (or: the missing data mechanisms)
+
+<!-- TODO: edit!! -->
+
+List-wise deletion assumes that the observed part of the data is representative of the missing part of the data, which seldom holds in practice.
+In practice, the missing part of the data is often missing due to some non-trivial reason, other than pure chance (or 'bad luck').
+If there is a non-chance cause for the missingness across observations, the observed part of the data is not representative of the missing part of the data.
+This relationship can be formulated in terms of a missing data model.
+Missing data models capture the causal relation between the data ($Y$) and the associated missingness indicator ($R$).
+Missing data models thereby reflect the 'probability to be missing' for any given observation. 
+Missing data models are used to describe and classify the causes of the missingness, which determines how the missingness should be handled to arrive at unbiased and confidence valid results.
+
+There are three types of missing data mechanisms described by missing data models.
+If there is no data-related cause cause of the missingness, the missingness is said to be 'completely at random' (MCAR), or 'not data dependent' [respective terminology by @rubin1976; and @hand2020].
+If there is an association between the missingness and the observed part of the data, the missingness is 'at random' conditional on the observed data (MAR) or 'seen data dependent'.
+If the cause of the missingness is missing too, the missingness is 'not at random' (MNAR), or 'unseen data dependent'. 
+@fig-mech provides a graphical representation of these three mechanisms, where the missingness ($R$) in incomplete data $Y$ either depends on $Y$ itself (i.e., MNAR), on observed covariate(s) $X$ (i.e., MAR), or none of these (i.e., MCAR).
+Such a graphical representation of missingness mechanisms was first published by @schafer2002. 
+Since then, many others have extended the use of causal diagrams for missing data methodology [e.g., @daniel2012; @ding2018; @moreno-betancur2018].
+
+::: {#fig-mech}
+
+``` tikz
+\begin{tikzpicture}[
+    >=stealth,
+    node distance=1.5cm,
+    every node/.style={font=\small}
+]
+
+% ------- MCAR -------
+\begin{scope}[shift={(0,0)}]
+    \node (X1) at (0,1.5) {$X$};
+    \node (Y1) at (0,0)   {$Y$};
+    \node (Z1) at (2,1.5) {$\psi$};
+    \node (R1) at (2,0)   {$R$};
+    
+    \draw[<->] (X1) -- (Y1);
+    \draw[->] (Z1) -- (R1);
+    
+    \node (mcar) at (1, 2.5) {MCAR};
+
+\end{scope}
+
+% ------- MAR -------
+\begin{scope}[shift={(5,0)}]
+    \node (X2) at (0,1.5) {$X$};
+    \node (Y2) at (0,0)   {$Y$};
+    \node (Z2) at (2,1.5) {$\psi$};
+    \node (R2) at (2,0)   {$R$};
+
+    \draw[<->] (X2) -- (Y2);
+    \draw[->] (X2) -- (R2);
+    \draw[->] (Z2) -- (R2);
+
+    \node (mar) at (1, 2.5) {MAR};
+
+\end{scope}
+
+% ------- MNAR -------
+\begin{scope}[shift={(10,0)}]
+    \node (X3) at (0,1.5) {$X$};
+    \node (Y3) at (0,0)   {$Y$};
+    \node (Z3) at (2,1.5) {$\psi$};
+    \node (R3) at (2,0)   {$R$};
+
+    \draw[<->] (X3) -- (Y3);
+    \draw[->] (X3) -- (R3);
+    \draw[->] (Y3) -- (R3);
+    \draw[->] (Z3) -- (R3);
+
+    \node (mnar) at (1, 2.5) {MNAR};
+
+\end{scope}
+
+\end{tikzpicture}
+```
+
+`\fignote{Incomplete data $Y$ and fully observed covariate $X$ covary. Under missing completely at random missingness (MCAR), the missingness indicator $R$ is only affected by $\psi$, causes of the missingness unrelated to $X$ and $Y$. Under MAR, the missingness also depends on observed information ($X$), whereas MNAR entails missingness that is dependent on the missing data itself ($Y$). Figure adapted from Schafer \& Graham (2002).}`{=latex} 
+
+Missing data mechanisms
+:::
+
+<!-- tikz in quarto https://github.com/orgs/quarto-dev/discussions/8925 -->
+
+Modeling the non-response can aid the analysis of incomplete data.
+Together with complete-data models (i.e., the model of scientific interest), missing data models inform data analysts how the missingness might affect the scientific estimates.
+But from the observed data alone, it is impossible to definitively determine the missingness mechanism.
+We can only make assumptions about the missingness mechanisms that are most likely to hold in our incomplete data.
+We need external information (e.g., about the study design) to substantiate the assumption about the missingness mechanism.
+For example, if there was a glitch in the survey software, affecting all participant equally likely, a reasonable assumption would be MCAR.
+In human subjects research, however, pure MCAR missingness is unlikely.
+<!-- In that case, a MCAR missingness mechanism has to be excluded as an option. -->
+Only truly random missingness, independent of any individual characteristics, would amount to missing completely at random missingness mechanism. 
+<!-- This could happen, for example, due to a glitch in the service software, affecting all participant equally likely. -->
+
+In the empirical example about trust in the government during the COVID-19 pandemic, MCAR was not a reasonable assumption.
+It was not random who had missing data on the outcome variable (the question in the survey about trust in the government). 
+Non-response was associated with demographic traits of respondents with lower trust.
+People with lower trust in institutions were also less likely to respond to follow-up data collection waves of the questionnaire.
+This resulted in higher missingness rates across participants with lower trust in the government.
+If we would use list-wise deletion as missing data method, we would over-estimate trust in the government at the population level.
+<!-- Methods that implicitly assume MCAR (like list-wise deletion) are therefore likely to cause bias. -->
+
+
+There were signs of non-MCAR missingness in the COVID survey data because participants with complete data differed from participants with non-response.
+<!-- , missing data methods that implicitly assume MCAR would cause bias. -->
+Using only the observed data to infer to the population leads to biased estimates if the missingness is not MCAR.
+But if we can accurately model the missingness probability based on known data, we have MAR missingness, which can yield valid inferences.
+<!-- ---if this model if adequate. -->
+<!-- Under MAR, we can model the missingness probability using known variables and obtain valid inference if this model is adequate. -->
+Then, conditional on this information (such as previous observations or demographic data), observed and missing values have the same probability to be missing.
+That is why we also speak of 'ignorable' missingness.
+"The assumption of ignorability is essentially the belief on the part of the user that the available data are sufficient to correct for the effects of the missing data" [@vanbuuren2018, \S 2.2.6].
+Ignorable missing-data mechanisms meet two requirements: 1) conditional on the observed data, the probability that an entry is missing does not depend on the unobserved value itself (i.e., MCAR or MAR missingness), and 2) the parameters in the missing data model are distinct from the parameters of the substantive model [@little2019]. 
+If treated correctly, ignorable missingness will yield valid inferences.
+
+This is in contrast to the MNAR missingness mechanism, where the missingness depends the unobserved values themselves.
+If the missingness is MNAR, the validity of the inferences is at risk.
+This would have happened, for example, if in the COVID-19 survey the people who distrust the government would have been less likely to respond to the trust item and we would have no way of correcting for this.
+This kind of missingness cannot be resolved from the observed data alone and requires external information to amend.
+MNAR missingness is often called 'non-ignorable', which implies that given the observed data, you cannot treat the missing data mechanism as irrelevant for the subsequent inferences.
+In practice, it is impossible to know from the observed part of the data alone whether we are dealing with MNAR, so you always have to make an assumption about the mechanism underlying the missingness in your data.
+<!-- "The assumption cannot be tested on the data itself, but it can be checked against suitable external validation data"  [@vanbuuren2018, \S 2.2.6]. -->
+<!-- Differences between the observed part of the data and the missing part can be accommodated by treating the missing data problem.  -->
+The missing data mechanisms and our assumptions about them in practice determine how the missingness should be treated to achieve unbiased and confidence valid statistical inferences.
+
+### How to treat the missing data problem? (or: ignore, model, fill in -- the missing data methods)
+
+<!-- TODO: edit -->
+
+This section describes three popular routes for treating missing data.
+I will not pretend to provide an all encompassing overview on treating missing data problems. 
+Others have written much more extensive reference works on the matter, see for example @rubin1996, @schafer1997, @allison2002, @schafer2002, @graham2012, @molenberghs2014, @vanbuuren2018, and @little2019.
+The three missing data treatments I will briefly describe are deletion-based methods, likelihood-based methods, and imputation, before further expanding on imputation methodology.
+
+<!-- #### Deletion-based methods -->
+The first missing data treatments are deletion-based methods, such as list-wise deletion.
+With list-wise deletion, we only analyze rows in the data without missing values (i.e., complete cases).
+Deletion-based methods are easy to apply, and sometimes even applied by default in statistical analysis software.
+If the missingness level is low, deletion-based methods do little harm, and under some conditions they might even be the best missing data method to apply [see e.g., @vanbuuren2018 $\S$ 2.7; @carpenter2021, $\S$ 3.1].
+Deletion-based methods, however, do not accommodate differences between the observed and missing parts of the data, making them mostly applicable to MCAR. 
+Under most kinds of missingness, deletion-based methods will therefore risk biasing the statistical inferences.
+Moreover, these methods discard incomplete observations, resulting in lower power and potential resource waste compared to non-deletion-based methods.
+In short, deletion-based methods do not treat the missing data as much as ignore them, and one should be careful of bias when applying them.
+
+<!-- #### Likelihood-based methods -->
+Secondly, there are methods that incorporate the missingness into the model of scientific interest, such as likelihood-based methods.
+These missing data methods jointly specify the complete-data model and missing data model per analysis.
+Thereby, these modeling methods do accommodate MAR, but only for a single, specified analysis model.
+For example, 'expectation-maximization' (EM) treats the missing values as latent variables in the complete data model.
+Another option that incorporates the missingness in the analysis model are via Bayesian methods. 
+<!-- Bayesian methods do not yield null hypothesis significance tests, which may be a problem when working with applied researchers. -->
+<!-- can incorporate the missingness into the analysis model, but there are no null hypothesis significance tests, which may be a problem when working with applied researchers.  -->
+<!-- But this yields many parameters and might not be available for a complex multilevel model like the empirical example with the COVID-19 data.  -->
+Both of these techniques are tied to a specific analysis model, which may be a problem when working with applied researchers, and which might not be suitable for contemporary practitioners who run several models in a data science workflow. 
+
+<!-- #### Imputation methods -->
+Thirdly, there are imputation methods.
+With imputation, we fill in the 'gaps' in an incomplete dataset.
+<!-- Imputation separates the missing data problem from the analysis model and is the focus of this dissertation. -->
+<!-- Why impute? -->
+Imputation methods thereby first solve for the missingness, to then analyze the  completed data 'as if' they were fully observed.
+This allows the use of familiar complete‑data methods, which may be useful when different people are responsible for different parts of a project (e.g., a missing data methodologist and a domain expert). 
+<!-- instead of bespoke incomplete‑data models. -->
+Since imputation splits the missing data problem from the analysis of scientific interest, it does not have the drawback of being analysis model specific.
+It is possible to run several different analyses on the same imputed daatset, without having to incorporate the missingness into the scientific model each time.
+This makes imputation better suited for contemporary data science workflows than missing data methods that incorporate the missingness in the substantive model.
+<!-- Another advantage is that it is easier. -->
+In short, compared to methods that incorporate the missing data into the analysis model, imputation is more flexible and often less complex for non‑experts.
+Compared to list-wise deletion, imputation methods offer the ability to accommodate MAR mechanisms, and they reduce research waste by retaining incomplete cases. 
+This makes imputation a flexible allround tool for solving missing data problems.
+
+### How to generate imputations? (or: univariate, joint, chained -- the imputation flavors)
+
+<!-- [TODO: edit!!!]  -->
+With imputation, we fill in the missing part of the data based on the observed part.
+<!-- How do we model the missing part of the data based on the observed part of the data?  -->
+Imputation allows us to model the distribution of this missing part based on what is observed, using the observed part of the data to fix the missing part of the data.
+The next paragraphs will outline which types of model or models we can use for generating imputations.
+
+The simplest model is no model at all.
+We can, for example, impute the missing values by filling in a random other person's observed data, called 'hot deck imputation'.
+This method is quick and easy.
+The problem of this method is that it does not accommodate MAR mechanisms, and, moreover, disrupts the multivariate distribution of the data, biasing any multivariate statistics downwards. 
+Another simple technique is to impute a univariate statistic such as the mean. 
+Unfortunately, imputing the mean will bias almost all scientific estimates.
+<!-- , because mean imputation severely biases any multivariate statistics downward, and there is no correction for the missing at random missingness mechanisms. -->
+In general, all univariate imputation methods fail to retain multivariate associations in the data, and cannot account for MAR mechanisms.
+So, instead of imputing variables univariately, imputation should retain the multivariate structure of the data.
+<!-- Unfortunately, popular ad-hoc missing data methods, such as replacing missing values with variable means, lead to biased estimates.  -->
+
+Capturing the multivariate structure of incomplete data is historically done in two steps: a modeling step and an imputation step.
+In the modeling step, a multivariate distribution of the full dataset would be defined, after which imputed values could be drawn from the joint model.
+In a joint model, one specifies $P(Y, X, R)$: the distribution of the incomplete data, complete covariates, and missingness indicator.
+Joint modeling imputation was originally developed for known distributions, such as multivariate normal data.
+With increasing data complexity and dataset size, specifying a joint model might not be feasible.
+The problem with joint modeling is that there might not exist a multivariate probability distribution, for example, with factor variables involved. 
+Joint modeling is a direct but inflexible way to arrive at a joint distribution.
+Good thing we do not need this joint model explicitly.
+
+<!-- Why MI in the flavor of mice? -->
+Missing observations can also be filled in using several separate imputation models, instead of one joint distribution.
+In the 'fully conditional specification' framework [FCS, @vanbuuren2006], we do not specify an overall joint model, but conditional models per incomplete variable.
+Because of the variable-by-variable approach, this technique is also called 'sequential regression multivariate imputation' [SRMI, @raghunathan2001] or 'multivariate imputation by chained equations' [MICE, @vanbuuren1999].
+FCS does not assume any specific joint distribution, and is substantive model agnostic.
+While Rubin [-@rubin1987] "distinguished three tasks for creating imputations under an explicit model: the *modeling* task the *imputation* task and the *estimation* task" [@vanbuuren2007, p. 221], FSC does not require these explicit tasks. 
+Instead, FCS only requires an *imputation model* to describe how synthetic values may be generated, without explicit specification of the joint model.
+This makes FCS flexible: just specify an imputation model per incomplete variable.
+
+With FCS, we define an imputation model per incomplete variable. 
+FCS is a flexible and complete data model agnostic way to arrive at a joint distribution via several imputation models.
+These imputation models consist of the functional form of the model and imputation model predictors.
+<!-- And we need two things for this:  -->
+The functional form of the model determines the distribution of the imputed values.
+For example, Likert scale items (e.g., trust in the government) can be imputed using a semi parametric imputation method taht retains the range and distribution of the observed data (e.g., 'predictive mean matching', or PMM). 
+The second ingredient in an imputation model are the imputation model predictors.
+Imputation model predictors are other variables in the data that we use to amend the missing data problem.
+For example, we can include variables with a high linear association with this incomplete variable, or variables that are related to the missingness indicator of this incomplete variable (such as demographic data). 
+<!-- We will assume that you took the necessary measures to prevent and/or mend any missing observations during the data collection stage of your research project, but still ended up with an incomplete dataset. -->
+<!-- FCS implicitly relies on the joint distribution. -->
+The relations implied by the imputation models can correct for MAR missingness mechanisms, to yield an unbiased estimate of the quantity of scientific interest.
+
+<!-- [TODO: add segway] -->
+In short, we have learned that imputation has the ability to produce unbiased estimates.
+<!-- , because imputation allows for -->
+The next question to consider is whether these estimates are properly uncertain too (i.e., confidence valid).
+<!-- Imputation is widely supported in software: one line of code can resolve the missing data problem at once. -->
+Well, that depends.
+Imputation does not necessarily yield confidence valid inferences.
+Only imputation processes that correctly propagate uncertainty do.
+All techniques that rely on a single replacement value risk under-representing uncertainty in the inferences, because the uncertainty due to the non-response is not taken into account.
+That's where multiple imputation (MI) comes in.
+
+### Why multiply impute? (or: several 'wrongs' *can* make a 'right')
+
+<!-- TODO: edit -->
+The uncertainty due to non-response can be captured using the multiple imputation framework. 
+MI is the practice of generating several complet*ed* datasets by replacing each missing value with a synthetic substitute multiple times.
+<!-- For each missing datapoint, we draw samples from a distribution of values that *might have* been (posterior predictive distribution). -->
+The completed datasets can be analyzed as if the data were complete to begin with.
+On each completed dataset, we obtain estimates of the analysis of scientific interest.
+These estimates per imputation are then combined to obtain one pooled estimate.
+See @fig-scheme for a graphical presentation of these steps.
+
+In @fig-scheme, the incomplete data $Y$ is partially observed, consisting of observed and missing data, $Y = \{Y_{\text{obs}}, Y_{\text{mis}}\}$. The missing data $Y_{\text{mis}}$ in $Y$ is imputed $m$ times to obtain $m$ completed datasets, $\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$, where $\ell = 1, 2, \dots, m$. On each imputation, the quantity of scientific interest $Q$ is estimated, yielding $m$ analysis results $\hat{Q}_{\ell}$. These results are pooled across imputations to obtain a single pooled result $\bar{Q}$.
+
+::: {#fig-scheme}
+
+```{mermaid}
+%%| fig-width: 4.74
+flowchart LR
+    subgraph 1["Incomplete data"]
+    A(("$$Y$$"))
+    end
+    subgraph 2["Imputed data"]
+    B1("$$\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$$")
+    B2("$$\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$$")
+    B3("$$\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$$")
+    end
+    subgraph 3["Analysis results"]
+    C1("$$\hat{Q}_{\ell}$$")
+    C2("$$\hat{Q}_{\ell}$$")
+    C3("$$\hat{Q}_{\ell}$$")
+    end
+    subgraph 4["Pooled result"]
+    D(("$$\bar{Q}$$"))
+    end
+    
+    A --> B1
+    A -- " impute" --> B2
+    A --> B3
+
+    B1 --> C1
+    B2 -- estimate --> C2
+    B3 --> C3
+
+    C1 --> D
+    C2 -- pool --> D
+    C3 --> D
+    
+```
+
+`\fignote{$Y$ = incomplete data, $\ell$ = imputation number, $\{Y_{\text{obs}}, \dot{Y}_{\ell}\}$ = imputed data per imputation, $\hat{Q}_{\ell}$ = estimated quantity of scientific interest per imputation, $\bar{Q}$ = pooled estimate.}`{=latex} 
+
+Multiple imputation scheme ($m=3$)
+
+:::
+
+<!-- Even 'advanced' techniques for substituting missing values that recover the unobserved value almost perfectly are problematic. -->
+<!-- Multivariate models such as stochastic regression imputation do correct for MAR missingness, but underestimate variance if used as single imputation. -->
+Conceptualized by @rubin1976, MI posits that repeated stochastic draws per per missing datapoint create a distribution of plausible values: the posterior distribution of the missing data conditional on the observed data and the missingness, $P(Y_\mathrm{mis}|Y_\mathrm{obs},R)$.
+This posterior distribution reflects the uncertainty due to non‑response.
+By drawing imputations from the posterior distribution of the missing data, we obtain several completed versions of the data that *might have* been.
+
+From the probability distribution for each missing value, we draw multiple values as imputations.
+If we would use infinitely many values as imputations, we would obtain the entire probability distribution. 
+In practice, however, we use a limited number of imputations. 
+With that, we *approximate* the probability distributions of missing values. 
+The more imputations are used, the better we can represent the uncertainty in the data due to missingness.
+This is expressed in the 'simulation error'.
+The variance of the pooled estimate incorporates not just the sampling variance (within each imputation) but also added variance due to non-response (between imputation variance and simulation error).
+The variability between imputations reflects uncertainty due to the missingness.
+
+MI is a convenient method for obtaining confidence valid statistical inferences from incomplete data.
+There are many implementations of MI available in statistical software packages.
+In this dissertation, we will focus on the `mice` package in R.
+By default, `mice` runs variable-by-variable (FCS) multiple ($m=5$) imputation.
+`mice` enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty. 
+Under the right conditions, this yields statistical inferences that are both unbiased and confidence valid.
+But how can we know when this is the case? 
+That's the topic of this dissertation.
+
+## Research design
+
+### What is the research problem? (or: why extend the status quo)
+
+In this dissertation, I investigate how imputation methodology can be evaluated. 
+<!-- I focus specifically on imputation workflows with `mice`. -->
+<!-- Of course, I am not the first person to study this.  -->
+<!-- Other imputation methodologists have  -->
+<!-- In a nutshell:  -->
+<!-- How do methodologists know whether an imputation approach works?  -->
+<!-- Because we have empirical estimates from simulation studies (and, if available, formal properties from analytical derivations).  -->
+<!-- And how do imputers know whether their imputation models worked in practice?  -->
+<!-- Our current answer is well, they don't know for sure.  -->
+<!-- And that's what this dissertation is all about.  -->
+The status quo for evaluating imputation methodology may not always be sufficient.
+Please allow me to illustrate this by presenting a bit of a caricature:
+
+- Q: How do methodologists know whether an imputation approach 'works'? 
+  - A: They obtain estimates of its performance via simulation studies (and--if available--formal properties via analytical derivations).
+- Q: How do imputers know whether the imputation workflow was successful on their particular dataset? 
+  - A: Our current answer is: well, they do not know for sure. 
+
+This highlights a fundamental issue that underlies all missing data methodology.
+We cannot assess our missing data treatments without the one thing we do not have: the missing data itself.
+Since missing data are--by definition--missing, there is no way to know for sure that our imputation workflow yielded appropriate imputations.
+Only when the true, but unobserved data is somehow recovered, we could check the effectiveness of the missing data treatment.
+In practice, with empirical incomplete data, this is rarely achieved.
+In simulation studies, however, we can create our own 'true' data and introduce artificial missingness.
+This allows us to experimentally test how well a missing data method handles the missingness.
+Unfortunately, this too comes with downsides.
+That is why I study which tools are required for evaluating the quality of imputation processes in applied use as well as in simulations. 
+
+<!-- This dissertation is about  -->
+<!-- the fundamental issue with missing data: the one piece of information that would be required to asess our missing data treatment -->
+<!-- I study which tools are required for evaluating the quality of imputation processes. -->
+<!-- Methodologists need standardized computational evaluations to justify new procedures. -->
+<!-- Applied researchers need accessible methods to assess whether a chosen method behaves adequately on their particular data. -->
+<!-- TODO: add back? Methodologists need standardized computational evaluations to justify new procedures. 
+Applied researchers need accessible methods to assess whether a chosen method behaves adequately on their particular data. -->
+
+<!-- What is the status quo? -->
+<!-- Verification via statistical evaluation (but not standardized), and some validation via computational and graphical evaluation (but not systematic). -->
+<!-- Is the status quo sufficient?  -->
+<!-- No, statistical evaluation is required, but not sufficient. -->
+<!-- How Rubin developed the methodology works in theory, but is not enough for contemporary practitioners. -->
+
+To understand the status quo, let us consider a typical life cycle for imputation methodology. 
+First, an imputation method is theorized, and--if possible--its analytical properties are derived. 
+Then, the method is implemented in code as a 'proof of concept'. 
+With the method implemented in a script or software, we can run a simulation study. 
+Simulation studies provide experimental evidence of the method’s properties under a certain set of conditions. 
+Ideally, the method is then put to scrutiny by peers in the scientific community, who may run additional simulations to replicate or challenge its reported performance. 
+Finally, the method is applied in practice. 
+End users run the imputation procedure on real-world data and, implicitly or explicitly, evaluate its appropriateness in that setting.
+<!-- In this life cycle of imputation methodology, there are three types of evaluation.  -->
+ <!-- ### How do we know imputation works? (or: analytical, experimental, and experiential evaluation) --> 
+<!-- Let's consider a typical life cycle for imputation methodology. -->
+<!-- First, an imputation method is theorized, and---if possible---it's analytical properties are derived. -->
+<!-- Then, the method is implemented in code as a 'proof of concept'. -->
+<!-- With the method implemented in a script or software, we can run a simulation study. -->
+<!-- Simulation studies provide experimental evidence of the method's properties under a certain set of conditions.  -->
+<!-- Ideally, the method will then be put to scrutiny by scientific community peers, who might run different experiments to replicate the method's efficacy. -->
+<!-- And finally, the method is applied in practice. -->
+<!-- The end user of the imputation method can then evaluate the appropriateness of method in real-world data. -->
+In this life cycle of imputation methodology, we can differentiate three types of evaluation:
+
+1. Analytical evaluation---using analytical derivations to evaluate the formal statistical properties of the method.
+2. Experimental evaluation---using simulation studies to evaluate the empirical performance (estimates of the method's attributes).
+3. Experiential evaluation---using real-world data to evaluate the operational utility (the method's usefulness in practice).
+
+ <!-- a few desirable properties of a statistical esti-mator under the frequentist framework: both the point and variance estimateare unbiased or consistent, and the 95% confidence interval has a nominalcoverage under repeated sampling. In certain cases, such properties might bedemonstrated by mathematical derivations. However in many other scenarios,especially if estimators are complicated, a more feasible approach to evaluat-ing their performances is through Monte Carlo simulation studies, based onwhich we can numerically generate sampling distributions of the estimator ofinterest. -->
+<!-- REF: He, 2021, p. 40 -->
+<!-- see also:  (Little and Rubin2020,Chapter 5). -->
+
+<!-- ### Evaluating imputations -->
+
+<!-- One can evaluate: -->
+
+<!-- - analytically---the formal statistical properties of the method via analytical derivations; -->
+<!-- - experimentally---the empirical performance (estimates of the method's attributes) via simulation studies; and -->
+<!-- - experientially---the operational utility (practical usefulness) in real data. -->
+
+The first and preferred option is analytic evaluation.
+<!-- to obtain the formal statistical properties of the imputation method using analytic derivations. -->
+If we can derive closed‑form results for bias, variance, and confidence validity of an estimator, we obtain deductive truths: under stated assumptions, the method has proven properties.
+<!-- However, for many imputation methods this is unfeasible or even impossible, such as for FCS methods without an existing known joint model. -->
+However, this route is often impossible or unfeasible, for example when no known joint model exists for a fully conditional specification (FCS) method.
+Without analytical proof, we cannot definitively conclude that an imputation method is an unbiased and confidence valid estimator of a population quantity. 
+In such cases, we fall back on experimental evaluation.
+<!-- Instead, we estimate the empirical performance of these methods using simulation studies. -->
+<!-- This is the default evaluation in the missing data methodology field.  -->
+
+Simulation studies are the default mode of evaluation for imputation methodology.
+In a simulation study, we can assess imputation workflows under varying missing data conditions. 
+Because we introduce the missingness in the simulation design ourselves, there is a 'comparative truth' (e.g., population parameters, or the generated complete data).
+We can then evaluate the results of our imputation process against the complete data to assess imputation accuracy.
+But better yet, if we have a specific analysis model and estimand in mind, we can compute performance metrics such as bias and confidence interval coverage.
+These performance measures provide evidence about whether the estimation process (the combination of imputation and inference) is approximately unbiased and confidence valid under the simulated conditions. 
+Note that this requires a specific analysis model: "A missing‑value treatment cannot be properly evaluated apart from the model estimation or testing procedure in which it is embedded" [@schafer2002, p. 149].
+And for FCS imputation specifically, the use of imputation models "creates new responsibilities for substantiating its correctness for a given statistical analysis" [@vanbuuren2007, p. 222]. 
+The quality of an imputation model is thus best assessed in pair with the complete data model.
+In practice, however, simulation studies cannot cover all potential use cases.
+Not all possible complete data models can be known or available to the simulator who designs the evaluation proocedure.
+This makes simulation studies no guarantee for practical performance.
+An additional problem is that the design and documentation of simulation studies for imputation methodology are not standardized, so it's difficult to compare different methods across studies.
+In short, simulation studies may be the standard, but they are not standardized or sufficient for evaluating imputation methodology.
+<!-- Simulation studies are the standard, but not standardized.  -->
+<!-- If we have a specific analysis model of interest, we can calculate performance metrics such as bias and confidence interval coverage to conclude whether a method is unbiased and confidence valid for a certain estimand. -->
+<!-- Note that this requires a specific analysis model, which might not always be available -->
+<!-- The quality of the imputation model can only be assessed based on the complete data model: -->
+<!-- "A missing‑value treatment cannot be properly evaluated apart from the model estimation or testing procedure in which it is embedded" [@schafer2002, p. 149]. -->
+<!-- Moreover, it is impossible to cover all the potential use cases.  -->
+<!-- We could also calculate the imputation accuracy by comparing the imputations against the complete data, but this is ill-advised.  -->
+
+The third kind of evaluation is experiential.
+Experiential evaluation focuses on operational utility in applied use, on a case‑by‑case basis with real data. 
+<!-- The third option is the operational utility.  -->
+<!-- This is case-by-case evaluation in applied use with real data.  -->
+<!-- In practice, confidence validity is not guaranteed.  -->
+Whereas we could construct the 'truth' in simulation studies, in practice we cannot.
+We therefore have to rely on assumptions and theoretical justifications, combined with indirect evidence about imputation model performance.
+Some assumptions are impossible to definitively determine (e.g., MNAR mechanisms), while some we can partially evaluate by looking at the data.
+We can, for example, inspect the imputation algorithm output for signs of non‑convergence, or compare the distributions of the imputed data against the observed.
+Diagnosing algorithmic non-convergence, however, is a challenging task [see, e.g., @gelman2013; @vanbuuren2018].
+And there are few diagnostic tools for assessing imputation model fit, especially for large datasets [@abayomi2008; @he2010; @bond16].
+Therefore, it remains difficult to aquire proof of imputation success in practice.  
+<!-- but in practice we have to rely on assumptions.  -->
+<!-- Those assumptions are crucial precisely because they cannot be (fully) proven. -->
+<!-- In practice, you cannot validate whether the imputation model was appropriate, because what you would need to do so is exactly the thing you don't have: the missing part of the incomplete data, while you only have the observed part. -->
+<!-- The thing we need is not available by definition. -->
+<!-- In practice, the best thing we can do is to rely on a combination of assumptions/theoretical justifications/substantive expertise and indirect evidence of imputation model fit: check the observed versus imputed data distributions, and inspect the imputations for signs of non-convergence.  -->
+
+Even if we known from simulation studies that an imputation method yields unbiased and confidence valid inferences, this only holds under certain conditions.
+And these conditions cannot be definitively met in practice.
+<!-- For widely used FCS methods, no general analytical proof exists, so we have to rely on evidence from simulation studies and on diagnostics in real‑world applications. -->
+For FCS imputation specifically, we would need correct assumptions about the missingness mechanism, 'congeniality' between imputation and analysis models, and adequate algorithmic behavior. 
+When these conditions fail (e.g., under MNAR missingness, incomplete imputation models, or non-convergence in the algorithm), our inferences may not be unbiased and/or confidence valid.
+However, there is not a systematic way to flag potential risks.
+<!-- Therefore, we should check the imputation model itself, for example to see whether the algorithm has converged.  -->
+<!-- We can also inspect the output and we might run sensitivity analyses.  -->
+Users of imputation methods often do not know whether they have correctly applied the procedure.
+<!-- The current practice is ad hoc. -->
+
+In this dissertation, I focus on experimental and experiential evaluation of imputation methodology. 
+The studies I present will follow this distinction into the two phases in the life cycle of FCS imputation methods: first a simulation study, and then applied use.
+For both phases, I will investigate which existing evaluation tools are already available, and whether all necessary tools are present yet in the imputer's toolbox.
+The central question then becomes: what is needed for the experimental and experiential evaluation of imputation methodology?
+<!-- Some questions I consider are ... -->
+<!-- I thereby contribute to the new status quo by unifying how imputations are evaluated across the life cycle. -->
+<!-- What is needed to design and report experimental evaluation imputation methodology  -->
+<!-- There two phases: statistical properties of the method in simulation (e.g., bias and confidence validity; statistical evaluation) & practical application (graphical and computational evaluation). -->
+<!-- The central questions for applied use are: how do we choose appropriate imputation models, and how do we know whether we have chosen well?  -->
+To address this question, I will borrow some terminology from the computer science discipline.
+Specifically, I will use the 'system life cycle' framework to provide a unified perspective on how imputations may be evaluated.
+<!-- This is not systematic at all currently.  -->
+<!-- That is a problem.  -->
+<!-- Users of the method then do not know whether they have correctly applied the method.  -->
+<!-- Inferential validity cannot be established. -->
+
+<!-- In this dissertation, I focus on the second and third routes.  -->
+<!-- FCS has no deductive or analytical proof, so we have to rely on evidence from simulation studies. -->
+<!-- It has been shown that FCS works under many conditions. -->
+<!-- But FCS implicitly relies on the joint distribution:  -->
+<!-- "Imputation models bypass the need to specify $P(Y, X, R)$, though their use creates new responsibilities for substantiating its correctness for a given statistical analysis." [@vanbuuren2007, p. 222]. -->
+<!-- The nice thing about joint modeling is that convergence of the model is guaranteed, whereas this is not the case with fully conditional specification. -->
+<!-- The question becomes: how do we choose an appropriate imputation model?  -->
+<!-- And how do we know whether we have chosen an appropriate imputation model? -->
+<!-- That's where computational evaluation comes in! -->
+
+<!-- Can we use existing tools or do we need more, and how?  -->
+<!-- No, not all tools are present in the imputer's toolbox.  -->
+<!-- I contribute to the new status quo by unifying how imputations are evaluated across the life cycle. -->
+<!-- - life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
+
+<!-- Gold standard: analytical properties.  -->
+<!-- V&V not applicable, because not a system(?).  -->
+<!-- Deductive truths. -->
+<!-- But not feasible with FCS. -->
+<!-- So, implementation needed, which does require V&V. -->
+<!-- Life cycle of imputation methods: method is theorized, method is implemented in software, method is evaluated in simulation study, method is put to scrutiny by scientific community, method is applied in practice, method is evaluated in real-world data. -->
+<!-- We will borrow terminology from the systems evaluation framework from computer science. -->
+
+<!-- - In the category non-response: just item non-response (not unit non-response), and M(C)AR mechanisms (not MNAR). Unit non-response and MNAR missingness mechanisms are outside of the scope of this dissertation.  -->
+<!-- - In the category imputation algorithms: just FCS in the flavor of MICE (not JOMO or SMC-FCS). The missing data method under consideration is primarily multiple imputation by chained equations (MICE), but some results may generalize to other iterative (FCS) imputation algorithms. We do not cover joint modeling (JOMO) imputation or non-imputation missing data methods. Although MICE is not SMC-FCS, we will restrict the analysis of scientific interest mostly to GLM family of models.  -->
+<!-- - In the category substantive models: just GLM for statistical inference. The applications are aimed at statistical inference (not prediction or causal inference). -->
+
+
+<!-- #### RQ -->
+
+<!-- #### Scope -->
+
+<!-- #### Framework -->
+
+<!-- #### Application to practice -->
+
+<!-- #### Workflow -->
+
+
+<!-- (or: human in the loop) -->
+<!-- **RQ: what tools are required to assess the quality of data-generating algorithms? in the development, evaluation, and application.** -->
+
+<!-- or: how do you actually know that your imputation method is any good? -->

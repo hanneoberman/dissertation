@@ -1,0 +1,217 @@
+# Discussion {#sec-discussion .unnumbered}
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+<!-- Goal: -->
+<!-- consolidate contributions -->
+<!-- interpret, not restate—findings -->
+<!-- acknowledge limitations -->
+<!-- articulate future research agenda -->
+
+In this dissertation, I have investigated how to evaluate imputation methodology.
+I have approached imputation workflows as a sociotechnical system, a combination of a technical system (i.e., the imputation software `mice`) and human operators (i.e., the imputer).
+A a sociotechnical system, imputation workflows require both verification as well as validation to evaluate the system output and operational utility.
+For imputation methodology, verification happens through computational evaluation in simulation studies, and 
+<!-- For imputation methodology, verification happens in simulation studies by means of computational evaluation of imputation methods. -->
+validation happens in practice, by means of computational evaluation and graphical evaluation of the imputation workflows. 
+<!-- system with human operators in applied use. -->
+<!-- of software and : a methodological practice that requires continuous verification and validation. -->
+<!-- Instead of seeing imputation as a quick fix for treating missing data, with a push of a button, I  -->
+<!-- A central theme that runs through all chapters is that imputation methodology should be evaluated, whether computationally or graphically. -->
+Evaluation is key both for methdolologists who develop imputation methodology, as well as for imputers who apply imputation in practice.
+
+## Main findings
+
+<!-- The central theme of this dissertation is that imputation methodology requires verification and validation. -->
+<!-- Evaluation is key both for methdolologists who develop imputation methodology, as well as for imputers who apply imputation in practice. -->
+
+In Chapter 2, we learned that testing new imputation methods through simulation studies requires careful, standardized design.
+If this is not the case, simulation studies might not cover all relevant conditions, and results are not comparable between studies.
+To make imputation methods comparable across studies, we must: 1) standardize simulation designs so that different methods face similar, clearly documented scenarios, 2) report design choices transparently, and 3)
+publish research compendiums so others can reproduce and extend the experiments.
+A promising development since writing this chapter, is the publication of a preregistration format for simulation studies.
+<!-- TODO: add prereg ref -->
+I hope many methodologists will make us of these tools to standardize their evaluations.
+But, even with such care, there is a limit to what simulation studies can tell us. 
+We can know that a method worked under the scenarios we simulated, but we cannot be certain that it will work in practice.
+That is why we need validation.
+<!-- ## Conclusion -->
+
+<!-- - Computational evaluation of imputation methodology is never finished. -->
+In Chapter 3 we studied the algorithmic convergence of the `mice` algorithm.
+Diagnosing non-convergence quantitatively is a form of computational evaluation of the imputation workflow.
+Since `mice` converges in distribution, and not to a point, non-convergence is hard to diagnose.
+We learned that commonly used metrics and thresholds for non-convergence in iterative algorithms such as `mice`, may not be directly applicable to FCS.
+Simulation results show that MICE reaches stable output before non-convergence metrics would indicate so. 
+There is a mismatch between theoretical convergence criteria and practical algorithmic behavior. 
+That is why we still have to rely on the current standard advised evaluation tool for algorithmic convergence: visual inspection.
+Inspecting traceplots for signs of non-convergence is a form of visual diagnostic evaluation of imputation workflows, or graphical evaluation.
+Graphical evaluation is also the topic of the fourth chapter.
+
+Visual inspection aids imputers in developing and evaluating imputation models, because formal tests are not available.
+The fifth chapter introduces the R package `ggmice`.
+`ggmice` offers tools for the graphical evaluation of the imputations models that were previously unavailable.
+`ggmice` functions aid imputers in visualizing incomplete data and imputed data side-by-side, displaying missingness and imputation models in an interpretable way, and by producing plots that can be extended and customized for publication.
+These visual diagnostics support existing evaluations whenever quantitative metrics and substantive reasoning are unfeasible.
+
+<!-- - The main findings in this thesis are... -->
+  <!-- - Defining and testing new imputation methods through simulation studies requires careful consideration of the simulation design and evaluation to make imputation methods comparable across studies.  -->
+  <!-- We need simulation studies to know imputation methods work.  -->
+  <!-- But we cannot be certain they actually *did* work whenever we apply them.  -->
+  <!-- The missing part of the data is by definition not available, so we cannot definitively state anything about the imputation model fit to the unobserved part of the data.  -->
+  <!-- Moreover, there's untestable assumptions (e.g., MNAR) and lack of clear diagnostic cut offs (e.g., convergence). -->
+  <!-- - Non-convergence is hard to diagnose, and typical thresholds to evaluate non-convergence may not be applicable to FCS algorithms: MICE reaches stable output before non-convergence metrics would indicate so.  -->
+  <!-- There is a mismatch between theoretical convergence criteria and practical algorithmic behavior.  -->
+  <!-- That's why we still have to rely on visual inspection. -->
+  <!-- - Visual inspection aids imputers in developing and evaluating imputation models, because formal tests are not available.  -->
+  <!-- The R package `ggmice` offers tools for the computational evaluation of the imputations models that were previously unavailable. -->
+
+<!-- TODO: write overall finding -->
+
+## Recommendations
+
+For colleagues who design and study imputation methods, this dissertation suggests the following:
+
+- Design simulation studies in a structured and reproducible manner. 
+  Make sure that the simulation conditions and performance measures cover all relevant scenarios and are comparable across methods. 
+  Report all design choices, and publish code (and data if applicable) alongside methodological papers.
+- Engage with applied researchers.
+  Talk to your intended audience (i.e., applied researchers), or at least find out what they are struggling with via discussion forums or surveys. 
+  This should inform the design of methods and diagnostics.
+
+For researchers who implement imputation in their own studies, the main advice can be summarized as:
+
+- Think before you code. Do not treat `mice` or any other package as a black box that magically treats your missing data problem.
+  Consider the missingness mechanisms and your analysis model(s) before specifying imputation methods and predictor sets. 
+  Your substantive knowledge is valuable for treating the missingness.
+- Look at the data, plot the data. 
+  Inspect incomplete variables, missingness patterns, and imputed values using graphics. 
+  Use visualization to inform model building, diagnose misfit, and communicate uncertainty.
+- Treat diagnostics as part of the analysis, not an afterthought. Convergence plots, distributional comparisons, and sensitivity analyses should be integrated into the workflow and reported.
+- Please cite the software you use. 
+  For R packages, it's as easy as running `citation("ggmice")`.
+
+
+## Limitations
+
+Computational and graphical evaluation are not a substitute for thinking. 
+Simulation studies, diagnostic metrics and plots can offer detailed insight into imputation workflows, but they may also create a false sense of certainty.
+For example, imputed values that lie within the range of the observed data may give a false sense of certainty against a MNAR mechanism, which is an untestable assumption.
+No amount of computation or visualization can prove that the missing-data mechanism is correctly assumed.
+Instead, one should use computational evaluation as complement to (not a replacement for) substantive knowledge and expert insight.
+
+This dissertation investigates imputation workflows at the methodological level, without systematic user feedback. 
+I have not tested the evaluation tools I propose systematically.
+Assessing their causal impact on user behavior and imputation quality in practice was not feasible.
+I did receive feedback via teaching, workshops, collaborations, and online forums GitHub and StackOverflow.
+This informal evaluation is an indication of user appreciation.
+And I have used this input for example to further develop `ggmice`.
+<!-- So even though it might be impossible to draw evidence-based conclusions about the efficacy of the tools I developed, we may still call the development evidence-informed. -->
+
+One such direction for future research is better support for non-numeric variables, such as categorical and cluster variables. 
+The visualizations implemented in `ggmice` are generally better suited for numeric data than categorical variables (or even open text field data, which is currently not supported at all by `mice`). 
+Future research could, for example, focus on associations of categorical variables with missingness indicators, or convergence parameters other than chain variances.
+
+Other directions for future development of `ggmice` include:
+
+- building new graphical evaluation tools for assessing imputation models, for example by representing the predictor matrix as a network graph;
+- extending the abilities of the `ggmice()` function for visualizing analysis results across multiple imputations (i.e., adding compatibility with `mira` objects);
+- implementing posterior predictive checking and over-imputation plots to reveal imputation model (mis)fit on observed parts of the data [cf. @cai2023]; and
+- integrating `ggmice` with `naniar` to make the graphical evaluation tool available to a wider audience.
+
+There are also some extensions that would first require a computational evaluation research project, before implementation in `mice` or `ggmice`.
+Two of these projects are:
+
+- developing new computational evaluation tools for quantifying uncertainty at the pattern or cell level, e.g., by calculating a weighted variance after imputation; and
+- developing tools for automated sensitivity analyses (e.g. inducing MNAR structure in the observed data and inspecting effects on imputations and inferences).
+
+These extensions further align the software with the philosophy of making imputation workflows and their consequences visible.
+
+<!-- - Tools for sensitivity analyses (e.g. inducing MNAR structure in the observed data and inspecting effects on imputations and inferences); -->
+<!-- - Investigating which data-level diagnostics are actually informative about imputation model adequacy in practice (i.e., when inferential validity cannot be evaluated). -->
+<!-- include computational evaluation of variable importance within imputation models and -->
+
+
+<!-- TODO: add that In the future, we might use integration tests and user evaluation studies too?  -->
+
+
+<!-- Future direction: automated sensitivity analyses and over-imputation. -->
+<!-- Sensitivity analyses that vary model assumptions, include alternative predictors, or impose plausible MNAR structures can reveal how fragile conclusions are to changes in imputation choices. -->
+<!-- Over-imputation can reveal imputation model misfit on observed part of the data. -->
+
+
+Since this dissertation relies on the R language and centers the `mice` package, it is not certain how results translate to the wider imputation ecosystem. 
+<!-- Concepts may generalize beyond `mice` in R. -->
+The focus reflects the current dominance of R and `mice` in many applied fields, and allows for depth and specificity in tool development. 
+While this set-up is popular, the data science landscape is expanding, with many machine learning and deep learning methods emerging as candidate imputation engines. 
+These methods are not (yet) widely implemented within `mice`. 
+They might be able to better approximate the posterior predictive distribution of the missing values than `mice` methods, but this requires dedicated research and evaluation, which is outside of the scope of this dissertation.
+
+<!-- #### Future research & development -->
+
+<!-- - This entire dissertation relies on the R language and centers the `mice` package [TODO rephrase as not a flaw: I focus on a dominant ecosystem, and concepts generalize beyond]. -->
+<!--   - While this set-up is very popular, the data science landscape has expanded and is ever evolving -->
+<!--   - Many machine learning and deep learning methods are not (yet) implemented as imputation models in `mice`. These might be able to better approximate the posterior predictive distribution of the missing values than `mice` methods, but research should show that still. -->
+
+<!-- - ~~I haven't tested whether the tools I developed actually improve the imputations of `mice` users~~ This dissertation evaluates tools and diagnostics at the methodological level; assessing their causal impact on user behavior and imputation quality is not feasible to systematically test. -->
+<!--   - GitHub issues and StackOverflow are indication -->
+<!--   - Impossible to draw evidence-based conclusions, but maybe evidence-informed? -->
+
+
+<!-- TODO: add pre vs post imputation facilitator functies om te checken of er nieuwe verbanden in zitten (kruistabel)? -->
+
+<!-- ::: {.callout} -->
+<!-- - TODO: rephrase `haven't's into future research (positive phrasing: reframe as scope conditions, not shortcomings) -->
+<!-- - maybe future: computational evaluation of variable importance within imputation models -->
+<!-- - maybe integrate ggmice into naniar? -->
+<!-- - maybe future? The visualizations implemented in `ggmice` are generally better suited for numeric data, as opposed to categorical variables (or even open text field data, which is not supported by `mice` currently). Future research on: associations of categorical variables with missingness indicators, and convergence parameter other than SD of imputed values. -->
+<!-- ::: -->
+
+## Outlook
+
+Missingness will be a persistent problem in research data.
+There is no foreseeable future in which all empirical datasets are complete.
+<!-- I therefore expect imputation methodology to con -->
+<!-- But the way we deal with data might change. -->
+But the way we deal with data might change.
+
+<!-- - Missing data remains a problem indefinitely. I expect imputation methodology to be developed and applied for the foreseeable future. But the way we deal with data might change. -->
+With the rise of machine learning and deep learning methods (or "AI"), evaluation will become ever more important. 
+These new methods will also require new verification and validation tools, especially if the framework for intended applications changes. 
+Many novel methods are designed under a prediction framework, not a statistical inference framework. 
+Instead of inferring from a sample to the population, the aim becomes to infer about an individual case in the fututre. 
+Methods intended for prediction may excel at point prediction, but ignore uncertainty in estimates.
+Omitting sampling variance from the estimates and to failing to incorporate between-imputation variance  underrepresents the uncertainty. 
+When such methods are used naively for inference, they produce confidence intervals that are too narrow and *p*-values that are too small. 
+The result is an increased risk of spurious findings.
+Therefore, all models must propagate uncertainty.
+
+<!-- - AI models should propagate uncertainty! -->
+Any model used in scientific inference should propagate uncertainty. 
+This includes (but is not limited to) integrating missing-data uncertainty into model outputs and reporting interval estimates that align with the uncertainty in the data and the modeling process.
+This also holds for graphical presentations.
+
+Trust in science requires an honest reflection of uncertainty in our analyses.
+So please be open about uncertainty and limitations of scientific studies. 
+And while we're at it, also please publish null results (e.g., via registered reports or pre-registrations), share data and code with other scientists and the public, and publish open access (including educational materials).
+At the same time, we should change the way we evaluate science.
+This dissertation is an example of the new 'recognition and rewards' vision. 
+It includes software as an actual chapter, not something extra.
+This is part of the current movement of valuing diverse forms of contribution beyond traditional papers.
+I hope this can serve as an example for other PhD candidates and researchers to reflect on what they consider scientific output.
+I hope and to claim space for software, open data, and methodological infrastructure as central achievements.
+I hope to inspire others to claim space for 'alternative' output such as software and data as full-fledged research output.
+
+Finally, it is important to note that imputation is not always the right response to missingness. 
+Missing data can signal a mismatch between our data collection methods and the lived experiences of participants. 
+Systematic patterns of non-response may point to issues in the survey design, accessibility, or trust.
+In such cases, treating missingness solely as a statistical nuisance to be 'fixed' risks overlooking important social and ethical dimensions of research, especially in the social and biomedical sciences, where rows in the data represent human beings. 
+I would love to study missingness as a method to tell you about mismatches between data collection and participant perspectives.
+<!-- In my own life, I have experienced ... [TODO: positionality??] -->
+
+In short, I hope this dissertation encourages to question defaults, to make evaluation practices explicit, and to contribute to a scientific culture that takes uncertainty---and our responsibilities in representing it---seriously.
+
+\part{ }

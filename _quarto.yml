@@ -1,0 +1,94 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Missing, but not overlooked"
+  subtitle: "Graphical and computational evaluation of imputation methodology"
+  reader-mode: true
+
+  page-footer:
+    left: |
+      Hanne Oberman
+    # right: |
+    #   [TODO: create cover, add boilerplate stuff]
+  cover-image: cover.jpg
+  favicon: cover.jpg
+  # site-url: https://r4ds.hadley.nz/
+  repo-url: https://github.com/hanneoberman/dissertation
+  repo-branch: main
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - acknowledgements.qmd
+    - notation.qmd
+
+    - part: intro.qmd
+      chapters:
+        - motivation.qmd
+        - background.qmd
+        - framework.qmd
+    - part: research.qmd
+      chapters:
+        - dissertation.qmd
+  
+    - part: discussion.qmd
+    # - discussion.qmd
+    
+    - references.qmd
+    
+  appendices: 
+    - cv.qmd
+    - samenvatting.qmd
+        
+format:
+  # html:
+  #   theme:
+  #     - cosmo
+  #     # - r4ds.scss
+  #   code-link: true
+  #   author-meta: "Hanne Oberman"
+  #   # include-in-header: "plausible.html"
+  #   callout-appearance: simple
+  pdf:
+    geometry:
+      - paperwidth=170mm
+      - paperheight=240mm
+      # - inner=3cm
+      # - outer=4cm
+      # - top=3cm
+      # - bottom=4cm
+      # - headsep=22pt
+      # - headheight=11pt
+      # - footskip=33pt
+      # - ignorehead
+      # - ignorefoot
+      - heightrounded
+    # documentclass: report
+    linestretch: 1.1
+    include-in-header:
+      text: |
+        \usepackage[labelfont={bf}]{caption}
+        \usepackage{ragged2e}
+        \usepackage{tikz}
+        \usepackage{pdfpages}
+        \newcommand{\fignote}[1]{\justifying{\footnotesize{\noindent\textit{Note. }{#1}}}}
+    mermaid:
+        theme: neutral
+    toc: false
+    # toc-depth: 3
+    number-sections: true
+    fig-cap-location: top
+    filters:
+      - diagram
+    execute:
+      echo: false
+    include-before-body:
+      - text: |
+          \pagenumbering{gobble}
+    bibliography: resources/dissertation.bib
+    csl: resources/apa.csl
+
+
+
+editor: source

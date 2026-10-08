@@ -1,0 +1,31 @@
+# Acknowledgements {.unnumbered}
+
+[TODO: write; may be added after uploading dissertation to MyPhD]
+
+
+
+<!-- Stef, Gerko, Thom, Florian, previous MICE members and students (bijv. Mingyang) -->
+<!-- M&S colleagues with shoutout to collabs (bijv. Peter) en mentor Hidde -->
+<!-- UMC colleagues -->
+<!-- OS mensen zoals Bawan & Flavio, OSCU team, OSC-NL (Anna & Mel!), FOST & COSiE -->
+<!-- andere mentorfiguren zoals Merel & Iris, Ella & Heather & rainbowR team -->
+<!-- noemen scicom inspiratoren zoals Ionica en Hanna en Saloni? -->
+<!-- andere teams waar ik bij zat? Daniel & Dong, project met Ed, accreditaties via Rens, scriptie bij Irene en Arjan -->
+
+<!-- niet noemen hier, wel uitnodiging: -->
+<!-- - CNBP coordinator Stella -->
+<!-- - COSiE team -->
+<!-- - vrienden, koor, fam (incl. oppas Ida) -->
+
+\newpage
+
+```{=latex}
+\clearpage
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{0}
+\tableofcontents
+}
+```
+
+\pagenumbering{arabic}

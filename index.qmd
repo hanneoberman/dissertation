@@ -1,0 +1,16 @@
+# &nbsp; {.unnumbered .unlisted}
+
+\thispagestyle{empty}
+
+```{r}
+#| message: false
+#| warning: false
+#| include: false
+library(ggplot2)
+library(ggmice)
+load("data/dat_xy.RData")
+```
+
+[TODO: create cover, add boilerplate stuff]
+
+\pagenumbering{roman}
