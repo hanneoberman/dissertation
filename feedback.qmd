@@ -164,6 +164,10 @@ p. 14: “which may be a problem when working with applied researchers.” Dat i
 
 Je zou bijvoorbeeld kunnen opmerken dat ML-methoden goed werken wanneer het wetenschappelijke model vooraf duidelijk is en weinig varieert. In zulke situaties is het niet nodig om voor elke nieuwe analyse een imputatiemodel op te zetten dat met uiteenlopende downstream analyses compatibel moet zijn. Dat maakt de afweging tussen ML en multiple imputation evenwichtiger en laat zien dat de keuze afhangt van de beoogde toepassing.
 
+::: {.callout-note}
+ML == multilevel?
+:::
+
 p. 15: "With imputation, we fill in the missing part of the data based on the observed part". Leesbare compacte variant. "Imputation replaces unobserved values by exploiting relationships in the observed data." De rest van de alinea is dan overbodig.
 
 p. 15: “The simplest model is no model at all.” Ik zou de voorbeelden hier in een andere volgorde introduceren. Begin eerst met een vaste waarde (bijvoorbeeld het gemiddelde of een constante) als eenvoudigste vorm van imputatie. Pas daarna kun je hot-deck introduceren.
@@ -210,6 +214,10 @@ p. 17: "Conceptualized by Rubin (1976), MI ...". Rubin 1976 gaat over MCAR/MAR/M
 
 p. 17/18: Ik snap dat je de presentatie eenvoudig wilt houden, maar figuur 4 is naar mijn smaak té eenvoudig. De figuur laat de between-variantie en de pooling tot de totale variantie weg. Dat is geen technisch detail, maar een essentieel onderdeel van Rubin’s theorie. Juist via deze variantieschatting wordt de extra onzekerheid door missing data meegenomen in de inferentie. Zonder dit onderdeel blijft onduidelijk waarom multipele imputatie tot confidence-valid inferentie kan leiden.
 
+::: {.callout-note}
+Figure 4 aanpassen: hoe?
+:::
+
 p. 17: Ik zou eerst de within- en between- componenten introduceren, hoe die combineren bij oneindige m (met wat licht formules) en daarna pas iets zeggen over de simulatie error, en het (kleine) aandeel daarvan in de totale error. Het lijkt nu alsof de simulatie error een allesbepalende error is.
 
 p. 17: "mice enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty." --> "mice enables researchers to account for missing data in a way that reduces bias and properly reflects the uncertainty introduced by the missing data."
@@ -247,11 +255,11 @@ p. 18: Tweede deel: Sterke alinea over de life cycle
 
 p. 19: Het blok simulation oogt nogal massief. Opdelen in meerdere paragrafen?
 
-p. 19: "assumptoins"
+~~p. 19: "assumptoins"~~
 
 p. 19: "The third kind of evaluation is experiential." MOOI! Dit is een nieuw concept in binnen missing data. Je kunt dit begrip als novelty claimen. Geen dan ook een definitie van de term, bijv. "In this dissertation I distinguish between *experimental* evaluation, where imputation methods are assessed under controlled conditions with known ground truth, and *experiential* evaluation, where practitioners evaluate an imputation workflow on a specific dataset using only indirect evidence because the missing values are unavailable. Experimental evaluation asks: How well does the method perform? Experiential evaluation asks: How much can the analyst know that the method is appropriate for this particular dataset?" Voor zover ik weet is dit laatste niet eerder onderzocht.
 
-p. 20: avialable
+~~p. 20: avialable~~
 
 p. 20: "we will learn" --> "In this section, we examine how imputation methodology can be evaluated as a complete system."
 
@@ -289,11 +297,16 @@ p. 25: “Deciding which associations to include in the imputation models can be
 7. maximale predictieve nauwkeurigheid;
 8. behoud van deterministische relaties en logische consistentie.
 
+::: {.callout-note}
+6 & 7?
+:::
+
 In de praktijk zijn deze doelen vaak niet tegelijkertijd te realiseren en is predictorselectie een afweging tussen concurrerende optimalisatiecriteria. Een dergelijke indeling zou een nuttige kapstok kunnen bieden om de verschillende predictorselectiestrategieën te bespreken en hun onderliggende ontwerpkeuzes expliciet te maken.
 
 p. 26: "you need to ask". Alternatief: "it is important to assess"
 
 p. 26: De methoden voor post-hoc evaluatie kun je classificeren naar de vragen die ze beantwoorden:
+
 - Heeft het algoritme gewerkt? Trace plots, autocorrelaties, convergence diagnostics.
 - Zijn de imputaties plausibel? Density plots, strip plots, boxplots.
 - Blijven relaties tussen variabelen behouden? Scatterplots, correlaties, regressiecoëfficiënten.
@@ -302,6 +315,10 @@ p. 26: De methoden voor post-hoc evaluatie kun je classificeren naar de vragen d
 Hier is heel duidelijk de human-in-the-loop. 
 
 p. 26: Rubin (1987) developed the methodology ...". Maak een aparte alinea over de verschillende perspectieven op het belang van realistische data imputaties. 
+
+::: {.callout-note}
+welke perspectieven?
+:::
 
 “Bluntly stated, …” Deze formulering is wel erg absoluut. Misschien iets genuanceerder, bijvoorbeeld: “Imputation theorists care less about the imputed values themselves than about whether they lead to statistically valid inferences.”
 

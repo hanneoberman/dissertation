@@ -154,6 +154,19 @@ ul.task-list li input[type="checkbox"] {
 <p>p.&nbsp;14: “Under most kinds of missingness” –&gt; “Under MAR and MNAR”</p>
 <p>p.&nbsp;14: “which may be a problem when working with applied researchers.” Dat is zeker een terecht punt, maar je zou hier ook de andere kant van het verhaal kunnen belichten. Likelihood-gebaseerde methoden zijn juist erg geschikt in disciplines waar de analysemethoden grotendeels een vaste vorm hebben en steeds opnieuw worden toegepast.</p>
 <p>Je zou bijvoorbeeld kunnen opmerken dat ML-methoden goed werken wanneer het wetenschappelijke model vooraf duidelijk is en weinig varieert. In zulke situaties is het niet nodig om voor elke nieuwe analyse een imputatiemodel op te zetten dat met uiteenlopende downstream analyses compatibel moet zijn. Dat maakt de afweging tussen ML en multiple imputation evenwichtiger en laat zien dat de keuze afhangt van de beoogde toepassing.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ML == multilevel?</p>
+</div>
+</div>
 <p>p.&nbsp;15: “With imputation, we fill in the missing part of the data based on the observed part”. Leesbare compacte variant. “Imputation replaces unobserved values by exploiting relationships in the observed data.” De rest van de alinea is dan overbodig.</p>
 <p>p.&nbsp;15: “The simplest model is no model at all.” Ik zou de voorbeelden hier in een andere volgorde introduceren. Begin eerst met een vaste waarde (bijvoorbeeld het gemiddelde of een constante) als eenvoudigste vorm van imputatie. Pas daarna kun je hot-deck introduceren.</p>
 <p>Vervolgens kun je beargumenteren dat unconditional hot-deck het basismodel onder MCAR representeert. De impliciete (en sterke) modelaanname is dan dat de verdeling van de geobserveerde waarden representatief is voor die van de ontbrekende waarden. Vanuit dat uitgangspunt kun je vervolgens op natuurlijke wijze laten zien waarom rijkere imputatiemodellen nodig zijn wanneer deze aanname niet houdbaar is. Dat geeft de sectie een duidelijkere statistische opbouw.</p>
@@ -177,6 +190,19 @@ ul.task-list li input[type="checkbox"] {
 <p>In de eerste sectie zou ik eerst even het probleem van single imputatie beschrijven: de downstream analyse maakt geen onderscheid tussen de geobserveerde en geimputeerde data, en interpreteert alle datapunten als geobserveerd. Dat process komt neer op het toevoegen van informatie aan de data. Dat is ongewenst omdat de downstream analyse systematisch de onzekerheid als gevolg van ontbrekende data zal onderschatten.</p>
 <p>p.&nbsp;17: “Conceptualized by Rubin (1976), MI …”. Rubin 1976 gaat over MCAR/MAR/MNAR. Het idee van multipele imputatie is voor het eerst geintroduceerd in 1977: The Design of a General and Flexible System for Handling Nonresponse in Sample Surveys, in 2004 heruitgegeven in TAS. MI is pas volledig ontwikkeld in zijn 1987 boek.</p>
 <p>p.&nbsp;17/18: Ik snap dat je de presentatie eenvoudig wilt houden, maar figuur 4 is naar mijn smaak té eenvoudig. De figuur laat de between-variantie en de pooling tot de totale variantie weg. Dat is geen technisch detail, maar een essentieel onderdeel van Rubin’s theorie. Juist via deze variantieschatting wordt de extra onzekerheid door missing data meegenomen in de inferentie. Zonder dit onderdeel blijft onduidelijk waarom multipele imputatie tot confidence-valid inferentie kan leiden.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Figure 4 aanpassen: hoe?</p>
+</div>
+</div>
 <p>p.&nbsp;17: Ik zou eerst de within- en between- componenten introduceren, hoe die combineren bij oneindige m (met wat licht formules) en daarna pas iets zeggen over de simulatie error, en het (kleine) aandeel daarvan in de totale error. Het lijkt nu alsof de simulatie error een allesbepalende error is.</p>
 <p>p.&nbsp;17: “mice enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty.” –&gt; “mice enables researchers to account for missing data in a way that reduces bias and properly reflects the uncertainty introduced by the missing data.”</p>
 <p>— Research Problem</p>
@@ -195,9 +221,9 @@ ul.task-list li input[type="checkbox"] {
 <p>p.&nbsp;18: “status quo” veronderstelt een proces met tegengestelde belangen. Bedoel je niet meer “current practice”?</p>
 <p>p.&nbsp;18: Tweede deel: Sterke alinea over de life cycle</p>
 <p>p.&nbsp;19: Het blok simulation oogt nogal massief. Opdelen in meerdere paragrafen?</p>
-<p>p.&nbsp;19: “assumptoins”</p>
+<p><del>p.&nbsp;19: “assumptoins”</del></p>
 <p>p.&nbsp;19: “The third kind of evaluation is experiential.” MOOI! Dit is een nieuw concept in binnen missing data. Je kunt dit begrip als novelty claimen. Geen dan ook een definitie van de term, bijv. “In this dissertation I distinguish between <em>experimental</em> evaluation, where imputation methods are assessed under controlled conditions with known ground truth, and <em>experiential</em> evaluation, where practitioners evaluate an imputation workflow on a specific dataset using only indirect evidence because the missing values are unavailable. Experimental evaluation asks: How well does the method perform? Experiential evaluation asks: How much can the analyst know that the method is appropriate for this particular dataset?” Voor zover ik weet is dit laatste niet eerder onderzocht.</p>
-<p>p.&nbsp;20: avialable</p>
+<p><del>p.&nbsp;20: avialable</del></p>
 <p>p.&nbsp;20: “we will learn” –&gt; “In this section, we examine how imputation methodology can be evaluated as a complete system.”</p>
 <p>p.&nbsp;23: “The R package mice enables researchers with missing data problems to correct for differences due to missingness and maintain the appropriate level of uncertainty.” –&gt; “The R package mice enables researchers to address missing data in a statistically principled way, reducing bias due to missing data while preserving the appropriate level of uncertainty.”</p>
 <p>p.&nbsp;23: “They”, enkelvoud/meervoud</p>
@@ -221,11 +247,43 @@ ul.task-list li input[type="checkbox"] {
 <li>maximale predictieve nauwkeurigheid;</li>
 <li>behoud van deterministische relaties en logische consistentie.</li>
 </ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>6 &amp; 7?</p>
+</div>
+</div>
 <p>In de praktijk zijn deze doelen vaak niet tegelijkertijd te realiseren en is predictorselectie een afweging tussen concurrerende optimalisatiecriteria. Een dergelijke indeling zou een nuttige kapstok kunnen bieden om de verschillende predictorselectiestrategieën te bespreken en hun onderliggende ontwerpkeuzes expliciet te maken.</p>
 <p>p.&nbsp;26: “you need to ask”. Alternatief: “it is important to assess”</p>
-<p>p.&nbsp;26: De methoden voor post-hoc evaluatie kun je classificeren naar de vragen die ze beantwoorden: - Heeft het algoritme gewerkt? Trace plots, autocorrelaties, convergence diagnostics. - Zijn de imputaties plausibel? Density plots, strip plots, boxplots. - Blijven relaties tussen variabelen behouden? Scatterplots, correlaties, regressiecoëfficiënten. - Zijn de conclusies robuust? Over-imputation, leave-one-out analyses, sensitivity to alternative imputation models of MNAR-assumpties.</p>
+<p>p.&nbsp;26: De methoden voor post-hoc evaluatie kun je classificeren naar de vragen die ze beantwoorden:</p>
+<ul>
+<li>Heeft het algoritme gewerkt? Trace plots, autocorrelaties, convergence diagnostics.</li>
+<li>Zijn de imputaties plausibel? Density plots, strip plots, boxplots.</li>
+<li>Blijven relaties tussen variabelen behouden? Scatterplots, correlaties, regressiecoëfficiënten.</li>
+<li>Zijn de conclusies robuust? Over-imputation, leave-one-out analyses, sensitivity to alternative imputation models of MNAR-assumpties.</li>
+</ul>
 <p>Hier is heel duidelijk de human-in-the-loop.</p>
 <p>p.&nbsp;26: Rubin (1987) developed the methodology …“. Maak een aparte alinea over de verschillende perspectieven op het belang van realistische data imputaties.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>welke perspectieven?</p>
+</div>
+</div>
 <p>“Bluntly stated, …” Deze formulering is wel erg absoluut. Misschien iets genuanceerder, bijvoorbeeld: “Imputation theorists care less about the imputed values themselves than about whether they lead to statistically valid inferences.”</p>
 <p>Dit perspectief lijkt ook terug te komen in de literatuur. Little &amp; Rubin (3rd ed.) definiëren missing data als “unobserved values that would be meaningful for analysis if observed; in other words a missing value hides a meaningful value.” Schafer (1997) en Hand (2020) maken een vergelijkbaar punt. De implicatie is dat individuele imputaties vooral een middel zijn om geldige statistische inferentie mogelijk te maken; hun intrinsieke juistheid is van ondergeschikt belang zolang de inferentie correct blijft.</p>
 <p>Juist dit klassieke statistische perspectief contrasteert mooi met andere doelstellingen, zoals het behouden van gebruikersvertrouwen, waarin de plausibiliteit en geloofwaardigheid van individuele imputaties wél centraal kunnen staan. Dat contrast zou je explicieter kunnen uitwerken.</p>

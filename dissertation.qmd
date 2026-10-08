@@ -208,7 +208,7 @@ load("data/dat_xy.RData")
 
 \newpage
 
-# Introduction
+# Preface
 
 ### TL;DR (or: the quality of the solution)
 
@@ -216,9 +216,9 @@ load("data/dat_xy.RData")
 <!-- Algorithms are everywhere.  -->
 
 This dissertation is about algorithms and the quality of their output. 
-I investigate how one specific type of data-generating algorithm can be evaluated for use in statistical inferences. 
-The type of algorithm in question are imputation algorithms: algorithms with the purpose of generating plausible data values, based on a model of some observed information. 
-This type of algorithm is popular for solving missing data problems.  
+I aim to investigate how one specific type of data-generating algorithm can be evaluated for use in statistical inferences. 
+More specifically, I focus on imputation algorithms: algorithms with the purpose of generating plausible data values for information that is not observed, based on a model of some observed information. 
+This type of algorithm is popular for solving missing data problems in practice.  
 
 <!-- The data-generating algorithms in question are 'imputation' algorithms. -->
 <!-- - The algorithm central to this dissertation is MICE: multivariate imputation by chained equations. The MICE algorithm is developed to generate 'imputed values': synthetic substitutes to replace missing values in incomplete data, based on observed information.  -->
@@ -227,23 +227,26 @@ This type of algorithm is popular for solving missing data problems.
 
 <!-- generate several completed versions of an incomplete dataset, which allows data analysts to handle the completed datasets as if they were completely observed.  -->
 
-Missing data problems are timeless, but technological advances have made treating missingness easier than ever. 
-A single line of code can seem to solve your missing data problem nowadays. 
-But is that solution really what you expect? 
+Missing data problems are timeless, but technological advances have made treating missingness easier than ever [REFs?]. 
+Nowadays, a single line of code can seem to solve your missing data problem. 
+But is that solution really what you would expect? 
+And does that solution give you the correct statistical answer?
 That is what my dissertation is about.
 I want to contribute methodology that facilitates drawing valid inferences from incomplete data. 
 
 Missing data are ubiquitous and cannot be ignored without risking bias.
-Missing data occur often in scientific disciplines with human subjects, such as the social sciences and biomedical research.
+Missing data occur often in scientific disciplines with human subjects, such as the social sciences and biomedical research [REFs?].
 A participant in a study might, for example, drop out of a longitudinal trial or refuse to answer a sensitive question, resulting in gaps in the research data.
 These gaps complicate data analysis and may lead to biased and invalid study results.
+That is where imputation comes into play.
+
 Imputation algorithms are designed to 'impute' (i.e., fill in) missing values in incomplete datasets. 
 Imputation is a popular and flexible procedure that separates the missing data problem from the analysis of scientific interest. 
-
-Imputation allows data analysts to first solve for the missingness, to then be able to analyze the completed data as if they were completely observed. 
-If done several times in parallel, imputation can yield estimates that are both unbiased as well as confidence valid.
-The practice of drawing inference by replacing missing values with several synthetic substitutes is called 'multiple imputation' (MI). 
-@fig-imp provides an example of multiple imputation, where a missing value is replaced several times with plausible substitutes.
+Imputation allows data analysts to first solve for the missingness by imputing the missing values, to then be able to analyze the completed data as if the data were completely observed. 
+If done several times in parallel, imputation can yield estimates that are both unbiased as well as confidence valid in a broad range of scenarios.
+This practice of drawing inference by replacing missing values with multiple synthetic substitutes is called 'multiple imputation' (MI). 
+@fig-imp provides an example of multiple imputation, where a missing value is replaced several times with plausible substitutes. 
+<!-- TODO: explain figure. [Gerko: Ik zou hier wel echt kapitaliseren op deze afbeelding. Je kunt heel mooi uitleggen dat de waardes voor X hier ontbreken en dat Y wel is geobserveerd en dat we de relatie tussen Y en X juist gebruiken om deze waarden te schatten. Je kunt ook heel mooi uitleggen dat iedere waarde voor X onzeker is en dat je daarom juist de Monte Carlo variatie hier tussen mee zou willen nemen] -->
 The variability between imputations will reflect the uncertainty due to non-response in the final estimate.
 
 ```{r}
@@ -258,6 +261,7 @@ knitr::kable(dplyr::arrange(dat_xy, Y))
 #| layout-ncol: 2
 #| fig-height: 3
 # dat_xy[6, 2] <- 5.5
+# TODO: add caption
 ggmice(dat_xy, aes(X, Y)) + 
   geom_point() + 
   theme_classic() +
@@ -315,24 +319,20 @@ The ideal route is to study the formal statistical properties of the method via 
 Unfortunately, this is often impossible for imputation algorithms, many of which do not have formal proofs.
 Instead, the de facto standard is to estimate their empirical performance via simulation studies.
 These studies, however, are not standardized and are therefore hard to compare.
-Moreover, simulation study results might not always translate to applied use.
+Moreover, simulation study results might not always translate to applied practice.
 For real-world applications, there is no systematic framework for evaluating the operational utility of imputation algorithms, such as their algorithmic convergence.
 Ergo, evaluating whether imputations should be trusted remains challenging.
+<!-- TODO: add 'subjective to some extend'? -->
 
   <!-- - Theoretical properties: analytically (often impossible) -->
   <!-- - Empirical performance: via simulation studies ('in silico'; the standard, but not standardized) -->
   <!-- - In practice/applied use: evaluate output, sensitivity analyses, ...? (very ad hoc, not systematic) -->
   
-In this dissertation, I set out to investigate what is needed to develop, apply, and evaluate data-generating algorithms. 
+In this dissertation, I set out to investigate how the methodology for developing, applying, and evaluating data-generating algorithms may be standardized. 
 I thereby focus on the imputation procedure 'MICE' [@vanbuuren1999] as implemented in the R package `mice` [@vanbuuren2011].
 
-This dissertation in a nutshell:
-
-- Q: Why do I study the evaluation of imputation methodology? 
-  - A: Because current evaluation practices (such as computational evaluation via simulation studies, and graphical evaluation via diagnostic plots) are fragmented and may be insufficient. 
-
-- Q: How will I contribute to the evaluation of imputation methodology? 
-  - A: By bridging inferential evaluation and data- or algorithm-level diagnostics for imputation workflows.
+I *study* the evaluation of imputation methodology because current evaluation practices (such as computational evaluation via simulation studies, and graphical evaluation via diagnostic plots) are fragmented and may be insufficient. 
+I *contribute to* the evaluation of imputation methodology by bridging inferential evaluation and data- or algorithm-level diagnostics for imputation workflows.
 
 <!-- - Missing data may be widespread, but so are missing data treatment methods. -->
 <!-- - Imputation = filling in missing values to fix the missing data problem. -->
@@ -350,10 +350,11 @@ This dissertation in a nutshell:
 
 <!-- $$Y = \{Y_{obs}, \dot{Y}_{\text{mis}}\}$$ -->
 
-## Background
+## Preface
 
 ### Why this dissertation? (or: certainty with uncertainty)
 
+<!-- #### Personal motivation -->
 <!-- [Idea by Hidde: personal relevance to draw the reader in. Not just scientific and societal relevance of research, but also: why me?] -->
 
 My academic tagline has long been "statistician, interdisciplinarian, open scientist". 
@@ -397,6 +398,9 @@ The introduction section ends with a framework for evaluating imputation methodo
 <!-- Mijn indruk is dat je het voorwoord op dit punt het beste kunt afronden. Daarna kun je beginnen met Hoofdstuk 2, waarin je de inhoudelijke lijn van de dissertatie oppakt. Dat zorgt voor een duidelijke scheiding tussen de persoonlijke motivatie en het wetenschappelijke verhaal. -->
 
 <!-- ### But first, some terminology and notation -->
+
+# Theoretical background
+
 ### Why are missing data problematic? (or: don't ignore the missingness)
 
 Generally speaking, statistical inference works really well. 
@@ -972,7 +976,7 @@ Experiential evaluation focuses on operational utility in applied use, on a case
 <!-- This is case-by-case evaluation in applied use with real data.  -->
 <!-- In practice, confidence validity is not guaranteed.  -->
 Whereas we could construct the 'truth' in simulation studies, in practice we cannot.
-We therefore have to rely on assumptoins and theoretical justifications, combined with indirect evidence about imputation model performance.
+We therefore have to rely on assumptions and theoretical justifications, combined with indirect evidence about imputation model performance.
 Some assumptions are impossible to definitively determine (e.g., MNAR mechanisms), while some we can partially evaluate by looking at the data.
 We can, for example, inspect the imputation algorithm output for signs of non‑convergence, or compare the distributions of the imputed data against the observed.
 Diagnosing algorithmic non-convergence, however, is a challenging task [see, e.g., @gelman2013; @vanbuuren2018].
@@ -997,7 +1001,7 @@ Users of imputation methods often do not know whether they have correctly applie
 
 In this dissertation, I focus on experimental and experiential evaluation of imputation methodology. 
 The studies I present will follow this distinction into the two phases in the life cycle of FCS imputation methods: first a simulation study, and then applied use.
-For both phases, I will investigate which existing evaluation tools are already avialable, and whether all necessary tools are present yet in the imputer's toolbox.
+For both phases, I will investigate which existing evaluation tools are already available, and whether all necessary tools are present yet in the imputer's toolbox.
 The central question then becomes: what is needed for the experimental and experiential evaluation of imputation methodology?
 <!-- Some questions I consider are ... -->
 <!-- I thereby contribute to the new status quo by unifying how imputations are evaluated across the life cycle. -->
